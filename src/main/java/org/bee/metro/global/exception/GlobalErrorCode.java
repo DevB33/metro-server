@@ -15,9 +15,9 @@ public enum GlobalErrorCode implements ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "G004", "서버 내부 오류가 발생했습니다."),
     ;
 
-    private HttpStatus httpStatus;
-    private String code;
-    private String message;
+    private final HttpStatus httpStatus;
+    private final String code;
+    private final String message;
 
     GlobalErrorCode(HttpStatus httpStatus, String code, String message) {
         this.code = code;
