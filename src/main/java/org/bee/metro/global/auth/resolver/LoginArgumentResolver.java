@@ -1,5 +1,6 @@
 package org.bee.metro.global.auth.resolver;
 
+import java.util.UUID;
 import org.bee.metro.global.auth.annotation.Login;
 import org.bee.metro.global.auth.exception.AuthErrorCode;
 import org.bee.metro.global.auth.exception.type.AuthenticationException;
@@ -15,8 +16,8 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
-        boolean hasLongParameterType = parameter.getParameterType().isAssignableFrom(Long.class);
-        return hasLoginAnnotation && hasLongParameterType;
+        boolean hasUUIDParameterType = parameter.getParameterType().isAssignableFrom(UUID.class);
+        return hasLoginAnnotation && hasUUIDParameterType;
     }
 
     @Override
