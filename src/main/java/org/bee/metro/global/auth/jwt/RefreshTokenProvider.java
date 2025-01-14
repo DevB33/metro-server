@@ -1,12 +1,9 @@
 package org.bee.metro.global.auth.jwt;
 
-import io.jsonwebtoken.JwtParser;
-import javax.crypto.SecretKey;
-
 public class RefreshTokenProvider extends JwtProvider {
 
-    public RefreshTokenProvider(String issuer, SecretKey secretKey, JwtParser jwtParser) {
-        super(issuer, secretKey, jwtParser);
+    public RefreshTokenProvider(String issuer, String secret) {
+        super(issuer, secret);
     }
 
     @Override

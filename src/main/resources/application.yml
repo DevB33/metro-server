@@ -4,3 +4,11 @@ spring:
 
 client:
   url: http://localhost:8080
+
+jwt:
+  access:
+    issuer: metro
+    secret: secret
+  refresh:
+    issuer: metro
+    secret: secret

@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.UUID;
 import javax.crypto.SecretKey;
@@ -18,10 +20,10 @@ public abstract class JwtProvider {
     private final SecretKey secretKey;
     private final JwtParser jwtParser;
 
-    public JwtProvider(String issuer, SecretKey secretKey, JwtParser jwtParser) {
+    public JwtProvider(String issuer, String secret) {
         this.issuer = issuer;
-        this.secretKey = secretKey;
-        this.jwtParser = jwtParser;
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.jwtParser = Jwts.parser().verifyWith(secretKey).build();
     }
 
     public String generateToken(String subject) {
