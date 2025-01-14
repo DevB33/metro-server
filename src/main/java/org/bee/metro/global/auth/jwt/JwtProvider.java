@@ -23,8 +23,7 @@ public abstract class JwtProvider {
         this.jwtParser = jwtParser;
     }
 
-    public String generateToken() {
-        String subject = this.getSubject();
+    public String generateToken(String subject) {
         long expireSeconds = this.getExpirationSeconds();
 
         Date now = new Date();
@@ -51,5 +50,4 @@ public abstract class JwtProvider {
     }
 
     abstract long getExpirationSeconds();
-    abstract String getSubject();
 }
