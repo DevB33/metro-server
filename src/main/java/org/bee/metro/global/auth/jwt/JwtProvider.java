@@ -5,6 +5,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import java.util.Date;
+import java.util.UUID;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
 import org.bee.metro.global.auth.exception.AuthErrorCode;
@@ -37,10 +38,10 @@ public abstract class JwtProvider {
                 .compact();
     }
 
-    public String parseToken(String token) {
+    public UUID parseToken(String token) {
         try {
             Claims claims = jwtParser.parseSignedClaims(token).getPayload();
-            return claims.getSubject();
+            return UUID.fromString(claims.getSubject());
         } catch (ExpiredJwtException e) {
             throw new BadRequestException("토큰이 만료되었습니다.", AuthErrorCode.EXPIRED_TOKEN);
         } catch (RuntimeException e) {
