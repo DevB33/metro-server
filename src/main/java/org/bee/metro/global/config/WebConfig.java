@@ -3,8 +3,10 @@ package org.bee.metro.global.config;
 import java.util.List;
 import org.bee.metro.global.auth.resolver.LoginArgumentResolver;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -28,5 +30,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginArgumentResolver());
+    }
+
+    @Bean
+    public WebClient webClient() {
+        return WebClient.create();
     }
 }
