@@ -1,14 +1,16 @@
 package org.bee.metro.core.member.infra;
 
+import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.member.domain.Member;
 import org.bee.metro.core.member.domain.MemberRepository;
 import org.bee.metro.core.member.entity.MemberEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class MemberCoreRepository implements MemberRepository {
 
-    MemberJpaRepository memberJpaRepository;
+    private final MemberJpaRepository memberJpaRepository;
 
     @Override
     public Member save(Member member) {
