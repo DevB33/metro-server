@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.UUID;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
-import org.bee.metro.global.auth.exception.AuthErrorCode;
+import org.bee.metro.core.auth.exception.AuthErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
 
 @Slf4j

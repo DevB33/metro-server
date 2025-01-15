@@ -2,7 +2,7 @@ package org.bee.metro.global.auth.resolver;
 
 import java.util.UUID;
 import org.bee.metro.global.auth.annotation.Login;
-import org.bee.metro.global.auth.exception.AuthErrorCode;
+import org.bee.metro.core.auth.exception.AuthErrorCode;
 import org.bee.metro.global.auth.exception.type.AuthenticationException;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;

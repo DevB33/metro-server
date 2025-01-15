@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.bee.metro.global.auth.exception.AuthErrorCode;
+import org.bee.metro.core.auth.exception.AuthErrorCode;
 import org.bee.metro.global.auth.exception.type.AuthorizationException;
 import org.bee.metro.global.auth.jwt.JwtProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
