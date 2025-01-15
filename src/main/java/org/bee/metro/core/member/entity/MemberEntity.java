@@ -32,4 +32,13 @@ public class MemberEntity extends BaseEntity {
         this.email = email;
         this.avatar = avatar;
     }
+
+    public static MemberEntity from(UUID id, String name, String email, String avatar) {
+        return MemberEntity.builder()
+                .id(id)
+                .name(name)
+                .email(email)
+                .avatar(avatar)
+                .build();
+    }
 }
