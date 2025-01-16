@@ -18,4 +18,10 @@ public class MemberCoreRepository implements MemberRepository {
         MemberEntity savedMemberEntity = memberJpaRepository.save(memberEntity);
         return Member.fromEntity(savedMemberEntity);
     }
+
+    @Override
+    public Member findByOAuthId(String oAuthId) {
+        MemberEntity memberEntity = memberJpaRepository.findByOAuthId(oAuthId);
+        return Member.fromEntity(memberEntity);
+    }
 }

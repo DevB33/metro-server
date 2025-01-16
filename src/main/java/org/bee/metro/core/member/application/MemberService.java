@@ -22,4 +22,8 @@ public class MemberService {
 
         return memberRepository.save(member);
     }
+
+    public Member findMemberByOAuthId(String oAuthId) {
+        return memberRepository.findByOAuthId(oAuthId);
+    }
 }

@@ -25,8 +25,19 @@ public class AuthService {
         OAuthService oAuthService = oAuthServiceFactory.getService(provider);
         MemberCreationPayload memberPayload = oAuthService.getMemberCreationPayload(authorizationCode, state);
 
-        Member member = memberService.createMember(memberPayload.name(), memberPayload.email(), memberPayload.avatar());
+        Member member = createMemberIfNotExists(memberPayload);
+        return generateMemberToken(member);
+    }
 
+    private Member createMemberIfNotExists(MemberCreationPayload memberPayload) {
+        Member member = memberService.findMemberByOAuthId(memberPayload.oauthId());
+        if (member == null) {
+            member = memberService.createMember(memberPayload);
+        }
+        return member;
+    }
+
+    private MemberToken generateMemberToken(Member member) {
         String accessToken = accessTokenProvider.generateToken(String.valueOf(member.getId()));
         String refreshToken = refreshTokenProvider.generateToken(String.valueOf(member.getId()));
         return new MemberToken(accessToken, refreshToken);
