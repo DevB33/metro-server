@@ -3,6 +3,7 @@ package org.bee.metro.core.member.application;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.bee.metro.context.ServiceTest;
+import org.bee.metro.core.auth.dto.MemberCreationPayload;
 import org.bee.metro.core.member.domain.Member;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,9 +19,10 @@ class MemberServiceTest extends ServiceTest {
             String name = "test_name";
             String email = "test@email.test";
             String avatar = "test_avatar";
+            String oauthId = "test_oauth_id";
 
             // when
-            Member member = memberService.createMember(name, email, avatar);
+            Member member = memberService.createMember(new MemberCreationPayload(oauthId, name, email, avatar));
 
             // then
             assertThat(member.getName()).isEqualTo(name);

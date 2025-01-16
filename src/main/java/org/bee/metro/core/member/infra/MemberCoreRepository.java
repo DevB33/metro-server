@@ -14,8 +14,7 @@ public class MemberCoreRepository implements MemberRepository {
 
     @Override
     public Member save(Member member) {
-        MemberEntity memberEntity = MemberEntity.from(member.getId(), member.getName(), member.getEmail(),
-                member.getAvatar());
+        MemberEntity memberEntity = MemberEntity.from(member);
         MemberEntity savedMemberEntity = memberJpaRepository.save(memberEntity);
         return Member.fromEntity(savedMemberEntity);
     }

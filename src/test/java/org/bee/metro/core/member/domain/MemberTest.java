@@ -24,18 +24,21 @@ class MemberTest {
             String name = "name";
             String email = "email@email.com";
             String avatar = "avatar";
+            String oauthId = "oauthId";
 
             // when
             Member member = Member.builder()
                     .name(name)
                     .email(email)
                     .avatar(avatar)
+                    .oauthId(oauthId)
                     .build();
 
             // then
             assertThat(member.getName()).isEqualTo(name);
             assertThat(member.getEmail()).isEqualTo(email);
             assertThat(member.getAvatar()).isEqualTo(avatar);
+            assertThat(member.getOauthId()).isEqualTo(oauthId);
         }
 
         @ParameterizedTest
@@ -43,12 +46,14 @@ class MemberTest {
         void 올바르지_않은_인자가_들어오면_예외가_발생한다(String name, String email) {
             // given
             String avatar = "avatar";
+            String oauthId = "oauthId";
 
             // expect
             assertThrows(BadRequestException.class, () -> Member.builder()
                     .name(name)
                     .email(email)
                     .avatar(avatar)
+                    .oauthId(oauthId)
                     .build());
         }
 
@@ -74,6 +79,7 @@ class MemberTest {
                     .name("name")
                     .email("email@email.com")
                     .avatar("avatar")
+                    .oauthId("oauthId")
                     .build();
 
             // when
@@ -84,6 +90,7 @@ class MemberTest {
             assertThat(member.getName()).isEqualTo(entity.getName());
             assertThat(member.getEmail()).isEqualTo(entity.getEmail());
             assertThat(member.getAvatar()).isEqualTo(entity.getAvatar());
+            assertThat(member.getOauthId()).isEqualTo(entity.getOauthId());
         }
     }
 }

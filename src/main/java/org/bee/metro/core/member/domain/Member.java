@@ -14,13 +14,14 @@ public class Member {
     private String name;
     private String email;
     private String avatar;
+    private String oauthId;
 
     private static String ERROR_NAME_IS_BLANK = "이름은 비어있을 수 없습니다.";
     private static String ERROR_EMAIL_IS_BLANK = "이메일은 비어있을 수 없습니다.";
     private static String ERROR_INVALID_EMAIL_FORMAT = "이메일 형식이 올바르지 않습니다. 현재 이메일: %s";
 
     @Builder
-    public Member(UUID id, String name, String email, String avatar) {
+    public Member(UUID id, String name, String email, String avatar, String oauthId) {
         validateName(name);
         validateEmail(email);
 
@@ -28,6 +29,7 @@ public class Member {
         this.name = name;
         this.email = email;
         this.avatar = avatar;
+        this.oauthId = oauthId;
     }
 
     public static Member fromEntity(MemberEntity entity) {
@@ -36,6 +38,7 @@ public class Member {
                 .name(entity.getName())
                 .email(entity.getEmail())
                 .avatar(entity.getAvatar())
+                .oauthId(entity.getOauthId())
                 .build();
     }
 

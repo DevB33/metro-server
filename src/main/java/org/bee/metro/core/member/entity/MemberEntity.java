@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.bee.metro.core.member.domain.Member;
 import org.bee.metro.global.entity.BaseEntity;
 
 @Entity
@@ -28,20 +29,24 @@ public class MemberEntity extends BaseEntity {
 
     private String avatar;
 
+    private String oauthId;
+
     @Builder
-    public MemberEntity(UUID id, String name, String email, String avatar) {
+    public MemberEntity(UUID id, String name, String email, String avatar, String oauthId) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.avatar = avatar;
+        this.oauthId = oauthId;
     }
 
-    public static MemberEntity from(UUID id, String name, String email, String avatar) {
+    public static MemberEntity from(Member member) {
         return MemberEntity.builder()
-                .id(id)
-                .name(name)
-                .email(email)
-                .avatar(avatar)
+                .id(member.getId())
+                .name(member.getName())
+                .email(member.getEmail())
+                .avatar(member.getAvatar())
+                .oauthId(member.getOauthId())
                 .build();
     }
 }
