@@ -75,6 +75,7 @@ public class NaverOAuthService implements OAuthService {
         try {
             JsonNode jsonNode = objectMapper.readTree(response);
             return new MemberCreationPayload(
+                    "n-" + jsonNode.get("response").get("id").asText(),
                     jsonNode.get("response").get("name").asText(),
                     jsonNode.get("response").get("email").asText(),
                     jsonNode.get("response").get("profile_image").asText()

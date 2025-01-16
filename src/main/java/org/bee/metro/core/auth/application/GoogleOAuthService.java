@@ -69,6 +69,7 @@ public class GoogleOAuthService implements OAuthService {
         try {
             JsonNode jsonNode = objectMapper.readTree(response);
             return new MemberCreationPayload(
+                    "g-" + jsonNode.get("id").asText(),
                     jsonNode.get("name").asText(),
                     jsonNode.get("email").asText(),
                     jsonNode.get("picture").asText()

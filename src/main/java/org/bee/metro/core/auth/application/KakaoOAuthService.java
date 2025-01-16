@@ -58,6 +58,7 @@ public class KakaoOAuthService implements OAuthService {
         try {
             JsonNode jsonNode = objectMapper.readTree(response);
             return new MemberCreationPayload(
+                    "k-" + jsonNode.get("id").asText(),
                     jsonNode.get("properties").get("nickname").asText(),
                     jsonNode.get("kakao_account").get("email").asText(),
                     jsonNode.get("properties").get("profile_image").asText()
