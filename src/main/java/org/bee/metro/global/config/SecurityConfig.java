@@ -22,14 +22,15 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/login", "/h2-console/**").permitAll());
-
-        httpSecurity
+                        .requestMatchers("/auth/login", "/h2-console/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .headers((headerConfig) ->
                         headerConfig.frameOptions((frameOptionsConfig -> frameOptionsConfig.disable())))
                 .addFilterBefore(
                         new AuthenticationFilter(jwtProvider),
-                        UsernamePasswordAuthenticationFilter.class);
+                        UsernamePasswordAuthenticationFilter.class
+                );
 
         return httpSecurity.build();
     }
