@@ -29,7 +29,7 @@ public class AuthApi {
         MemberToken memberToken = authService.login(
                 memberLoginRequest.authorizationCode(),
                 memberLoginRequest.state(),
-                OAuthProvider.valueOf(memberLoginRequest.provider())
+                OAuthProvider.valueOf(memberLoginRequest.provider().toUpperCase())
         );
 
         Cookie refreshTokenCookie = MemberToken.generateRefreshTokenCookie(memberToken);
