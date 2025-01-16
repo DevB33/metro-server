@@ -3,6 +3,7 @@ package org.bee.metro.core.auth.application;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.auth.common.OAuthProvider;
 import org.bee.metro.core.auth.dto.MemberCreationPayload;
@@ -25,17 +26,23 @@ public class NaverOAuthService implements OAuthService {
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
 
-    private static final String TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
-    private static final String PROFILE_URL = "https://openapi.naver.com/v1/nid/me";
+    private static final String HTTPS = "https";
+    private static final String TOKEN_URL_HOST = "nid.naver.com";
+    private static final String TOKEN_URL_PATH = "/oauth2.0/token";
+    private static final String PROFILE_URL_HOST = "openapi.naver.com";
+    private static final String PROFILE_URL_PATH = "/v1/nid/me";
 
     @Override
     public String getAccessToken(String authorizationCode, String state) {
         String response = webClient.get()
-                .uri(uriBUilder -> uriBUilder
-                        .host(TOKEN_URL)
+                .uri(uriBuilder -> uriBuilder
+                        .scheme(HTTPS)
+                        .host(TOKEN_URL_HOST)
+                        .path(TOKEN_URL_PATH)
                         .queryParam("client_id", clientId)
                         .queryParam("client_secret", clientSecret)
                         .queryParam("grant_type", "authorization_code")
+                        .queryParam("code", authorizationCode)
                         .queryParam("state", state)
                         .build()
                 )
@@ -55,7 +62,9 @@ public class NaverOAuthService implements OAuthService {
     public MemberCreationPayload getMemberInfo(String accessToken) {
         String response = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .host(PROFILE_URL)
+                        .scheme(HTTPS)
+                        .host(PROFILE_URL_HOST)
+                        .path(PROFILE_URL_PATH)
                         .build()
                 )
                 .header("Authorization", "Bearer " + accessToken)

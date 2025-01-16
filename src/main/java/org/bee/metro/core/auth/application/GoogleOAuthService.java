@@ -25,16 +25,26 @@ public class GoogleOAuthService implements OAuthService {
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
 
-    private static final String TOKEN_URL = "https://oauth2.googleapis.com/token";
+    private static final String HTTPS = "https";
+    private static final String TOKEN_URL_HOST = "oauth2.googleapis.com";
+    private static final String TOKEN_URL_PATH = "/token";
     private static final String PROFILE_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
-    private static final String REDIRECT_URI = "http://localhost:3000/auth/callback";
+    private static final String REDIRECT_URI = "http://localhost:8080/auth/callback";
 
     @Override
     public String getAccessToken(String authorizationCode, String state) {
         String response = webClient.post()
-                .uri(TOKEN_URL)
-                .bodyValue("client_id=" + clientId + "&client_secret=" + clientSecret + "&code=" + authorizationCode
-                        + "redirect_uri=" + REDIRECT_URI + "&grant_type=authorization_code")
+                .uri(uriBuilder -> uriBuilder
+                        .scheme(HTTPS)
+                        .host(TOKEN_URL_HOST)
+                        .path(TOKEN_URL_PATH)
+                        .queryParam("client_id", clientId)
+                        .queryParam("client_secret", clientSecret)
+                        .queryParam("code", authorizationCode)
+                        .queryParam("redirect_uri", REDIRECT_URI)
+                        .queryParam("grant_type", "authorization_code")
+                        .build()
+                )
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

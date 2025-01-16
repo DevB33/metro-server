@@ -24,12 +24,13 @@ public class KakaoOAuthService implements OAuthService {
 
     private static final String TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private static final String PROFILE_URL = "https://kapi.kakao.com/v2/user/me";
-    private static final String REDIRECT_URI = "http://localhost:3000/auth/callback";
+    private static final String REDIRECT_URI = "http://localhost:8080/auth/callback";
 
     @Override
     public String getAccessToken(String authorizationCode, String state) {
         String response = webClient.post()
                 .uri(TOKEN_URL)
+                .header("Content-Type", "application/x-www-form-urlencoded")
                 .bodyValue("grant_type=authorization_code&client_id=" + clientId
                         + "&redirect_uri=" + REDIRECT_URI + "&code=" + authorizationCode)
                 .retrieve()
@@ -49,6 +50,7 @@ public class KakaoOAuthService implements OAuthService {
         String response = webClient.get()
                 .uri(PROFILE_URL)
                 .header("Authorization", "Bearer " + accessToken)
+                .header("Content-Type", "application/x-www-form-urlencoded")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -56,9 +58,9 @@ public class KakaoOAuthService implements OAuthService {
         try {
             JsonNode jsonNode = objectMapper.readTree(response);
             return new MemberCreationPayload(
-                    jsonNode.get("kakao_account").get("email").asText(),
                     jsonNode.get("properties").get("nickname").asText(),
-                    jsonNode.get("properties").get("profile").asText()
+                    jsonNode.get("kakao_account").get("email").asText(),
+                    jsonNode.get("properties").get("profile_image").asText()
             );
         } catch (JsonProcessingException e) {
             throw new BadRequestException("카카오 회원정보를 가져오는데 실패했습니다.", AuthErrorCode.PROFILE_FETCH_FAILED);
