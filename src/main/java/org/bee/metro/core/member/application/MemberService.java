@@ -23,7 +23,7 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public Member findMemberByOAuthId(String oAuthId) {
-        return memberRepository.findByOauthId(oAuthId);
+    public Member findMemberByOAuthId(String oauthId) {
+        return memberRepository.findByOauthId(oauthId);
     }
 }
