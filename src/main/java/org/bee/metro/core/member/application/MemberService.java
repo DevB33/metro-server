@@ -24,6 +24,6 @@ public class MemberService {
     }
 
     public Member findMemberByOAuthId(String oAuthId) {
-        return memberRepository.findByOAuthId(oAuthId);
+        return memberRepository.findByOauthId(oAuthId);
     }
 }

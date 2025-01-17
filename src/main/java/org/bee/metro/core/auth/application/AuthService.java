@@ -24,7 +24,6 @@ public class AuthService {
     public MemberToken login(String authorizationCode, String state, OAuthProvider provider) {
         OAuthService oAuthService = oAuthServiceFactory.getService(provider);
         MemberCreationPayload memberPayload = oAuthService.getMemberCreationPayload(authorizationCode, state);
-
         Member member = createMemberIfNotExists(memberPayload);
         return generateMemberToken(member);
     }

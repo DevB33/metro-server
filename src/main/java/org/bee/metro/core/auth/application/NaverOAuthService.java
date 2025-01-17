@@ -3,7 +3,6 @@ package org.bee.metro.core.auth.application;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.auth.common.OAuthProvider;
 import org.bee.metro.core.auth.dto.MemberCreationPayload;
