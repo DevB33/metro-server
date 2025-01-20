@@ -30,4 +30,37 @@ class MemberServiceTest extends ServiceTest {
             assertThat(member.getAvatar()).isEqualTo(avatar);
         }
     }
+
+    @Nested
+    class findByOauthId_메서드는 {
+
+        @Test
+        void 정상적인_요청이면_사용자를_조회한다() {
+            // given
+            String name = "test_name";
+            String email = "test@email.test";
+            String avatar = "test_avatar";
+            String oauthId = "test_oauth_id";
+
+            memberService.createMember(new MemberCreationPayload(oauthId, name, email, avatar));
+
+            // when
+            Member member = memberService.findMemberByOAuthId(oauthId);
+
+            // then
+            assertThat(member.getName()).isEqualTo(name);
+        }
+
+        @Test
+        void 존재하지_않는_사용자일_경우_null을_반환한다() {
+            // given
+            String oauthId = "test_oauth_id";
+
+            // when
+            Member member = memberService.findMemberByOAuthId(oauthId);
+
+            // then
+            assertThat(member).isNull();
+        }
+    }
 }

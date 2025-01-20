@@ -22,6 +22,9 @@ public class MemberCoreRepository implements MemberRepository {
     @Override
     public Member findByOauthId(String oAuthId) {
         MemberEntity memberEntity = memberJpaRepository.findByOauthId(oAuthId);
+        if (memberEntity == null) {
+            return null;
+        }
         return Member.fromEntity(memberEntity);
     }
 }
