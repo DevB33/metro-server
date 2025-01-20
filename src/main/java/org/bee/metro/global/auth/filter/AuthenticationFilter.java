@@ -28,17 +28,13 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     private static final List<Pattern> WHITE_LIST = List.of(
             Pattern.compile("^/auth/login$"),
             Pattern.compile("^/h2-console$"),
-            Pattern.compile("^/h2-console/.*")
+            Pattern.compile("^/h2-console/.*"),
+            Pattern.compile("^/auth/callback$")
     );
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
-        if (isWhitelisted(request.getRequestURI())) {
-            filterChain.doFilter(request, response);
-            return;
-        }
 
         String bearerAccessToken = request.getHeader(AUTHORIZATION);
         if (bearerAccessToken != null && bearerAccessToken.startsWith(BEARER)) {
@@ -59,7 +55,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private boolean isWhitelisted(String path) {
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
         for (Pattern pattern : WHITE_LIST) {
             if (pattern.matcher(path).matches()) {
                 return true;
