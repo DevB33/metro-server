@@ -19,12 +19,14 @@ public class KakaoOAuthService implements OAuthService {
     @Value("${auth.kakao.client-id}")
     private String clientId;
 
+    @Value("${auth.kakao.callback-uri}")
+    private String callbackUri;
+
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
 
     private static final String TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private static final String PROFILE_URL = "https://kapi.kakao.com/v2/user/me";
-    private static final String REDIRECT_URI = "http://localhost:8080/auth/callback";
 
     @Override
     public String getAccessToken(String authorizationCode, String state) {
@@ -32,7 +34,7 @@ public class KakaoOAuthService implements OAuthService {
                 .uri(TOKEN_URL)
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .bodyValue("grant_type=authorization_code&client_id=" + clientId
-                        + "&redirect_uri=" + REDIRECT_URI + "&code=" + authorizationCode)
+                        + "&redirect_uri=" + callbackUri + "&code=" + authorizationCode)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

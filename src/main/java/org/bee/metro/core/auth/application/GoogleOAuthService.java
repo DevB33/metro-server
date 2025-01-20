@@ -22,6 +22,9 @@ public class GoogleOAuthService implements OAuthService {
     @Value("${auth.google.client-secret}")
     private String clientSecret;
 
+    @Value("${auth.google.callback-uri}")
+    private String callbackUri;
+
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
 
@@ -29,7 +32,6 @@ public class GoogleOAuthService implements OAuthService {
     private static final String TOKEN_URL_HOST = "oauth2.googleapis.com";
     private static final String TOKEN_URL_PATH = "/token";
     private static final String PROFILE_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
-    private static final String REDIRECT_URI = "http://localhost:8080/auth/callback";
 
     @Override
     public String getAccessToken(String authorizationCode, String state) {
@@ -41,7 +43,7 @@ public class GoogleOAuthService implements OAuthService {
                         .queryParam("client_id", clientId)
                         .queryParam("client_secret", clientSecret)
                         .queryParam("code", authorizationCode)
-                        .queryParam("redirect_uri", REDIRECT_URI)
+                        .queryParam("redirect_uri", callbackUri)
                         .queryParam("grant_type", "authorization_code")
                         .build()
                 )
