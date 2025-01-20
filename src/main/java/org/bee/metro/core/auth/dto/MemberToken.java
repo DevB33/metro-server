@@ -15,4 +15,13 @@ public record MemberToken(
         refreshTokenCookie.setPath("/");
         return refreshTokenCookie;
     }
+
+    public static Cookie generateAccessTokenCookie(MemberToken memberToken) {
+        Cookie accessTokenCookie = new Cookie("accessToken", memberToken.accessToken());
+        accessTokenCookie.setHttpOnly(true);
+        accessTokenCookie.setSecure(true);
+        accessTokenCookie.setMaxAge(60 * 60 * 2);
+        accessTokenCookie.setPath("/");
+        return accessTokenCookie;
+    }
 }
