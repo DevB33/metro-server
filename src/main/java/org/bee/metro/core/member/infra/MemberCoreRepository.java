@@ -1,5 +1,6 @@
 package org.bee.metro.core.member.infra;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.member.domain.Member;
 import org.bee.metro.core.member.domain.MemberRepository;
@@ -22,6 +23,15 @@ public class MemberCoreRepository implements MemberRepository {
     @Override
     public Member findByOauthId(String oAuthId) {
         MemberEntity memberEntity = memberJpaRepository.findByOauthId(oAuthId);
+        if (memberEntity == null) {
+            return null;
+        }
+        return Member.fromEntity(memberEntity);
+    }
+
+    @Override
+    public Member findById(UUID id) {
+        MemberEntity memberEntity = memberJpaRepository.findById(id).orElse(null);
         if (memberEntity == null) {
             return null;
         }
