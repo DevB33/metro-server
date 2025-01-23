@@ -50,6 +50,7 @@ public class AuthApi {
     public ResponseEntity<Void> logout(HttpServletResponse response) {
         deleteTokenCookie(REFRESH_TOKEN, response);
         deleteTokenCookie(ACCESS_TOKEN, response);
+        return ResponseEntity.ok().build();
     }
 
     private static void deleteTokenCookie(String tokenSignature, HttpServletResponse response) {
