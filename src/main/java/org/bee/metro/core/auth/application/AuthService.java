@@ -32,11 +32,11 @@ public class AuthService {
     }
 
     private Member createMemberIfNotExists(MemberCreationPayload memberPayload) {
-        Member member = memberService.findMemberByOAuthId(memberPayload.oauthId());
-        if (member == null) {
-            member = memberService.createMember(memberPayload);
+        try {
+            return memberService.findMemberByOAuthId(memberPayload.oauthId());
+        } catch (NotFoundException e) {
+            return memberService.createMember(memberPayload);
         }
-        return member;
     }
 
     private MemberToken generateMemberToken(Member member) {
@@ -48,10 +48,6 @@ public class AuthService {
     public MemberToken refresh(String refreshToken) {
         UUID memberId = refreshTokenProvider.parseToken(refreshToken);
         Member member = memberService.findMemberById(memberId);
-
-        if (member == null) {
-            throw new NotFoundException("사용자를 찾을 수 없습니다.", AuthErrorCode.NOT_FOUND_MEMBER);
-        }
         return generateMemberToken(member);
     }
 }
