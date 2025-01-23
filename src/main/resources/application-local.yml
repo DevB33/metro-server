@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: metro
+
+client:
+  url: http://localhost:8080
+
+jwt:
+  access:
+    issuer: metro
+    secret: W1RmZ29zU2VjcmV0S2V5Rm9yQ2hhdEdyb3VwS2V5Rm9yWW91clRlc3Q=
+  refresh:
+    issuer: metro
+    secret: W1RmZ29zU2VjcmV0S2V5Rm9yQ2hhdEdyb3VwS2V5Rm9yWW91clRlc3Q=
