@@ -5,15 +5,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.auth.application.AuthService;
 import org.bee.metro.core.auth.common.OAuthProvider;
-import org.bee.metro.core.auth.dto.AccessTokenResponse;
 import org.bee.metro.core.auth.dto.MemberLoginRequest;
 import org.bee.metro.core.auth.dto.MemberToken;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthApi {
 
     private final AuthService authService;
+
+    public static final String REFRESH_TOKEN = "refreshToken";
+    public static final String ACCESS_TOKEN = "accessToken";
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(
@@ -46,9 +46,15 @@ public class AuthApi {
         response.addCookie(accessTokenCookie);
     }
 
-    @GetMapping("/callback")
-    public ResponseEntity<?> callback(@RequestParam String code, @RequestParam(required = false) String state) {
-        System.out.println("code = " + code);
-        return ResponseEntity.ok().build();
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        deleteTokenCookie(REFRESH_TOKEN, response);
+        deleteTokenCookie(ACCESS_TOKEN, response);
+    }
+
+    private static void deleteTokenCookie(String tokenSignature, HttpServletResponse response) {
+        Cookie deletedCookie = new Cookie(tokenSignature, null);
+        deletedCookie.setMaxAge(0);
+        response.addCookie(deletedCookie);
     }
 }
