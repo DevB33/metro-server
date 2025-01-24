@@ -6,7 +6,6 @@ import org.bee.metro.core.auth.common.OAuthProvider;
 import org.bee.metro.core.auth.common.OAuthServiceFactory;
 import org.bee.metro.core.auth.dto.MemberCreationPayload;
 import org.bee.metro.core.auth.dto.MemberToken;
-import org.bee.metro.core.auth.exception.AuthErrorCode;
 import org.bee.metro.core.member.application.MemberService;
 import org.bee.metro.core.member.domain.Member;
 import org.bee.metro.global.auth.jwt.AccessTokenProvider;
@@ -45,9 +44,8 @@ public class AuthService {
         return new MemberToken(accessToken, refreshToken);
     }
 
-    public MemberToken refresh(String refreshToken) {
-        UUID memberId = refreshTokenProvider.parseToken(refreshToken);
-        Member member = memberService.findMemberById(memberId);
+    public MemberToken refresh(UUID id) {
+        Member member = memberService.findMemberById(id);
         return generateMemberToken(member);
     }
 }
