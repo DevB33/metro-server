@@ -7,13 +7,13 @@ import lombok.RequiredArgsConstructor;
 public class JwtAuthentication {
 
     private final UUID id;
-    private final String accessToken;
+    private final String token;
 
     public UUID getPrincipal() {
         return id;
     }
 
     public String getCredentials() {
-        return accessToken;
+        return token;
     }
 }

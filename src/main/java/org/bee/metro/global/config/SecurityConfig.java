@@ -1,6 +1,7 @@
 package org.bee.metro.global.config;
 
 import org.bee.metro.global.auth.filter.AuthenticationFilter;
+import org.bee.metro.global.auth.filter.RefreshionFilter;
 import org.bee.metro.global.auth.jwt.AccessTokenProvider;
 import org.bee.metro.global.auth.jwt.RefreshTokenProvider;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,10 @@ public class SecurityConfig {
                         headerConfig.frameOptions((frameOptionsConfig -> frameOptionsConfig.disable())))
                 .addFilterBefore(
                         new AuthenticationFilter(jwtProvider),
+                        UsernamePasswordAuthenticationFilter.class
+                )
+                .addFilterBefore(
+                        new RefreshionFilter(jwtProvider),
                         UsernamePasswordAuthenticationFilter.class
                 );
 
