@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +29,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors
                         .configurationSource(request -> {
-                            var corsConfig = new org.springframework.web.cors.CorsConfiguration();
+                            var corsConfig = new CorsConfiguration();
                             corsConfig.setAllowedOrigins(List.of(allowedOrigins));
                             corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
                             corsConfig.setAllowedHeaders(List.of("Authorization", "Content-Type"));
