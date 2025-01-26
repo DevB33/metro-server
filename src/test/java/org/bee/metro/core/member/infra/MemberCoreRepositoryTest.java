@@ -53,7 +53,7 @@ class MemberCoreRepositoryTest extends RepositoryTest {
             memberCoreRepository.save(member);
 
             // when
-            Member foundMember = memberCoreRepository.findByOauthId("oAuthId");
+            Member foundMember = memberCoreRepository.findByOauthId("oAuthId").orElse(null);
 
             // then
             assertThat(foundMember).isNotNull();
@@ -70,7 +70,7 @@ class MemberCoreRepositoryTest extends RepositoryTest {
                     .build();
 
             // when
-            Member foundMember = memberCoreRepository.findByOauthId("oAuthId");
+            Member foundMember = memberCoreRepository.findByOauthId("oAuthId").orElse(null);
 
             // then
             assertThat(foundMember).isNull();

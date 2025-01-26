@@ -1,10 +1,12 @@
 package org.bee.metro.core.member.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.bee.metro.context.ServiceTest;
 import org.bee.metro.core.auth.dto.MemberCreationPayload;
 import org.bee.metro.core.member.domain.Member;
+import org.bee.metro.global.exception.type.NotFoundException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -52,15 +54,13 @@ class MemberServiceTest extends ServiceTest {
         }
 
         @Test
-        void 존재하지_않는_사용자일_경우_null을_반환한다() {
+        void 존재하지_않는_사용자일_경우_예외가_발생한다() {
             // given
             String oauthId = "test_oauth_id";
 
-            // when
-            Member member = memberService.findMemberByOAuthId(oauthId);
-
-            // then
-            assertThat(member).isNull();
+            // expect
+            assertThatThrownBy(() -> memberService.findMemberByOAuthId(oauthId))
+                    .isInstanceOf(NotFoundException.class);
         }
     }
 }
