@@ -52,5 +52,5 @@ public abstract class JwtProvider {
         }
     }
 
-    abstract long getExpirationSeconds();
+    protected abstract long getExpirationSeconds();
 }

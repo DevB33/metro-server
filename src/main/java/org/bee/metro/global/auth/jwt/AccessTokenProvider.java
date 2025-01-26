@@ -7,7 +7,7 @@ public class AccessTokenProvider extends JwtProvider {
     }
 
     @Override
-    long getExpirationSeconds() {
+    protected long getExpirationSeconds() {
         return 60 * 60 * 2;
     }
 
