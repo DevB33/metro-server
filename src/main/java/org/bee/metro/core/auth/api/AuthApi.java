@@ -59,6 +59,9 @@ public class AuthApi {
     private static void deleteTokenCookie(String tokenSignature, HttpServletResponse response) {
         Cookie deletedCookie = new Cookie(tokenSignature, null);
         deletedCookie.setMaxAge(0);
+        deletedCookie.setPath("/");
+        deletedCookie.setHttpOnly(true);
+        deletedCookie.setSecure(true);
         response.addCookie(deletedCookie);
     }
 
