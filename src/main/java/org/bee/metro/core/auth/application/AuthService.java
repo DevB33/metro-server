@@ -39,8 +39,8 @@ public class AuthService {
     }
 
     private MemberToken generateMemberToken(Member member) {
-        String accessToken = accessTokenProvider.generateToken(String.valueOf(member.getId()));
-        String refreshToken = refreshTokenProvider.generateToken(String.valueOf(member.getId()));
+        String accessToken = accessTokenProvider.generateToken(member.getId());
+        String refreshToken = refreshTokenProvider.generateToken(member.getId());
         return new MemberToken(accessToken, refreshToken);
     }
 

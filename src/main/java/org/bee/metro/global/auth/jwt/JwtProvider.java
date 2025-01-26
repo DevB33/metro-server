@@ -26,7 +26,7 @@ public abstract class JwtProvider {
         this.jwtParser = Jwts.parser().verifyWith(secretKey).build();
     }
 
-    public String generateToken(String subject) {
+    public String generateToken(UUID subject) {
         long expireSeconds = this.getExpirationSeconds();
 
         Date now = new Date();
@@ -34,7 +34,7 @@ public abstract class JwtProvider {
         return Jwts.builder()
                 .issuer(issuer)
                 .issuedAt(now)
-                .subject(subject)
+                .subject(String.valueOf(subject))
                 .expiration(expiresAt)
                 .signWith(secretKey)
                 .compact();
