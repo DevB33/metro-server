@@ -41,7 +41,7 @@ public class SecurityConfig {
                 )
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/login", "/h2-console/**").permitAll()
+                        .requestMatchers("/auth/login", "/h2-console/**", "/auth/refresh", "/auth/test-login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .headers((headerConfig) ->

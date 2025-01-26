@@ -29,6 +29,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             Pattern.compile("^/auth/login$"),
             Pattern.compile("^/h2-console$"),
             Pattern.compile("^/h2-console/.*"),
+            Pattern.compile("^/auth/refresh$"),
             Pattern.compile("^/auth/test-login$")
     );
 
