@@ -71,4 +71,11 @@ public class AuthApi {
         appendTokenToResponse(response, memberToken);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/test-login")
+    public ResponseEntity<Void> testLogin(HttpServletResponse response) {
+        MemberToken memberToken = authService.testLogin();
+        appendTokenToResponse(response, memberToken);
+        return ResponseEntity.ok().build();
+    }
 }

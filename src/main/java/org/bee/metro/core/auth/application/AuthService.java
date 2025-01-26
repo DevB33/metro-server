@@ -48,4 +48,13 @@ public class AuthService {
         Member member = memberService.findMemberById(id);
         return generateMemberToken(member);
     }
+
+    public MemberToken testLogin() {
+        MemberCreationPayload memberPayload = new MemberCreationPayload(
+                "test", "test", "test@test.com", "test"
+        );
+
+        Member member = createMemberIfNotExists(memberPayload);
+        return generateMemberToken(member);
+    }
 }
