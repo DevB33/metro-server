@@ -6,3 +6,5 @@
 :toclevels: 2
 :sectlinks:
 :docinfo: shared-head
+
+include::errorCode.adoc[]
