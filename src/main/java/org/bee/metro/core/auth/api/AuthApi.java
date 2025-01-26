@@ -2,12 +2,15 @@ package org.bee.metro.core.auth.api;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.auth.application.AuthService;
 import org.bee.metro.core.auth.common.OAuthProvider;
 import org.bee.metro.core.auth.dto.MemberLoginRequest;
 import org.bee.metro.core.auth.dto.MemberToken;
+import org.bee.metro.global.auth.annotation.Login;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +59,23 @@ public class AuthApi {
     private static void deleteTokenCookie(String tokenSignature, HttpServletResponse response) {
         Cookie deletedCookie = new Cookie(tokenSignature, null);
         deletedCookie.setMaxAge(0);
+        deletedCookie.setPath("/");
+        deletedCookie.setHttpOnly(true);
+        deletedCookie.setSecure(true);
         response.addCookie(deletedCookie);
+    }
+
+    @GetMapping("/refresh")
+    public ResponseEntity<Void> refresh(@Login UUID id, HttpServletResponse response) {
+        MemberToken memberToken = authService.refresh(id);
+        appendTokenToResponse(response, memberToken);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/test-login")
+    public ResponseEntity<Void> testLogin(HttpServletResponse response) {
+        MemberToken memberToken = authService.testLogin();
+        appendTokenToResponse(response, memberToken);
+        return ResponseEntity.ok().build();
     }
 }

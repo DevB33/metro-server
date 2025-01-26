@@ -10,7 +10,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.auth.exception.AuthErrorCode;
-import org.bee.metro.global.auth.exception.type.AuthorizationException;
+import org.bee.metro.global.auth.exception.type.AuthenticationException;
 import org.bee.metro.global.auth.jwt.JwtProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,7 +29,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             Pattern.compile("^/auth/login$"),
             Pattern.compile("^/h2-console$"),
             Pattern.compile("^/h2-console/.*"),
-            Pattern.compile("^/auth/callback$")
+            Pattern.compile("^/auth/refresh$"),
+            Pattern.compile("^/auth/test-login$")
     );
 
     @Override
@@ -49,7 +50,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         } else {
-            throw new AuthorizationException(ERROR_TOKEN_DOES_NOT_EXIST.formatted(bearerAccessToken),
+            throw new AuthenticationException(ERROR_TOKEN_DOES_NOT_EXIST.formatted(bearerAccessToken),
                     AuthErrorCode.NOT_FOUND_TOKEN);
         }
         filterChain.doFilter(request, response);

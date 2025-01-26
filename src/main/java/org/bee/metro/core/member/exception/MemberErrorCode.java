@@ -4,7 +4,8 @@ import org.bee.metro.global.exception.ErrorCode;
 
 public enum MemberErrorCode implements ErrorCode {
     ARGUMENT_IS_NULL("M001", "인자는 null일 수 없습니다."),
-    INVALID_EMAIL_FORMAT("M002", "이메일 형식이 올바르지 않습니다.")
+    INVALID_EMAIL_FORMAT("M002", "이메일 형식이 올바르지 않습니다."),
+    MEMBER_NOT_FOUND("M003", "사용자를 찾을 수 없습니다.")
     ;
 
     private final String code;

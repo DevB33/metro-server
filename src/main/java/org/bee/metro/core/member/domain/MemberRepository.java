@@ -1,6 +1,10 @@
 package org.bee.metro.core.member.domain;
 
+import java.util.Optional;
+import java.util.UUID;
+
 public interface MemberRepository {
     Member save(Member member);
-    Member findByOauthId(String oAuthId);
+    Optional<Member> findById(UUID id);
+    Optional<Member> findByOauthId(String oAuthId);
 }

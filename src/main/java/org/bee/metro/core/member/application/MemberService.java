@@ -1,9 +1,12 @@
 package org.bee.metro.core.member.application;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.auth.dto.MemberCreationPayload;
 import org.bee.metro.core.member.domain.Member;
 import org.bee.metro.core.member.domain.MemberRepository;
+import org.bee.metro.core.member.exception.MemberErrorCode;
+import org.bee.metro.global.exception.type.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +26,14 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public Member findMemberByOAuthId(String oauthId) {
-        return memberRepository.findByOauthId(oauthId);
+    public Member findMemberById(UUID id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("사용자를 찾을 수 없습니다.", MemberErrorCode.MEMBER_NOT_FOUND));
     }
+
+    public Member findMemberByOAuthId(String oauthId) {
+        return memberRepository.findByOauthId(oauthId)
+                .orElseThrow(() -> new NotFoundException("사용자를 찾을 수 없습니다.", MemberErrorCode.MEMBER_NOT_FOUND));
+    }
+
 }
