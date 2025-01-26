@@ -16,6 +16,12 @@ public abstract class ServiceTest {
     private DatabaseCleaner databaseCleaner;
 
     @Autowired
+    protected AccessTokenProvider accessTokenProvider;
+
+    @Autowired
+    protected RefreshTokenProvider refreshTokenProvider;
+
+    @Autowired
     protected MemberService memberService;
 
     @Autowired
