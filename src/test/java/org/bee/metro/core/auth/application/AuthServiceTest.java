@@ -17,7 +17,8 @@ class AuthServiceTest extends ServiceTest {
         void 정상적인_인증코드와_상태를_전달하면_토큰을_반환한다() {
             // given & when
             MemberToken memberToken = authService.login(
-                    "authorization", "state", OAuthProvider.TEST);
+                    "authorization", "state", OAuthProvider.TEST
+            );
 
             // then
             assertNotNull(memberToken.accessToken());
