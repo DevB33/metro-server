@@ -1,15 +1,19 @@
 package org.bee.metro.context;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bee.metro.core.auth.api.AuthApi;
 import org.bee.metro.core.auth.application.AuthService;
+import org.bee.metro.global.auth.jwt.RefreshTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(value = {AuthApi.class})
+@Import(RefreshTokenProvider.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 public abstract class DocumentTest {
@@ -19,4 +23,7 @@ public abstract class DocumentTest {
 
     @MockitoBean
     protected AuthService authService;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
 }
