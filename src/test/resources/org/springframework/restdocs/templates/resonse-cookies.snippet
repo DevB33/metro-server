@@ -1,0 +1,11 @@
+    |===
+    |쿠키명|타입|필수값|양식|설명
+
+    {{#cookies}}
+        |{{#tableCellContent}}`+{{name}}+`{{/tableCellContent}}
+        |{{#tableCellContent}}`+{{type}}+`{{/tableCellContent}}
+        |{{#tableCellContent}}{{^optional}}true{{/optional}}{{/tableCellContent}}
+        |{{#tableCellContent}}{{#format}}{{.}}{{/format}}{{/tableCellContent}}
+    |{{#tableCellContent}}{{description}}{{/tableCellContent}}
+    {{/cookies}}
+    |===
