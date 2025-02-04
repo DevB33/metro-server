@@ -3,6 +3,7 @@ package org.bee.metro.core.document.exception;
 import org.bee.metro.global.exception.ErrorCode;
 
 public enum DocumentErrorCode implements ErrorCode {
+    ARGUMENT_IS_NULL("D001", "해당 인자는 null일 수 없습니다")
     ;
 
     private final String code;
