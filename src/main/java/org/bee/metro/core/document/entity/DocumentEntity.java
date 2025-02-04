@@ -11,12 +11,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.bee.metro.global.entity.BaseEntity;
 
 @Entity
 @Getter
 @Table(name = "DOCUMENT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DocumentEntity {
+public class DocumentEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
