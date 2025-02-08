@@ -30,6 +30,9 @@ public class DocumentEntity extends BaseEntity {
     private String tag;
 
     @Column(nullable = true)
+    private String icon;
+
+    @Column(nullable = true)
     private String cover;
 
     private UUID parentId;
@@ -37,10 +40,11 @@ public class DocumentEntity extends BaseEntity {
     private UUID ownerId;
 
     @Builder
-    public DocumentEntity(UUID id, String title, String tag, String cover, UUID parentId, UUID ownerId) {
+    public DocumentEntity(UUID id, String title, String tag, String icon, String cover, UUID parentId, UUID ownerId) {
         this.id = id;
         this.title = title;
         this.tag = tag;
+        this.icon = icon;
         this.cover = cover;
         this.parentId = parentId;
         this.ownerId = ownerId;
