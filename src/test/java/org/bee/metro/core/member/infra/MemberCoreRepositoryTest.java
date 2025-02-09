@@ -4,17 +4,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.bee.metro.context.RepositoryTest;
 import org.bee.metro.core.member.domain.Member;
+import org.bee.metro.core.member.domain.MemberRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 class MemberCoreRepositoryTest extends RepositoryTest {
 
-    private final MemberCoreRepository memberCoreRepository;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    MemberCoreRepositoryTest(MemberCoreRepository memberCoreRepository) {
-        this.memberCoreRepository = memberCoreRepository;
+    MemberCoreRepositoryTest(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Nested
@@ -31,7 +32,7 @@ class MemberCoreRepositoryTest extends RepositoryTest {
                     .build();
 
             // when
-            Member savedMember = memberCoreRepository.save(member);
+            Member savedMember = memberRepository.save(member);
 
             // then
             assertThat(savedMember).isNotNull();
@@ -50,10 +51,10 @@ class MemberCoreRepositoryTest extends RepositoryTest {
                     .email("email@email.com")
                     .avatar("avatar")
                     .build();
-            memberCoreRepository.save(member);
+            memberRepository.save(member);
 
             // when
-            Member foundMember = memberCoreRepository.findByOauthId("oAuthId").orElse(null);
+            Member foundMember = memberRepository.findByOauthId("oAuthId").orElse(null);
 
             // then
             assertThat(foundMember).isNotNull();
@@ -70,7 +71,7 @@ class MemberCoreRepositoryTest extends RepositoryTest {
                     .build();
 
             // when
-            Member foundMember = memberCoreRepository.findByOauthId("oAuthId").orElse(null);
+            Member foundMember = memberRepository.findByOauthId("oAuthId").orElse(null);
 
             // then
             assertThat(foundMember).isNull();
