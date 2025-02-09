@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.global.entity.BaseEntity;
 
 @Entity
@@ -48,5 +49,17 @@ public class DocumentEntity extends BaseEntity {
         this.cover = cover;
         this.parentId = parentId;
         this.ownerId = ownerId;
+    }
+    
+    public static DocumentEntity from(Document document) {
+        return DocumentEntity.builder()
+            .id(document.getId())
+            .title(document.getTitle())
+            .tag(document.getTag())
+            .icon(document.getIcon())
+            .cover(document.getCover())
+            .parentId(document.getParentId())
+            .ownerId(document.getOwnerId())
+            .build();
     }
 }

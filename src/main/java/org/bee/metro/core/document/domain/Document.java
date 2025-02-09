@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import org.bee.metro.core.document.entity.DocumentEntity;
 import org.bee.metro.core.document.exception.DocumentErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
 
@@ -38,6 +39,20 @@ public class Document {
         this.ownerId = ownerId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public static Document fromEntity(DocumentEntity documentEntity) {
+        return Document.builder()
+            .id(documentEntity.getId())
+            .title(documentEntity.getTitle())
+            .tag(documentEntity.getTag())
+            .icon(documentEntity.getIcon())
+            .cover(documentEntity.getCover())
+            .parentId(documentEntity.getParentId())
+            .ownerId(documentEntity.getOwnerId())
+            .createdAt(documentEntity.getCreatedAt())
+            .updatedAt(documentEntity.getUpdatedAt())
+            .build();
     }
 
     private void validateParentId(UUID parentId) {
