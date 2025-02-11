@@ -1,6 +1,7 @@
 package org.bee.metro.core.document.infra;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,12 @@ public class DocumentCoreRepository implements DocumentRepository {
         DocumentEntity documentEntity = DocumentEntity.from(document);
         DocumentEntity savedDocumentEntity = documentJpaRepository.save(documentEntity);
         return Document.fromEntity(savedDocumentEntity);
+    }
+
+    @Override
+    public Optional<Document> findById(UUID id) {
+        Optional<DocumentEntity> documentEntity = documentJpaRepository.findById(id);
+        return documentEntity.map(Document::fromEntity);
     }
 
     @Override
