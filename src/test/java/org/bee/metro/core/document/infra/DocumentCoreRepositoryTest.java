@@ -42,4 +42,29 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             assertThat(savedDocument).isNotNull();
         }
     }
+
+    @Nested
+    class findByOwnerId_메서드는 {
+
+        @Test
+        void 문서를_조회한다() {
+            UUID ownerId = UUID.randomUUID();
+            Document document = Document.builder()
+                    .id(null)
+                    .title("title")
+                    .tag("tag")
+                    .icon("icon")
+                    .cover("cover")
+                    .parentId(UUID.randomUUID())
+                    .ownerId(ownerId)
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+            documentRepository.save(document);
+
+            Document foundDocument = documentRepository.findByOwnerId(ownerId).get(0);
+
+            assertThat(foundDocument).isNotNull();
+        }
+    }
 }
