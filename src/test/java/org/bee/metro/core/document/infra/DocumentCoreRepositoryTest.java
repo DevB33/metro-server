@@ -136,4 +136,28 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             assertThat(foundDocument).isNotNull();
         }
     }
+
+    @Nested
+    class deleteById_메서드는 {
+
+        @Test
+        void 해당_문서를_삭제한다() {
+            Document document = Document.builder()
+                    .id(null)
+                    .title("title")
+                    .tag("tag")
+                    .icon("icon")
+                    .cover("cover")
+                    .parentId(UUID.randomUUID())
+                    .ownerId(UUID.randomUUID())
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+            Document savedDocument = documentRepository.save(document);
+
+            documentRepository.deleteById(savedDocument.getId());
+
+            assertThat(documentRepository.findById(savedDocument.getId())).isEmpty();
+        }
+    }
 }
