@@ -1,7 +1,9 @@
 package org.bee.metro.core.document.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.bee.metro.core.document.domain.Document;
 
 public record DocumentTreeNode(
         UUID id,
@@ -9,4 +11,13 @@ public record DocumentTreeNode(
         String icon,
         List<DocumentTreeNode> children
 ) {
+
+    public static DocumentTreeNode createByDocument(Document document) {
+        return new DocumentTreeNode(
+                document.getId(),
+                document.getTitle(),
+                document.getIcon(),
+                new ArrayList<>()
+        );
+    }
 }
