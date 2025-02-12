@@ -21,7 +21,7 @@ public class Document {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public static final String ROOT_DOCUMENT_PARENT_ID = "00000000-0000-0000-0000-000000000000";
+    public static final UUID ROOT_DOCUMENT_PARENT_ID = UUID.fromString("00000000-0000-0000-0000-000000000000");
     public static final String ERROR_OWNER_ID_IS_NULL = "소유자 아이디는 null일 수 없습니다.";
 
     @Builder
@@ -62,7 +62,7 @@ public class Document {
 
     private UUID makeValidParentId(UUID parentId) {
         if (parentId == null) {
-            return UUID.fromString(ROOT_DOCUMENT_PARENT_ID);
+            return ROOT_DOCUMENT_PARENT_ID;
         }
         return parentId;
     }
