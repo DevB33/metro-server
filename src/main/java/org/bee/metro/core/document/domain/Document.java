@@ -66,4 +66,8 @@ public class Document {
         }
         return parentId;
     }
+
+    public boolean isNotOwner(UUID ownerId) {
+        return !this.ownerId.equals(ownerId);
+    }
 }
