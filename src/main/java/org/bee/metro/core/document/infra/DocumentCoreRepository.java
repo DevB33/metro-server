@@ -36,4 +36,9 @@ public class DocumentCoreRepository implements DocumentRepository {
                 .map(Document::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteById(UUID id) {
+        documentJpaRepository.deleteById(id);
+    }
 }
