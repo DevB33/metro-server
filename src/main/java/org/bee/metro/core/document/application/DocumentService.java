@@ -1,5 +1,6 @@
 package org.bee.metro.core.document.application;
 
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -12,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
+import org.bee.metro.core.document.exception.DocumentErrorCode;
+import org.bee.metro.global.exception.type.BadRequestException;
+import org.bee.metro.global.exception.type.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -64,7 +68,17 @@ public class DocumentService {
         return documentRepository.save(document);
     }
 
-    public void deleteDocument(UUID id) {
+    public Document getDocument(UUID id) {
+        return documentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("해당 문서가 존재하지 않습니다.", DocumentErrorCode.NOT_FOUND));
+    }
+
+    @Transactional
+    public void deleteDocument(UUID ownerId, UUID id) {
+        Document document = getDocument(id);
+        if (document.isNotOwner(ownerId)) {
+            throw new BadRequestException("해당 문서의 삭제 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
+        }
         documentRepository.deleteById(id);
     }
 }
