@@ -21,7 +21,7 @@ public class Document {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public static final String ERROR_PARENT_ID_IS_NULL = "부모 아이디는 null일 수 없습니다.";
+    public static final String ROOT_DOCUMENT_PARENT_ID = "00000000-0000-0000-0000-000000000000";
     public static final String ERROR_OWNER_ID_IS_NULL = "소유자 아이디는 null일 수 없습니다.";
 
     @Builder
@@ -34,7 +34,7 @@ public class Document {
         this.tag = tag;
         this.icon = icon;
         this.cover = cover;
-        this.parentId = parentId;
+        this.parentId = makeValidParentId(parentId);
         this.ownerId = ownerId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -58,5 +58,12 @@ public class Document {
         if (ownerId == null) {
             throw new BadRequestException(ERROR_OWNER_ID_IS_NULL, DocumentErrorCode.ARGUMENT_IS_NULL);
         }
+    }
+
+    private UUID makeValidParentId(UUID parentId) {
+        if (parentId == null) {
+            return UUID.fromString(ROOT_DOCUMENT_PARENT_ID);
+        }
+        return parentId;
     }
 }
