@@ -36,6 +36,7 @@ public class DocumentEntity extends BaseEntity {
     @Column(nullable = true)
     private String cover;
 
+    @Column(nullable = true)
     private UUID parentId;
 
     private UUID ownerId;

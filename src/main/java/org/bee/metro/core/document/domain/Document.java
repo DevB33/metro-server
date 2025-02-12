@@ -27,7 +27,6 @@ public class Document {
     @Builder
     public Document(UUID id, String title, String tag, String icon, String cover, UUID parentId, UUID ownerId,
                     LocalDateTime createdAt, LocalDateTime updatedAt) {
-        validateParentId(parentId);
         validateOwnerId(ownerId);
 
         this.id = id;
@@ -53,12 +52,6 @@ public class Document {
             .createdAt(documentEntity.getCreatedAt())
             .updatedAt(documentEntity.getUpdatedAt())
             .build();
-    }
-
-    private void validateParentId(UUID parentId) {
-        if (parentId == null) {
-            throw new BadRequestException(ERROR_PARENT_ID_IS_NULL, DocumentErrorCode.ARGUMENT_IS_NULL);
-        }
     }
 
     private void validateOwnerId(UUID ownerId) {

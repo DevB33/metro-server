@@ -79,7 +79,6 @@ class DocumentTest {
 
         private static Stream<Arguments> generateInvalidArguments() {
             return Stream.of(
-                    Arguments.of(null, UUID.randomUUID()),
                     Arguments.of(UUID.randomUUID(), null)
             );
         }
