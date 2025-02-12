@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bee.metro.core.auth.api.AuthApi;
 import org.bee.metro.core.auth.application.AuthService;
 import org.bee.metro.core.document.api.DocumentApi;
+import org.bee.metro.core.document.application.DocumentService;
 import org.bee.metro.document.config.DocumentConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -23,7 +24,7 @@ public abstract class DocumentTest {
     protected MockMvc mockMvc;
 
     @MockitoBean
-    protected DocumentApi documentApi;
+    protected DocumentService documentService;
 
     @MockitoBean
     protected AuthService authService;
