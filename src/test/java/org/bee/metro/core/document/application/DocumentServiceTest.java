@@ -105,5 +105,20 @@ class DocumentServiceTest extends ServiceTest {
             assertThatThrownBy(() -> documentService.deleteDocument(anotherOwnerId, document.getId()))
                     .isInstanceOf(BadRequestException.class);
         }
+
+        @Test
+        void 하위_문서도_함께_삭제한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID parentId = UUID.randomUUID();
+            Document document = documentService.createDocument(ownerId, parentId);
+            Document childDocument1 = documentService.createDocument(ownerId, document.getId());
+            Document childDocument2 = documentService.createDocument(ownerId, document.getId());
+
+            documentService.deleteDocument(ownerId, document.getId());
+
+            assertThat(documentRepository.findById(document.getId())).isEmpty();
+            assertThat(documentRepository.findById(childDocument1.getId())).isEmpty();
+            assertThat(documentRepository.findById(childDocument2.getId())).isEmpty();
+        }
     }
 }
