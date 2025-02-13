@@ -1,10 +1,10 @@
-    |===
-    |쿠키명|타입|필수값|양식|설명
+|===
+    |쿠키명|필수값|설명
 
     {{#cookies}}
-        |{{#tableCellContent}}`+{{name}}+`{{/tableCellContent}}
-        |{{#tableCellContent}}{{^optional}}true{{/optional}}{{/tableCellContent}}
-        |{{#tableCellContent}}{{#format}}{{.}}{{/format}}{{/tableCellContent}}
-    |{{#tableCellContent}}{{description}}{{/tableCellContent}}
+        |`+{{name}}+`
+        |{{^optional}}true{{/optional}}
+        |{{description}}
+
     {{/cookies}}
     |===
