@@ -3,7 +3,6 @@
 
     {{#cookies}}
         |{{#tableCellContent}}`+{{name}}+`{{/tableCellContent}}
-        |{{#tableCellContent}}`+{{type}}+`{{/tableCellContent}}
         |{{#tableCellContent}}{{^optional}}true{{/optional}}{{/tableCellContent}}
         |{{#tableCellContent}}{{#format}}{{.}}{{/format}}{{/tableCellContent}}
     |{{#tableCellContent}}{{description}}{{/tableCellContent}}
