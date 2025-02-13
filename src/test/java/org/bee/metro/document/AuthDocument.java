@@ -12,16 +12,13 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.UUID;
 import org.bee.metro.context.DocumentTest;
 import org.bee.metro.core.auth.dto.MemberLoginRequest;
 import org.bee.metro.core.auth.dto.MemberToken;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.security.test.context.support.WithMockUser;
 
-@WithMockUser
 @AutoConfigureMockMvc(addFilters = false)
 public class AuthDocument extends DocumentTest {
 
