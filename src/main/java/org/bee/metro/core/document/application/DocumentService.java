@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +80,21 @@ public class DocumentService {
         if (document.isNotOwner(ownerId)) {
             throw new BadRequestException("해당 문서의 삭제 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
         }
-        documentRepository.deleteById(id);
+        deleteDocumentTree(document);
+    }
+
+    private void deleteDocumentTree(Document document) {
+        Stack<Document> stack = new Stack<>();
+        stack.push(document);
+
+        while (!stack.isEmpty()) {
+            Document currentDocument = stack.pop();
+            List<Document> childDocuments = documentRepository.findByParentId(currentDocument.getId());
+
+            for (Document childDocument : childDocuments) {
+                stack.push(childDocument);
+            }
+            documentRepository.deleteById(currentDocument.getId());
+        }
     }
 }
