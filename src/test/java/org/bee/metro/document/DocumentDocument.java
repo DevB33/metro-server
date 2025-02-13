@@ -6,18 +6,23 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import org.bee.metro.context.DocumentTest;
+import org.bee.metro.core.document.domain.Document;
+import org.bee.metro.core.document.dto.DocumentCreationRequest;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
 
 @AutoConfigureMockMvc
 public class DocumentDocument extends DocumentTest {
@@ -31,7 +36,6 @@ public class DocumentDocument extends DocumentTest {
                     new DocumentTreeNode(UUID.randomUUID(), "name1", "icon1", Collections.emptyList()));
             given(documentService.getDocumentsByOwnerId(any())).willReturn(documentTreeNodes);
 
-            String accessToken = "Bearer " + refreshTokenProvider.generateToken(randomId);
             mockMvc.perform(get("/documents")
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
@@ -43,6 +47,36 @@ public class DocumentDocument extends DocumentTest {
                                     fieldWithPath("node[].title").description("문서 제목"),
                                     fieldWithPath("node[].icon").description("문서 아이콘"),
                                     fieldWithPath("node[].children").description("하위 문서 목록")
+                            )
+                    ));
+        }
+    }
+
+    @Nested
+    class 문서_생성 {
+
+        @Test
+        void 문서_생성이_성공하면_200을_반환한다() throws Exception {
+            Document document = Document.builder()
+                    .id(UUID.randomUUID())
+                    .ownerId(randomId)
+                    .parentId(UUID.randomUUID())
+                    .build();
+            given(documentService.createDocument(any(), any())).willReturn(document);
+
+            DocumentCreationRequest documentCreationRequest = new DocumentCreationRequest(UUID.randomUUID());
+            mockMvc.perform(post("/documents")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(documentCreationRequest)))
+                    .andExpect(status().isOk())
+                    .andDo(document("document/create",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("parentId").description("부모 문서 ID")
+                            ),
+                            responseFields(
+                                    fieldWithPath("id").description("생성된 문서 ID")
                             )
                     ));
         }
