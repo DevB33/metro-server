@@ -1,20 +1,22 @@
 package org.bee.metro.core.member.infra;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.bee.metro.context.RepositoryTest;
 import org.bee.metro.core.member.domain.Member;
+import org.bee.metro.core.member.domain.MemberRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 class MemberCoreRepositoryTest extends RepositoryTest {
 
-    private final MemberCoreRepository memberCoreRepository;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    MemberCoreRepositoryTest(MemberCoreRepository memberCoreRepository) {
-        this.memberCoreRepository = memberCoreRepository;
+    MemberCoreRepositoryTest(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Nested
@@ -31,10 +33,40 @@ class MemberCoreRepositoryTest extends RepositoryTest {
                     .build();
 
             // when
-            Member savedMember = memberCoreRepository.save(member);
+            Member savedMember = memberRepository.save(member);
 
             // then
             assertThat(savedMember).isNotNull();
+        }
+
+        @Test
+        void 이미_존재하는_회원은_저장한다() {
+            // given
+            Member member = Member.builder()
+                    .oauthId("oAuthId")
+                    .name("name")
+                    .email("email@email.com")
+                    .avatar("avatar")
+                    .build();
+            Member savedMember = memberRepository.save(member);
+
+            // when
+            Member updatedMember = memberRepository.save(
+                    Member.builder()
+                            .id(savedMember.getId())
+                            .oauthId("updated_oAuthId")
+                            .name("updated_name")
+                            .email("email@email.com")
+                            .avatar("updatedavatar")
+                            .build()
+            );
+
+            // then
+            assertAll(
+                    () -> assertThat(updatedMember.getId()).isEqualTo(savedMember.getId()),
+                    () -> assertThat(updatedMember.getOauthId()).isEqualTo("updated_oAuthId"),
+                    () -> assertThat(updatedMember.getName()).isEqualTo("updated_name")
+            );
         }
     }
 
@@ -50,10 +82,10 @@ class MemberCoreRepositoryTest extends RepositoryTest {
                     .email("email@email.com")
                     .avatar("avatar")
                     .build();
-            memberCoreRepository.save(member);
+            memberRepository.save(member);
 
             // when
-            Member foundMember = memberCoreRepository.findByOauthId("oAuthId").orElse(null);
+            Member foundMember = memberRepository.findByOauthId("oAuthId").orElse(null);
 
             // then
             assertThat(foundMember).isNotNull();
@@ -70,7 +102,7 @@ class MemberCoreRepositoryTest extends RepositoryTest {
                     .build();
 
             // when
-            Member foundMember = memberCoreRepository.findByOauthId("oAuthId").orElse(null);
+            Member foundMember = memberRepository.findByOauthId("oAuthId").orElse(null);
 
             // then
             assertThat(foundMember).isNull();

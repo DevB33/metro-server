@@ -14,7 +14,8 @@ public class ErrorCodeDocument extends DocumentTest {
     void 에러_코드_생성() throws Exception {
         ErrorCodeFieldsSnippet errorCodeFieldsSnippet = new ErrorCodeFieldsSnippet("error-code", "error-code-template");
 
-        mockMvc.perform(get("/test/error-code"))
+        mockMvc.perform(get("/test/error-code")
+                        .header("Authorization", accessToken))
                 .andDo(print())
                 .andDo(document("error-code", errorCodeFieldsSnippet));
     }
