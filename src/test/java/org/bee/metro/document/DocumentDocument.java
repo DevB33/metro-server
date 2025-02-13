@@ -8,6 +8,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -78,6 +79,21 @@ public class DocumentDocument extends DocumentTest {
                             responseFields(
                                     fieldWithPath("id").description("생성된 문서 ID")
                             )
+                    ));
+        }
+    }
+
+    @Nested
+    class 문서_삭제 {
+
+        @Test
+        void 문서_삭제가_성공하면_200을_반환한다() throws Exception {
+            UUID documentId = UUID.randomUUID();
+            mockMvc.perform(delete("/documents/" + documentId)
+                            .header("Authorization", accessToken))
+                    .andExpect(status().isOk())
+                    .andDo(document("document/delete",
+                            preprocessRequest(prettyPrint())
                     ));
         }
     }
