@@ -7,8 +7,8 @@ import org.bee.metro.core.auth.api.AuthApi;
 import org.bee.metro.core.auth.application.AuthService;
 import org.bee.metro.core.document.api.DocumentApi;
 import org.bee.metro.core.document.application.DocumentService;
-import org.bee.metro.document.config.DocumentConfig;
 import org.bee.metro.global.auth.jwt.RefreshTokenProvider;
+import org.bee.metro.global.config.SecurityConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -25,7 +25,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(value = {AuthApi.class, DocumentApi.class})
-@Import({DocumentConfig.class})
+@Import({SecurityConfig.class})
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 public abstract class DocumentTest {
@@ -46,6 +46,7 @@ public abstract class DocumentTest {
     protected ObjectMapper objectMapper;
 
     protected final UUID randomId = UUID.randomUUID();
+    protected String accessToken;
 
     @BeforeEach
     void setupSecurityContext() {
@@ -58,5 +59,7 @@ public abstract class DocumentTest {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authentication);
         TestSecurityContextHolder.setContext(context);
+
+        this.accessToken = "Bearer " + refreshTokenProvider.generateToken(randomId);
     }
 }
