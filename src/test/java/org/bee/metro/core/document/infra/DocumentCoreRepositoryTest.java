@@ -138,6 +138,31 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
     }
 
     @Nested
+    class findByParentId_메서드는 {
+
+        @Test
+        void 문서를_조회한다() {
+            UUID parentId = UUID.randomUUID();
+            Document document = Document.builder()
+                    .id(null)
+                    .title("title")
+                    .tag("tag")
+                    .icon("icon")
+                    .cover("cover")
+                    .parentId(parentId)
+                    .ownerId(UUID.randomUUID())
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+            documentRepository.save(document);
+
+            Document foundDocument = documentRepository.findByParentId(parentId).get(0);
+
+            assertThat(foundDocument).isNotNull();
+        }
+    }
+
+    @Nested
     class deleteById_메서드는 {
 
         @Test
