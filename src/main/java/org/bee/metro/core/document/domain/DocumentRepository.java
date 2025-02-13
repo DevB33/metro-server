@@ -8,5 +8,6 @@ public interface DocumentRepository {
     Document save(Document document);
     Optional<Document> findById(UUID id);
     List<Document> findByOwnerId(UUID ownerId);
+    List<Document> findByParentId(UUID parentId);
     void deleteById(UUID id);
 }

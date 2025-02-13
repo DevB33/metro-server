@@ -38,6 +38,14 @@ public class DocumentCoreRepository implements DocumentRepository {
     }
 
     @Override
+    public List<Document> findByParentId(UUID parentId) {
+        List<DocumentEntity> documentEntities = documentJpaRepository.findByParentId(parentId);
+        return documentEntities.stream()
+                .map(Document::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void deleteById(UUID id) {
         documentJpaRepository.deleteById(id);
     }

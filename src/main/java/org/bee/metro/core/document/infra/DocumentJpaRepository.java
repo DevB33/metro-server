@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DocumentJpaRepository extends JpaRepository<DocumentEntity, UUID> {
     List<DocumentEntity> findByOwnerId(UUID ownerId);
+    List<DocumentEntity> findByParentId(UUID parentId);
 }
