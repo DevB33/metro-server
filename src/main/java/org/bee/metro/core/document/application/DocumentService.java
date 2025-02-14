@@ -102,8 +102,12 @@ public class DocumentService {
         }
     }
 
-    public DetailDocumentPayload findDocumentById(UUID id) {
+    public DetailDocumentPayload findDocumentById(UUID memberId, UUID id) {
         Document document = getDocument(id);
+        if (document.isNotOwner(memberId)) {
+            throw new BadRequestException("해당 문서의 조회 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
+        }
+
         List<Block> blocksInDocument = blockService.findByDocumentId(document.getId());
         return DetailDocumentPayload.createByDocumentAndBlocks(document, blocksInDocument);
     }
