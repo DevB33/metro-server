@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import org.bee.metro.context.DocumentTest;
 import org.bee.metro.core.document.domain.Document;
+import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.junit.jupiter.api.Nested;
@@ -95,6 +96,38 @@ public class DocumentDocument extends DocumentTest {
                     .andDo(document("document/delete",
                             preprocessRequest(prettyPrint())
                     ));
+        }
+    }
+
+    @Nested
+    class 문서_상세_조회 {
+
+        @Test
+        void 문서_상세_조회가_성공하면_200을_반환한다() throws Exception {
+            DetailDocumentPayload detailDocumentPayload = new DetailDocumentPayload(
+                    "title",
+                    "icon",
+                    List.of("tag1", "tag2"),
+                    "cover",
+                    Collections.emptyList()
+            );
+            given(documentService.findDocumentById(any(), any())).willReturn(detailDocumentPayload);
+
+            UUID documentId = UUID.randomUUID();
+            mockMvc.perform(get("/documents/" + documentId)
+                    .header("Authorization", accessToken))
+                    .andExpect(status().isOk())
+                    .andDo(document("document/detail",
+                            preprocessRequest(prettyPrint()),
+                            responseFields(
+                                    fieldWithPath("title").description("문서 제목"),
+                                    fieldWithPath("icon").description("문서 아이콘"),
+                                    fieldWithPath("tags").description("문서 태그 목록"),
+                                    fieldWithPath("cover").description("문서 커버 이미지"),
+                                    fieldWithPath("blocks").description("문서 블록 목록")
+                            )
+                    )
+            );
         }
     }
 }

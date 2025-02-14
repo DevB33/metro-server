@@ -1,6 +1,7 @@
 package org.bee.metro.context;
 
 import org.bee.metro.core.auth.application.AuthService;
+import org.bee.metro.core.block.application.BlockService;
 import org.bee.metro.core.document.application.DocumentService;
 import org.bee.metro.core.document.domain.DocumentRepository;
 import org.bee.metro.core.member.application.MemberService;
@@ -22,6 +23,9 @@ public abstract class ServiceTest {
 
     @Autowired
     protected RefreshTokenProvider refreshTokenProvider;
+
+    @Autowired
+    protected BlockService blockService;
 
     @Autowired
     protected DocumentService documentService;

@@ -467,6 +467,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_문서_리스트_조회">문서 리스트 조회</a></li>
 <li><a href="#_문서_생성">문서 생성</a></li>
 <li><a href="#_문서_삭제">문서 삭제</a></li>
+<li><a href="#_문서_상세_조회">문서 상세 조회</a></li>
 </ul>
 </li>
 <li><a href="#error-code">에러 코드</a>
@@ -628,7 +629,7 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTQyMzg1Miwic3ViIjoiZGY1Yjg1N2EtNjQ0ZC00ZmIyLTgzMTQtODNmNTBjODY1YTc2IiwiZXhwIjoxNzQwMDI4NjUyfQ.edJLzydGDHAPlvtGW5gbpFlAPfBi_d3mNuoKZxqgPIHcoK9M7Dt6hIGMOwBDrPmO
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTU0Mjg4Nywic3ViIjoiNWY5NWY0NGEtMjAwYi00ZDQyLThjMGQtNmJmZTFmNjU2YTc4IiwiZXhwIjoxNzQwMTQ3Njg3fQ.AMtyuRwrde-MJfd1Y0vLcEsG6gxX8k4dVZUPZdnRVrCBeM8UJD4zw0yaFds0kpjb
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -700,12 +701,12 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /documents HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTQyMzg1Miwic3ViIjoiM2VlNDhiYjEtMGYyYi00OGZhLTlmNDUtMjIzNjM4OTIzNzdhIiwiZXhwIjoxNzQwMDI4NjUyfQ.rdZymzZwDkyOUPQO6g8Wh44xs9E8DEK6GDYRaVw-YVVCkkHzwHzyak0WS45Eer2T
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTU0Mjg4Nywic3ViIjoiZTQ0ODhhMzQtYzM0MC00ZWJmLWJjNDQtYTIwMTJkMjU2ZDA0IiwiZXhwIjoxNzQwMTQ3Njg3fQ.cYt6PaZhn7BaUcFcdeXG2T4TtJs2XDO1RoOY49W_iiHtAGiopJQqWcooqRDt4arA
 Content-Length: 57
 Host: localhost:8080
 
 {
-  "parentId" : "670577e3-581a-4c4a-aaf8-db1d5d921fda"
+  "parentId" : "75a5684d-7580-419d-82d2-160426095805"
 }</code></pre>
 </div>
 </div>
@@ -777,11 +778,82 @@ Host: localhost:8080
 <h4 id="_문서_삭제_http_request"><a class="link" href="#_문서_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /documents/e31d75c2-57b0-4201-94df-bce323203d5d HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTQyMzg1Miwic3ViIjoiMTk2NGNlMjYtNjc5ZS00NGUxLTg3M2MtZjczZTcyNDIzYjgxIiwiZXhwIjoxNzQwMDI4NjUyfQ.oj7AlQ0o0rdRfu6h2yfxZe4dX7iFunB5VqoTN2V7Xy04cyasb9YejSrGBsN-1zDK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /documents/39cb209e-d1b1-4d9d-add4-fc9448717f64 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTU0Mjg4Nywic3ViIjoiYWY1ZjA1NzEtZDU0MS00OGFlLWJiNDAtM2Y0NDNlMDdlYjgyIiwiZXhwIjoxNzQwMTQ3Njg3fQ.io-tUrlFoO-EFujIGC4IVF4u-BtVIc0NRfM1kuDFKH2FJJ7vVs7pjeUnQEBXuM1i
 Host: localhost:8080</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_문서_상세_조회"><a class="link" href="#_문서_상세_조회">문서 상세 조회</a></h3>
+<div class="sect3">
+<h4 id="_문서_상세_조회_http_request"><a class="link" href="#_문서_상세_조회_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents/94de5626-c873-413e-831a-601d4c0b22c9 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTU0Mjg4Nywic3ViIjoiZjk2MzU1OWUtMzExZi00NWEzLWExNjctNWQ1MzI3ZDZkM2E1IiwiZXhwIjoxNzQwMTQ3Njg3fQ.0BUk9h6StnjCA6JoOrBVHwJ-Enh8KTxifKuletAISvKYnzHc7pdbkLIpm-15LC2_
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_문서_상세_조회_response_fields"><a class="link" href="#_문서_상세_조회_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 아이콘</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tags</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 태그 목록</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cover</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 커버 이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 블록 목록</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
