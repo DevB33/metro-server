@@ -5,6 +5,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.document.application.DocumentService;
 import org.bee.metro.core.document.domain.Document;
+import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
 import org.bee.metro.core.document.dto.DocumentCreationResponse;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
@@ -50,4 +51,12 @@ public class DocumentApi {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/{documentId}")
+    public ResponseEntity<DetailDocumentPayload> getDocument(
+            @Login UUID memberId,
+            @PathVariable(value = "documentId") UUID documentId
+    ) {
+        DetailDocumentPayload document = documentService.findDocumentById(memberId, documentId);
+        return ResponseEntity.ok(document);
+    }
 }
