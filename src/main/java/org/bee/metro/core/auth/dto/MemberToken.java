@@ -19,7 +19,6 @@ public record MemberToken(
 
     public static Cookie generateAccessTokenCookie(MemberToken memberToken) {
         Cookie accessTokenCookie = new Cookie(AuthApi.ACCESS_TOKEN, memberToken.accessToken());
-        accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setSecure(true);
         accessTokenCookie.setMaxAge(60 * 60 * 2);
         accessTokenCookie.setPath("/");
