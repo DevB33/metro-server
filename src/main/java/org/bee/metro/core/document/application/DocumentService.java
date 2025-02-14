@@ -11,8 +11,11 @@ import java.util.Stack;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.bee.metro.core.block.application.BlockService;
+import org.bee.metro.core.block.domain.Block;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
+import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.bee.metro.core.document.exception.DocumentErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
@@ -24,6 +27,7 @@ import org.springframework.stereotype.Service;
 public class DocumentService {
 
     private final DocumentRepository documentRepository;
+    private final BlockService blockService;
 
     public List<DocumentTreeNode> getDocumentsByOwnerId(UUID ownerId) {
         List<Document> documents = documentRepository.findByOwnerId(ownerId);
@@ -96,5 +100,11 @@ public class DocumentService {
             }
             documentRepository.deleteById(currentDocument.getId());
         }
+    }
+
+    public DetailDocumentPayload findDocumentById(UUID id) {
+        Document document = getDocument(id);
+        List<Block> blocksInDocument = blockService.findByDocumentId(document.getId());
+        return DetailDocumentPayload.createByDocumentAndBlocks(document, blocksInDocument);
     }
 }
