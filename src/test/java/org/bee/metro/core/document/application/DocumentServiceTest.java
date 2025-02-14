@@ -2,12 +2,15 @@ package org.bee.metro.core.document.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.UUID;
 import org.bee.metro.context.ServiceTest;
 import org.bee.metro.core.document.domain.Document;
+import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.bee.metro.global.exception.type.BadRequestException;
+import org.bee.metro.global.exception.type.NotFoundException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -119,6 +122,45 @@ class DocumentServiceTest extends ServiceTest {
             assertThat(documentRepository.findById(document.getId())).isEmpty();
             assertThat(documentRepository.findById(childDocument1.getId())).isEmpty();
             assertThat(documentRepository.findById(childDocument2.getId())).isEmpty();
+        }
+    }
+
+    @Nested
+    class findDocumentById_메서드는 {
+
+        @Test
+        void 문서를_조회한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID parentId = UUID.randomUUID();
+            Document document = documentService.createDocument(ownerId, parentId);
+
+            DetailDocumentPayload foundDocument = documentService.findDocumentById(ownerId, document.getId());
+
+            assertAll(
+                    () -> assertThat(foundDocument.title()).isEqualTo(document.getTitle()),
+                    () -> assertThat(foundDocument.icon()).isEqualTo(document.getIcon()),
+                    () -> assertThat(foundDocument.cover()).isEqualTo(document.getCover())
+            );
+        }
+
+        @Test
+        void 문서가_없다면_예외가_발생한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID documentId = UUID.randomUUID();
+
+            assertThatThrownBy(() -> documentService.findDocumentById(ownerId, documentId))
+                    .isInstanceOf(NotFoundException.class);
+        }
+
+        @Test
+        void 문서_조회_권한이_없다면_예외가_발생한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID parentId = UUID.randomUUID();
+            Document document = documentService.createDocument(ownerId, parentId);
+
+            UUID notOwnerId = UUID.randomUUID();
+            assertThatThrownBy(() -> documentService.findDocumentById(notOwnerId, document.getId()))
+                    .isInstanceOf(BadRequestException.class);
         }
     }
 }
