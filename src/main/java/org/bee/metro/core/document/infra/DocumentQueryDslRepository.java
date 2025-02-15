@@ -4,8 +4,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.impl.JPAUpdateClause;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import metro.core.document.entity.QDocumentEntity;
 import org.bee.metro.core.document.common.DocumentFieldType;
+import org.bee.metro.core.document.entity.QDocumentEntity;
 import org.springframework.stereotype.Component;
 
 @Component
