@@ -2,6 +2,7 @@ package org.bee.metro.context;
 
 import org.bee.metro.core.document.infra.DocumentCoreRepository;
 import org.bee.metro.core.document.infra.DocumentJpaRepository;
+import org.bee.metro.core.document.infra.DocumentQueryDslRepository;
 import org.bee.metro.core.member.infra.MemberCoreRepository;
 import org.bee.metro.core.member.infra.MemberJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,4 +18,7 @@ public abstract class RepositoryTest {
 
     @Autowired
     protected DocumentJpaRepository documentJpaRepository;
+
+    @Autowired
+    protected DocumentQueryDslRepository documentQueryDslRepository;
 }
