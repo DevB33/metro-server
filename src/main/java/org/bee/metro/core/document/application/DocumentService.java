@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.application.BlockService;
 import org.bee.metro.core.block.domain.Block;
+import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
@@ -110,5 +111,12 @@ public class DocumentService {
 
         List<Block> blocksInDocument = blockService.findByDocumentId(document.getId());
         return DetailDocumentPayload.createByDocumentAndBlocks(document, blocksInDocument);
+    }
+
+    public void updateDocument(UUID memberId, UUID documentId, DocumentFieldType documentFieldType, String value) {
+        Document document = getDocument(documentId);
+        if (document.isNotOwner(memberId)) {
+            throw new BadRequestException("해당 문서의 수정 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
+        }
     }
 }
