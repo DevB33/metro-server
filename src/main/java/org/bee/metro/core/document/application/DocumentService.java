@@ -18,6 +18,7 @@ import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
+import org.bee.metro.core.document.dto.DocumentUpdatePayload;
 import org.bee.metro.core.document.exception.DocumentErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
 import org.bee.metro.global.exception.type.NotFoundException;
@@ -120,5 +121,6 @@ public class DocumentService {
             throw new BadRequestException("해당 문서의 수정 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
         }
 
+        DocumentUpdatePayload updatePayload = DocumentFieldType.createByType(documentFieldType, value);
     }
 }
