@@ -113,10 +113,12 @@ public class DocumentService {
         return DetailDocumentPayload.createByDocumentAndBlocks(document, blocksInDocument);
     }
 
+    @Transactional
     public void updateDocument(UUID memberId, UUID documentId, DocumentFieldType documentFieldType, String value) {
         Document document = getDocument(documentId);
         if (document.isNotOwner(memberId)) {
             throw new BadRequestException("해당 문서의 수정 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
         }
+
     }
 }
