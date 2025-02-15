@@ -119,7 +119,6 @@ public class DocumentService {
         if (document.isNotOwner(memberId)) {
             throw new BadRequestException("해당 문서의 수정 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
         }
-
-
+        documentRepository.updateField(documentId, documentFieldType, value);
     }
 }
