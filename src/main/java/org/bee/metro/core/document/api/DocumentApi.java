@@ -74,7 +74,6 @@ public class DocumentApi {
                 DocumentFieldType.valueOf(documentUpdateRequest.type().toUpperCase()),
                 documentUpdateRequest.value()
         );
-
         return ResponseEntity.ok().build();
     }
 }

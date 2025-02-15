@@ -56,6 +56,4 @@ public class DocumentCoreRepository implements DocumentRepository {
     public void updateField(UUID id, DocumentFieldType type, String value) {
         documentQueryDslRepository.updateDocument(id, type, value);
     }
-
-
 }
