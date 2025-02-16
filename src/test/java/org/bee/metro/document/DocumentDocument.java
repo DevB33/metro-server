@@ -10,9 +10,11 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +23,7 @@ import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
+import org.bee.metro.core.document.dto.DocumentUpdateRequest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -115,19 +118,42 @@ public class DocumentDocument extends DocumentTest {
 
             UUID documentId = UUID.randomUUID();
             mockMvc.perform(get("/documents/" + documentId)
-                    .header("Authorization", accessToken))
+                            .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/detail",
-                            preprocessRequest(prettyPrint()),
-                            responseFields(
-                                    fieldWithPath("title").description("문서 제목"),
-                                    fieldWithPath("icon").description("문서 아이콘"),
-                                    fieldWithPath("tags").description("문서 태그 목록"),
-                                    fieldWithPath("cover").description("문서 커버 이미지"),
-                                    fieldWithPath("blocks").description("문서 블록 목록")
+                                    preprocessRequest(prettyPrint()),
+                                    responseFields(
+                                            fieldWithPath("title").description("문서 제목"),
+                                            fieldWithPath("icon").description("문서 아이콘"),
+                                            fieldWithPath("tags").description("문서 태그 목록"),
+                                            fieldWithPath("cover").description("문서 커버 이미지"),
+                                            fieldWithPath("blocks").description("문서 블록 목록")
+                                    )
                             )
-                    )
-            );
+                    );
+        }
+    }
+
+    @Nested
+    class 문서_부분_수정 {
+
+        @Test
+        void 문서_부분_수정에_성공하면_200을_반환한다() throws Exception {
+            DocumentUpdateRequest documentUpdateRequest = new DocumentUpdateRequest("TITLE", "value");
+
+            UUID documentId = UUID.randomUUID();
+            mockMvc.perform(patch("/documents/" + documentId)
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(documentUpdateRequest)))
+                    .andExpect(status().isOk())
+                    .andDo(document("document/update",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("type").description("수정할 필드 타입: TITLE, ICON, TAG, COVER"),
+                                    fieldWithPath("value").description("수정할 값")
+                            )
+                    ));
         }
     }
 }
