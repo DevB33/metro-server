@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.UUID;
 import org.bee.metro.context.ServiceTest;
+import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
@@ -99,6 +100,15 @@ class DocumentServiceTest extends ServiceTest {
         }
 
         @Test
+        void 해당_문서가_없다면_예외가_발생한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID documentId = UUID.randomUUID();
+
+            assertThatThrownBy(() -> documentService.updateDocument(ownerId, documentId, DocumentFieldType.TITLE, "updated title"))
+                    .isInstanceOf(NotFoundException.class);
+        }
+
+        @Test
         void 소유자가_아니라면_예외가_발생한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
@@ -160,6 +170,42 @@ class DocumentServiceTest extends ServiceTest {
 
             UUID notOwnerId = UUID.randomUUID();
             assertThatThrownBy(() -> documentService.findDocumentById(notOwnerId, document.getId()))
+                    .isInstanceOf(BadRequestException.class);
+        }
+    }
+
+    @Nested
+    class updateDocument_메서드는 {
+
+        @Test
+        void 문서의_필드를_수정한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID parentId = UUID.randomUUID();
+            Document document = documentService.createDocument(ownerId, parentId);
+
+            documentService.updateDocument(ownerId, document.getId(), DocumentFieldType.TITLE, "updated title");
+
+            Document updatedDocument = documentRepository.findById(document.getId()).orElseThrow();
+            assertThat(updatedDocument.getTitle()).isEqualTo("updated title");
+        }
+
+        @Test
+        void 해당_문서가_없다면_예외가_발생한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID documentId = UUID.randomUUID();
+
+            assertThatThrownBy(() -> documentService.updateDocument(ownerId, documentId, DocumentFieldType.TITLE, "updated title"))
+                    .isInstanceOf(NotFoundException.class);
+        }
+
+        @Test
+        void 문서_수정_권한이_없다면_예외가_발생한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID parentId = UUID.randomUUID();
+            Document document = documentService.createDocument(ownerId, parentId);
+
+            UUID notOwnerId = UUID.randomUUID();
+            assertThatThrownBy(() -> documentService.updateDocument(notOwnerId, document.getId(), DocumentFieldType.TITLE, "updated title"))
                     .isInstanceOf(BadRequestException.class);
         }
     }
