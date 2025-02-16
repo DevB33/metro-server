@@ -2,6 +2,7 @@ package org.bee.metro.core.document.infra;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.impl.JPAUpdateClause;
+import jakarta.persistence.EntityManager;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.document.common.DocumentFieldType;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DocumentQueryDslRepository {
 
+    private final EntityManager em;
     private final JPAQueryFactory queryFactory;
 
     public void updateDocument(UUID id, DocumentFieldType type, String value) {
@@ -26,5 +28,11 @@ public class DocumentQueryDslRepository {
             case COVER -> updated.set(documentEntity.cover, value);
         }
         updated.execute();
+        flushAndClear();
+    }
+
+    private void flushAndClear() {
+        em.flush();
+        em.clear();
     }
 }
