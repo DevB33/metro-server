@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.bee.metro.context.RepositoryTest;
+import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
 import org.junit.jupiter.api.Nested;
@@ -183,6 +184,30 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             documentRepository.deleteById(savedDocument.getId());
 
             assertThat(documentRepository.findById(savedDocument.getId())).isEmpty();
+        }
+    }
+
+    @Nested
+    class updateField_메서드는 {
+
+        @Test
+        void 해당_문서의_일부분을_수정한다() {
+            Document document = Document.builder()
+                    .id(null)
+                    .title("title")
+                    .tag("tag")
+                    .icon("icon")
+                    .cover("cover")
+                    .parentId(UUID.randomUUID())
+                    .ownerId(UUID.randomUUID())
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+            Document savedDocument = documentRepository.save(document);
+            documentRepository.updateField(savedDocument.getId(), DocumentFieldType.TITLE, "updated title");
+
+            Document updatedDocument = documentRepository.findById(savedDocument.getId()).get();
+            assertThat(updatedDocument.getTitle()).isEqualTo("updated title");
         }
     }
 }
