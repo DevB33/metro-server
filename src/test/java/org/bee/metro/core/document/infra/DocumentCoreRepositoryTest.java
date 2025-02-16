@@ -11,6 +11,8 @@ import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 class DocumentCoreRepositoryTest extends RepositoryTest {
@@ -190,8 +192,16 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
     @Nested
     class updateField_메서드는 {
 
-        @Test
-        void 해당_문서의_일부분을_수정한다() {
+        @ParameterizedTest
+        @CsvSource({
+                "TITLE, updated title",
+                "TAG, updated tag",
+                "ICON, updated icon",
+                "COVER, updated cover"
+        })
+        void 해당_문서의_일부분을_수정한다(String type, String value) {
+            DocumentFieldType documentFieldType = DocumentFieldType.valueOf(type);
+
             Document document = Document.builder()
                     .id(null)
                     .title("title")
@@ -204,10 +214,16 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
                     .updatedAt(LocalDateTime.now())
                     .build();
             Document savedDocument = documentRepository.save(document);
-            documentRepository.updateField(savedDocument.getId(), DocumentFieldType.TITLE, "updated title");
+            documentRepository.updateField(savedDocument.getId(), documentFieldType, value);
 
             Document updatedDocument = documentRepository.findById(savedDocument.getId()).get();
-            assertThat(updatedDocument.getTitle()).isEqualTo("updated title");
+
+            switch (documentFieldType) {
+                case TITLE -> assertThat(updatedDocument.getTitle()).isEqualTo(value);
+                case TAG -> assertThat(updatedDocument.getTag()).isEqualTo(value);
+                case ICON -> assertThat(updatedDocument.getIcon()).isEqualTo(value);
+                case COVER -> assertThat(updatedDocument.getCover()).isEqualTo(value);
+            }
         }
     }
 }
