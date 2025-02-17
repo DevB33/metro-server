@@ -4,16 +4,19 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.document.application.DocumentService;
+import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
 import org.bee.metro.core.document.dto.DocumentCreationResponse;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.bee.metro.core.document.dto.DocumentTreeNodeResponse;
+import org.bee.metro.core.document.dto.DocumentUpdateRequest;
 import org.bee.metro.global.auth.annotation.Login;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,5 +61,19 @@ public class DocumentApi {
     ) {
         DetailDocumentPayload document = documentService.findDocumentById(memberId, documentId);
         return ResponseEntity.ok(document);
+    }
+
+    @PatchMapping("/{documentId}")
+    public ResponseEntity<Void> updateDocument(
+            @Login UUID memberId,
+            @PathVariable(value = "documentId") UUID documentId,
+            @RequestBody DocumentUpdateRequest documentUpdateRequest
+    ) {
+        documentService.updateDocument(
+                memberId, documentId,
+                DocumentFieldType.valueOf(documentUpdateRequest.type().toUpperCase()),
+                documentUpdateRequest.value()
+        );
+        return ResponseEntity.ok().build();
     }
 }

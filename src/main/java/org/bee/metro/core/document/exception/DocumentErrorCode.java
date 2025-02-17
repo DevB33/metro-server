@@ -5,7 +5,8 @@ import org.bee.metro.global.exception.ErrorCode;
 public enum DocumentErrorCode implements ErrorCode {
     ARGUMENT_IS_NULL("D001", "해당 인자는 null일 수 없습니다"),
     NOT_FOUND("D002", "해당 문서를 찾을 수 없습니다"),
-    UNAUTHORIZED("D003", "해당 문서에 대한 권한이 없습니다")
+    UNAUTHORIZED("D003", "해당 문서에 대한 권한이 없습니다"),
+    INVALID_DOCUMENT_FIELD_TYPE("D004", "해당 문서 필드 타입이 올바르지 않습니다")
     ;
 
     private final String code;

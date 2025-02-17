@@ -468,6 +468,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_문서_생성">문서 생성</a></li>
 <li><a href="#_문서_삭제">문서 삭제</a></li>
 <li><a href="#_문서_상세_조회">문서 상세 조회</a></li>
+<li><a href="#_문서_부분_수정">문서 부분 수정</a></li>
 </ul>
 </li>
 <li><a href="#error-code">에러 코드</a>
@@ -629,7 +630,7 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTU0Mjg4Nywic3ViIjoiNWY5NWY0NGEtMjAwYi00ZDQyLThjMGQtNmJmZTFmNjU2YTc4IiwiZXhwIjoxNzQwMTQ3Njg3fQ.AMtyuRwrde-MJfd1Y0vLcEsG6gxX8k4dVZUPZdnRVrCBeM8UJD4zw0yaFds0kpjb
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTY3MjUxOCwic3ViIjoiN2M0Mjc2ZDgtYTExMS00ZDEwLWIzN2EtYjIwMjBkMWYwNThhIiwiZXhwIjoxNzQwMjc3MzE4fQ.h7_OCMvhXbzutxecG1qjiNAfktOG7-9Rj7arA89Dnrucs_hFSzy2s_SBVQ7XuEul
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -701,12 +702,12 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /documents HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTU0Mjg4Nywic3ViIjoiZTQ0ODhhMzQtYzM0MC00ZWJmLWJjNDQtYTIwMTJkMjU2ZDA0IiwiZXhwIjoxNzQwMTQ3Njg3fQ.cYt6PaZhn7BaUcFcdeXG2T4TtJs2XDO1RoOY49W_iiHtAGiopJQqWcooqRDt4arA
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTY3MjUxOCwic3ViIjoiYTRlZWQxMTEtMDNmNy00NDM1LTg3OGEtZjBhMDIxNmEyOWU4IiwiZXhwIjoxNzQwMjc3MzE4fQ.4eCIfDgebmBcLovdss7aw4BjgAN3K5o5ZR7_z8C2acKbFC2s2Ho33UUNo_d78imd
 Content-Length: 57
 Host: localhost:8080
 
 {
-  "parentId" : "75a5684d-7580-419d-82d2-160426095805"
+  "parentId" : "764ac4b8-8398-4114-b9de-0f6d44cd60d6"
 }</code></pre>
 </div>
 </div>
@@ -778,8 +779,8 @@ Host: localhost:8080
 <h4 id="_문서_삭제_http_request"><a class="link" href="#_문서_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /documents/39cb209e-d1b1-4d9d-add4-fc9448717f64 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTU0Mjg4Nywic3ViIjoiYWY1ZjA1NzEtZDU0MS00OGFlLWJiNDAtM2Y0NDNlMDdlYjgyIiwiZXhwIjoxNzQwMTQ3Njg3fQ.io-tUrlFoO-EFujIGC4IVF4u-BtVIc0NRfM1kuDFKH2FJJ7vVs7pjeUnQEBXuM1i
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /documents/95d89d84-d975-447b-a768-f491018dbac7 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTY3MjUxOCwic3ViIjoiMWUzNTEzZGUtOGQxNC00NWFlLTg2MGQtMDQzMmJlMDNlYjQ4IiwiZXhwIjoxNzQwMjc3MzE4fQ.dy4pJRYcvXjdTxOZgeAd8FDg-9RLMWHCOvEf_tR21UwIS0OHv_9fd494-XvCVbbJ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -791,8 +792,8 @@ Host: localhost:8080</code></pre>
 <h4 id="_문서_상세_조회_http_request"><a class="link" href="#_문서_상세_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents/94de5626-c873-413e-831a-601d4c0b22c9 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTU0Mjg4Nywic3ViIjoiZjk2MzU1OWUtMzExZi00NWEzLWExNjctNWQ1MzI3ZDZkM2E1IiwiZXhwIjoxNzQwMTQ3Njg3fQ.0BUk9h6StnjCA6JoOrBVHwJ-Enh8KTxifKuletAISvKYnzHc7pdbkLIpm-15LC2_
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents/7b3412f3-1248-4020-812d-ce1b3e2705a5 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTY3MjUxOCwic3ViIjoiZjQzY2NiNjUtMDE4Yi00OGNhLTljZTUtYmU1Y2FjZGMxNDFjIiwiZXhwIjoxNzQwMjc3MzE4fQ.odom1qfgTlKxqSqW4qASg3ZEIMnjW--Jw6FybJhfArwA24-8NkgMuCQnDY26-Wnj
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -851,6 +852,63 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 블록 목록</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_문서_부분_수정"><a class="link" href="#_문서_부분_수정">문서 부분 수정</a></h3>
+<div class="sect3">
+<h4 id="_문서_부분_수정_http_request"><a class="link" href="#_문서_부분_수정_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/f6dc6434-fa7b-4cc3-bc8c-66dd4cd3ed23 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTczOTY3MjUxOCwic3ViIjoiOGJjMTQ1NDctNmJhNi00ZTg2LTgwNDQtMDI2NTQ4YmYyZTI2IiwiZXhwIjoxNzQwMjc3MzE4fQ.0lqkfWTS-hVB8QA2n6QRF7Q5aIE5f2eIQGX1zD6fleFq6fnJQd9HJIbfcEa7Eaky
+Content-Length: 43
+Host: localhost:8080
+
+{
+  "type" : "TITLE",
+  "value" : "value"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_문서_부분_수정_request_fields"><a class="link" href="#_문서_부분_수정_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약사항</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정할 필드 타입: TITLE, ICON, TAG, COVER</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정할 값</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>

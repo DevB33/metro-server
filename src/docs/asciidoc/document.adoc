@@ -12,3 +12,6 @@ operation::document/delete[snippets='http-request']
 
 === 문서 상세 조회
 operation::document/detail[snippets='http-request,response-fields']
+
+=== 문서 부분 수정
+operation::document/update[snippets='http-request,request-fields']

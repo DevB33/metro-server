@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
 import org.bee.metro.core.document.entity.DocumentEntity;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 public class DocumentCoreRepository implements DocumentRepository {
 
     private final DocumentJpaRepository documentJpaRepository;
+    private final DocumentQueryDslRepository documentQueryDslRepository;
 
     @Override
     public Document save(Document document) {
@@ -48,5 +50,10 @@ public class DocumentCoreRepository implements DocumentRepository {
     @Override
     public void deleteById(UUID id) {
         documentJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateField(UUID id, DocumentFieldType type, String value) {
+        documentQueryDslRepository.updateDocument(id, type, value);
     }
 }
