@@ -2,9 +2,11 @@ package org.bee.metro.core.block.domain;
 
 import java.util.UUID;
 import lombok.Builder;
+import lombok.Getter;
 import org.bee.metro.core.block.exception.BlockErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
 
+@Getter
 public class Block {
 
     public static final String ERROR_IS_INVALID_BLOCK_ORDER = "블록의 순서는 0보다 작을 수 없습니다. 현재 순서: %s";
