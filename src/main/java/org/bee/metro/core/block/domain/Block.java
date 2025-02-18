@@ -31,5 +31,8 @@ public class Block {
     }
 
     private void validateDocumentId(UUID documentId) {
+        if (documentId == null) {
+            throw new BadRequestException("블록의 문서 ID는 필수입니다.", BlockErrorCode.INVALID_DOCUMENT_ID);
+        }
     }
 }
