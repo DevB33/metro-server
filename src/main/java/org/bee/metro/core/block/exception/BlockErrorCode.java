@@ -2,12 +2,13 @@ package org.bee.metro.core.block.exception;
 
 import org.bee.metro.global.exception.ErrorCode;
 
-public class BlockErrorCode implements ErrorCode {
+public enum BlockErrorCode implements ErrorCode {
+    INVALID_ORDER("B001", "블록의 순서는 0보다 작을 수 없습니다.");
 
     private final String code;
     private final String message;
 
-    public BlockErrorCode(String code, String message) {
+    BlockErrorCode(String code, String message) {
         this.code = code;
         this.message = message;
     }
