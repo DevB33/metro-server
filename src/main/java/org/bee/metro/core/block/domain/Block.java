@@ -8,6 +8,8 @@ import org.bee.metro.global.exception.type.BadRequestException;
 public class Block {
 
     public static final String ERROR_IS_INVALID_BLOCK_ORDER = "블록의 순서는 0보다 작을 수 없습니다. 현재 순서: %s";
+    public static final String ERROR_IS_INVALID_DOCUMENT_ID = "블록의 문서 ID는 필수입니다.";
+
     private final UUID id;
     private final BlockType type;
     private final Long order;
@@ -32,7 +34,7 @@ public class Block {
 
     private void validateDocumentId(UUID documentId) {
         if (documentId == null) {
-            throw new BadRequestException("블록의 문서 ID는 필수입니다.", BlockErrorCode.INVALID_DOCUMENT_ID);
+            throw new BadRequestException(ERROR_IS_INVALID_DOCUMENT_ID, BlockErrorCode.INVALID_DOCUMENT_ID);
         }
     }
 }
