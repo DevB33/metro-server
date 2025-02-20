@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -34,7 +35,7 @@ public class QDocumentEntity extends EntityPathBase<DocumentEntity> {
 
     public final ComparablePath<java.util.UUID> parentId = createComparable("parentId", java.util.UUID.class);
 
-    public final StringPath tag = createString("tag");
+    public final ListPath<org.bee.metro.core.document.domain.Tag, org.bee.metro.core.document.domain.QTag> tags = this.<org.bee.metro.core.document.domain.Tag, org.bee.metro.core.document.domain.QTag>createList("tags", org.bee.metro.core.document.domain.Tag.class, org.bee.metro.core.document.domain.QTag.class, PathInits.DIRECT2);
 
     public final StringPath title = createString("title");
 
