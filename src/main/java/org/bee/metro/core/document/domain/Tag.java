@@ -1,21 +1,15 @@
 package org.bee.metro.core.document.domain;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.bee.metro.core.document.exception.DocumentErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
 
 @Getter
-@Embeddable
 @NoArgsConstructor(force = true)
 public class Tag {
 
     private final String name;
-
-    @Enumerated(EnumType.STRING)
     private final LineColor color;
 
     public Tag(String name, LineColor color) {

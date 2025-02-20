@@ -1,13 +1,11 @@
 package org.bee.metro.core.document.entity;
 
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +32,8 @@ public class DocumentEntity extends BaseEntity {
     @Column(nullable = true)
     private String title;
 
-    @ElementCollection
-    @CollectionTable(name = "document_tags", joinColumns = @JoinColumn(name = "document_id"))
+    @Convert(converter = TagListConverter.class)
+    @Column(nullable = true)
     private List<Tag> tags;
 
     @Column(nullable = true)
