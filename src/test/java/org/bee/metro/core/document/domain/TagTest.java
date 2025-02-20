@@ -8,7 +8,8 @@ import org.bee.metro.global.exception.type.BadRequestException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class TagTest extends ServiceTest {
 
@@ -23,18 +24,22 @@ class TagTest extends ServiceTest {
             Tag tag = new Tag(value, color);
 
             assertThat(tag).isNotNull();
-            assertThat(tag.getValue()).isEqualTo(value);
+            assertThat(tag.getName()).isEqualTo(value);
             assertThat(tag.getColor()).isEqualTo(color);
         }
 
         @ParameterizedTest
-        @CsvSource({
-                "null, LINE_ONE",
-                "''  , LINE_ONE",
-                "tagValue, null"
-        })
+        @MethodSource("generateInvalidArguments")
         void 잘못된_입력에_대해_예외를_던진다(String value, LineColor color) {
             assertThrows(BadRequestException.class, () -> new Tag(value, color));
+        }
+
+        private static Arguments[] generateInvalidArguments() {
+            return new Arguments[] {
+                Arguments.of(null, LineColor.LINE_ONE),
+                Arguments.of("", LineColor.LINE_ONE),
+                Arguments.of("tagValue", null)
+            };
         }
     }
 }

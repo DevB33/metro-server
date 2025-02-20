@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.UUID;
 import org.bee.metro.context.DocumentTest;
 import org.bee.metro.core.document.domain.Document;
+import org.bee.metro.core.document.domain.LineColor;
+import org.bee.metro.core.document.domain.Tag;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
@@ -110,7 +112,7 @@ public class DocumentDocument extends DocumentTest {
             DetailDocumentPayload detailDocumentPayload = new DetailDocumentPayload(
                     "title",
                     "icon",
-                    List.of("tag1", "tag2"),
+                    List.of(new Tag("tag", LineColor.LINE_ONE)),
                     "cover",
                     Collections.emptyList()
             );
@@ -125,7 +127,8 @@ public class DocumentDocument extends DocumentTest {
                                     responseFields(
                                             fieldWithPath("title").description("문서 제목"),
                                             fieldWithPath("icon").description("문서 아이콘"),
-                                            fieldWithPath("tags").description("문서 태그 목록"),
+                                            fieldWithPath("tags[].name").description("문서 태그 목록"),
+                                            fieldWithPath("tags[].color").description("문서 태그 색상"),
                                             fieldWithPath("cover").description("문서 커버 이미지"),
                                             fieldWithPath("blocks").description("문서 블록 목록")
                                     )

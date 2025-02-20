@@ -9,7 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -48,7 +50,8 @@ public class DocumentEntity extends BaseEntity {
     private UUID ownerId;
 
     @Builder
-    public DocumentEntity(UUID id, String title, List<Tag> tags, String icon, String cover, UUID parentId, UUID ownerId) {
+    public DocumentEntity(UUID id, String title, List<Tag> tags, String icon, String cover, UUID parentId,
+                          UUID ownerId) {
         this.id = id;
         this.title = title;
         this.tags = tags;
@@ -57,16 +60,19 @@ public class DocumentEntity extends BaseEntity {
         this.parentId = parentId;
         this.ownerId = ownerId;
     }
-    
+
     public static DocumentEntity from(Document document) {
+        List<Tag> tags = new ArrayList<>(
+                Optional.ofNullable(document.getTags()).orElseGet(ArrayList::new));
+
         return DocumentEntity.builder()
-            .id(document.getId())
-            .title(document.getTitle())
-            .tags(document.getTags())
-            .icon(document.getIcon())
-            .cover(document.getCover())
-            .parentId(document.getParentId())
-            .ownerId(document.getOwnerId())
-            .build();
+                .id(document.getId())
+                .title(document.getTitle())
+                .tags(tags)
+                .icon(document.getIcon())
+                .cover(document.getCover())
+                .parentId(document.getParentId())
+                .ownerId(document.getOwnerId())
+                .build();
     }
 }
