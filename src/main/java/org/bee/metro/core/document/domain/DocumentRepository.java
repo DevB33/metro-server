@@ -10,6 +10,8 @@ public interface DocumentRepository {
     Optional<Document> findById(UUID id);
     List<Document> findByOwnerId(UUID ownerId);
     List<Document> findByParentId(UUID parentId);
+
     void deleteById(UUID id);
     void updateField(UUID id, DocumentFieldType type, String value);
+    void updateTags(UUID id, List<Tag> tags);
 }

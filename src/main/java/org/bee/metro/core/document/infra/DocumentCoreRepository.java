@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
+import org.bee.metro.core.document.domain.Tag;
 import org.bee.metro.core.document.entity.DocumentEntity;
 import org.springframework.stereotype.Repository;
 
@@ -55,5 +56,10 @@ public class DocumentCoreRepository implements DocumentRepository {
     @Override
     public void updateField(UUID id, DocumentFieldType type, String value) {
         documentQueryDslRepository.updateDocument(id, type, value);
+    }
+
+    @Override
+    public void updateTags(UUID id, List<Tag> tags) {
+        documentQueryDslRepository.updateTags(id, tags);
     }
 }
