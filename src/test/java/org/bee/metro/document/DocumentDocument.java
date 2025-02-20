@@ -139,10 +139,11 @@ public class DocumentDocument extends DocumentTest {
 
         @Test
         void 문서_부분_수정에_성공하면_200을_반환한다() throws Exception {
-            DocumentUpdateRequest documentUpdateRequest = new DocumentUpdateRequest("TITLE", "value");
+            DocumentUpdateRequest documentUpdateRequest = new DocumentUpdateRequest("value");
 
+            String fieldType = "title";
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(patch("/documents/" + documentId)
+            mockMvc.perform(patch("/documents/" + documentId + "/" + fieldType)
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(documentUpdateRequest)))
@@ -150,7 +151,6 @@ public class DocumentDocument extends DocumentTest {
                     .andDo(document("document/update",
                             preprocessRequest(prettyPrint()),
                             requestFields(
-                                    fieldWithPath("type").description("수정할 필드 타입: TITLE, ICON, TAG, COVER"),
                                     fieldWithPath("value").description("수정할 값")
                             )
                     ));

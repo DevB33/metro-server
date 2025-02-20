@@ -63,15 +63,16 @@ public class DocumentApi {
         return ResponseEntity.ok(document);
     }
 
-    @PatchMapping("/{documentId}")
+    @PatchMapping("/{documentId}/{fieldType}")
     public ResponseEntity<Void> updateDocument(
             @Login UUID memberId,
             @PathVariable(value = "documentId") UUID documentId,
+            @PathVariable(value = "fieldType") String fieldType,
             @RequestBody DocumentUpdateRequest documentUpdateRequest
     ) {
         documentService.updateDocument(
                 memberId, documentId,
-                DocumentFieldType.valueOf(documentUpdateRequest.type().toUpperCase()),
+                DocumentFieldType.valueOf(fieldType.toUpperCase()),
                 documentUpdateRequest.value()
         );
         return ResponseEntity.ok().build();
