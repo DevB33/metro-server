@@ -35,7 +35,7 @@ public class QDocumentEntity extends EntityPathBase<DocumentEntity> {
 
     public final ComparablePath<java.util.UUID> parentId = createComparable("parentId", java.util.UUID.class);
 
-    public final ListPath<org.bee.metro.core.document.domain.Tag, org.bee.metro.core.document.domain.QTag> tags = this.<org.bee.metro.core.document.domain.Tag, org.bee.metro.core.document.domain.QTag>createList("tags", org.bee.metro.core.document.domain.Tag.class, org.bee.metro.core.document.domain.QTag.class, PathInits.DIRECT2);
+    public final ListPath<org.bee.metro.core.document.domain.Tag, SimplePath<org.bee.metro.core.document.domain.Tag>> tags = this.<org.bee.metro.core.document.domain.Tag, SimplePath<org.bee.metro.core.document.domain.Tag>>createList("tags", org.bee.metro.core.document.domain.Tag.class, SimplePath.class, PathInits.DIRECT2);
 
     public final StringPath title = createString("title");
 
