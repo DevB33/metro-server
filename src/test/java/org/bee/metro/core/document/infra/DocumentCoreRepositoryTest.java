@@ -3,6 +3,7 @@ package org.bee.metro.core.document.infra;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -21,10 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 class DocumentCoreRepositoryTest extends RepositoryTest {
 
     private final DocumentRepository documentRepository;
+    private final EntityManager em;
 
     @Autowired
-    DocumentCoreRepositoryTest(DocumentRepository documentRepository) {
+    DocumentCoreRepositoryTest(DocumentRepository documentRepository, EntityManager em) {
         this.documentRepository = documentRepository;
+        this.em = em;
     }
 
     @Nested
@@ -203,7 +206,6 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
         })
         void 해당_문서의_일부분을_수정한다(String type, String value) {
             DocumentFieldType documentFieldType = DocumentFieldType.valueOf(type);
-
             Document document = Document.builder()
                     .id(null)
                     .title("title")
@@ -216,8 +218,9 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
                     .updatedAt(LocalDateTime.now())
                     .build();
             Document savedDocument = documentRepository.save(document);
-            documentRepository.updateField(savedDocument.getId(), documentFieldType, value);
+            flushAndClear();
 
+            documentRepository.updateField(savedDocument.getId(), documentFieldType, value);
             Document updatedDocument = documentRepository.findById(savedDocument.getId()).get();
 
             switch (documentFieldType) {
@@ -225,6 +228,11 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
                 case ICON -> assertThat(updatedDocument.getIcon()).isEqualTo(value);
                 case COVER -> assertThat(updatedDocument.getCover()).isEqualTo(value);
             }
+        }
+
+        private void flushAndClear() {
+            em.flush();
+            em.clear();
         }
     }
 }
