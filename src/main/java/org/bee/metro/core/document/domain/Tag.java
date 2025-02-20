@@ -13,21 +13,21 @@ import org.bee.metro.global.exception.type.BadRequestException;
 @NoArgsConstructor(force = true)
 public class Tag {
 
-    private final String value;
+    private final String name;
 
     @Enumerated(EnumType.STRING)
     private final LineColor color;
 
-    public Tag(String value, LineColor color) {
-        validateValue(value);
+    public Tag(String name, LineColor color) {
+        validateName(name);
         validateColor(color);
 
-        this.value = value;
+        this.name = name;
         this.color = color;
     }
 
-    private void validateValue(String value) {
-        if (value == null || value.isEmpty()) {
+    private void validateName(String name) {
+        if (name == null || name.isEmpty()) {
             throw new BadRequestException("태그 값은 null이거나 비어있을 수 없습니다.", DocumentErrorCode.ARGUMENT_IS_NULL);
         }
     }

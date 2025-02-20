@@ -21,7 +21,7 @@ public class QTag extends BeanPath<Tag> {
 
     public final EnumPath<LineColor> color = createEnum("color", LineColor.class);
 
-    public final StringPath value = createString("value");
+    public final StringPath name = createString("name");
 
     public QTag(String variable) {
         super(Tag.class, forVariable(variable));
