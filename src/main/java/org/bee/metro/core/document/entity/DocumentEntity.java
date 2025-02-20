@@ -1,17 +1,22 @@
 package org.bee.metro.core.document.entity;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.bee.metro.core.document.domain.Document;
+import org.bee.metro.core.document.domain.Tag;
 import org.bee.metro.global.entity.BaseEntity;
 
 @Entity
@@ -27,8 +32,9 @@ public class DocumentEntity extends BaseEntity {
     @Column(nullable = true)
     private String title;
 
-    @Column(nullable = true)
-    private String tag;
+    @ElementCollection
+    @CollectionTable(name = "document_tags", joinColumns = @JoinColumn(name = "document_id"))
+    private List<Tag> tags;
 
     @Column(nullable = true)
     private String icon;
@@ -42,10 +48,10 @@ public class DocumentEntity extends BaseEntity {
     private UUID ownerId;
 
     @Builder
-    public DocumentEntity(UUID id, String title, String tag, String icon, String cover, UUID parentId, UUID ownerId) {
+    public DocumentEntity(UUID id, String title, List<Tag> tags, String icon, String cover, UUID parentId, UUID ownerId) {
         this.id = id;
         this.title = title;
-        this.tag = tag;
+        this.tags = tags;
         this.icon = icon;
         this.cover = cover;
         this.parentId = parentId;
@@ -56,7 +62,7 @@ public class DocumentEntity extends BaseEntity {
         return DocumentEntity.builder()
             .id(document.getId())
             .title(document.getTitle())
-            .tag(document.getTag())
+            .tags(document.getTags())
             .icon(document.getIcon())
             .cover(document.getCover())
             .parentId(document.getParentId())

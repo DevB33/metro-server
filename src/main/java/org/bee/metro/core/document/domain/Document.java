@@ -1,6 +1,7 @@
 package org.bee.metro.core.document.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,7 @@ public class Document {
 
     private final UUID id;
     private final String title;
-    private final String tag;
+    private final List<Tag> tags;
     private final String icon;
     private final String cover;
     private final UUID parentId;
@@ -25,13 +26,13 @@ public class Document {
     public static final String ERROR_OWNER_ID_IS_NULL = "소유자 아이디는 null일 수 없습니다.";
 
     @Builder
-    public Document(UUID id, String title, String tag, String icon, String cover, UUID parentId, UUID ownerId,
+    public Document(UUID id, String title, List<Tag> tag, String icon, String cover, UUID parentId, UUID ownerId,
                     LocalDateTime createdAt, LocalDateTime updatedAt) {
         validateOwnerId(ownerId);
 
         this.id = id;
         this.title = title;
-        this.tag = tag;
+        this.tags = tag;
         this.icon = icon;
         this.cover = cover;
         this.parentId = makeValidParentId(parentId);
@@ -44,7 +45,7 @@ public class Document {
         return Document.builder()
             .id(documentEntity.getId())
             .title(documentEntity.getTitle())
-            .tag(documentEntity.getTag())
+            .tag(documentEntity.getTags())
             .icon(documentEntity.getIcon())
             .cover(documentEntity.getCover())
             .parentId(documentEntity.getParentId())
