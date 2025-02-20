@@ -24,7 +24,6 @@ public class DocumentQueryDslRepository {
         switch (type) {
             case TITLE -> updated.set(documentEntity.title, value);
             case ICON -> updated.set(documentEntity.icon, value);
-            case TAG -> updated.set(documentEntity.tag, value);
             case COVER -> updated.set(documentEntity.cover, value);
         }
         updated.execute();
