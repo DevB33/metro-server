@@ -4,11 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.List;
 import java.util.UUID;
 import org.bee.metro.context.ServiceTest;
 import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
+import org.bee.metro.core.document.domain.LineColor;
+import org.bee.metro.core.document.domain.Tag;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
+import org.bee.metro.core.document.dto.DocumentTagUpdateRequest;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.bee.metro.global.exception.type.BadRequestException;
 import org.bee.metro.global.exception.type.NotFoundException;
@@ -104,7 +108,8 @@ class DocumentServiceTest extends ServiceTest {
             UUID ownerId = UUID.randomUUID();
             UUID documentId = UUID.randomUUID();
 
-            assertThatThrownBy(() -> documentService.updateDocument(ownerId, documentId, DocumentFieldType.TITLE, "updated title"))
+            assertThatThrownBy(
+                    () -> documentService.updateDocument(ownerId, documentId, DocumentFieldType.TITLE, "updated title"))
                     .isInstanceOf(NotFoundException.class);
         }
 
@@ -194,7 +199,8 @@ class DocumentServiceTest extends ServiceTest {
             UUID ownerId = UUID.randomUUID();
             UUID documentId = UUID.randomUUID();
 
-            assertThatThrownBy(() -> documentService.updateDocument(ownerId, documentId, DocumentFieldType.TITLE, "updated title"))
+            assertThatThrownBy(
+                    () -> documentService.updateDocument(ownerId, documentId, DocumentFieldType.TITLE, "updated title"))
                     .isInstanceOf(NotFoundException.class);
         }
 
@@ -205,7 +211,40 @@ class DocumentServiceTest extends ServiceTest {
             Document document = documentService.createDocument(ownerId, parentId);
 
             UUID notOwnerId = UUID.randomUUID();
-            assertThatThrownBy(() -> documentService.updateDocument(notOwnerId, document.getId(), DocumentFieldType.TITLE, "updated title"))
+            assertThatThrownBy(
+                    () -> documentService.updateDocument(notOwnerId, document.getId(), DocumentFieldType.TITLE,
+                            "updated title"))
+                    .isInstanceOf(BadRequestException.class);
+        }
+    }
+
+    @Nested
+    class updateDocumentTags_메서드는 {
+
+        @Test
+        void 문서의_태그를_수정한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID parentId = UUID.randomUUID();
+            Document document = documentService.createDocument(ownerId, parentId);
+
+            List<DocumentTagUpdateRequest> tags = List.of(new DocumentTagUpdateRequest("newTag", "line_one"));
+            documentService.updateDocumentTags(ownerId, document.getId(), tags);
+
+            Document updatedDocument = documentRepository.findById(document.getId()).orElseThrow();
+            assertThat(updatedDocument.getTags().size()).isEqualTo(1);
+            assertThat(updatedDocument.getTags().get(0).getName()).isEqualTo("newTag");
+            assertThat(updatedDocument.getTags().get(0).getColor()).isEqualTo(LineColor.LINE_ONE);
+        }
+
+        @Test
+        void 해당_문서의_권한이_없으면_예외가_발생한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID parentId = UUID.randomUUID();
+            Document document = documentService.createDocument(ownerId, parentId);
+
+            UUID notOwnerId = UUID.randomUUID();
+            List<DocumentTagUpdateRequest> tags = List.of(new DocumentTagUpdateRequest("newTag", "line_one"));
+            assertThatThrownBy(() -> documentService.updateDocumentTags(notOwnerId, document.getId(), tags))
                     .isInstanceOf(BadRequestException.class);
         }
     }

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 import org.bee.metro.global.exception.type.BadRequestException;
@@ -22,7 +23,7 @@ class DocumentTest {
         void 올바른_인자가_들어오면_객체가_생성된다() {
             // given
             String title = "title";
-            String tag = "tag";
+            List<Tag> tag = List.of(new Tag("tag", LineColor.LINE_ONE));
             String icon = "icon";
             String cover = "cover";
             UUID parentId = UUID.randomUUID();
@@ -44,7 +45,7 @@ class DocumentTest {
 
             // then
             assertThat(document.getTitle()).isEqualTo(title);
-            assertThat(document.getTag()).isEqualTo(tag);
+            assertThat(document.getTags()).isEqualTo(tag);
             assertThat(document.getIcon()).isEqualTo(icon);
             assertThat(document.getCover()).isEqualTo(cover);
             assertThat(document.getParentId()).isEqualTo(parentId);
@@ -58,7 +59,7 @@ class DocumentTest {
         void 올바르지_않은_인자가_들어오면_예외가_발생한다(UUID parentId, UUID ownerId) {
             // given
             String title = "title";
-            String tag = "tag";
+            List<Tag> tag = List.of(new Tag("tag", LineColor.LINE_ONE));
             String icon = "icon";
             String cover = "cover";
             LocalDateTime createdAt = LocalDateTime.now();

@@ -15,3 +15,6 @@ operation::document/detail[snippets='http-request,response-fields']
 
 === 문서 부분 수정
 operation::document/update[snippets='http-request,request-fields']
+
+=== 문서 태그 수정
+operation::document/update-tags[snippets='http-request,request-fields']

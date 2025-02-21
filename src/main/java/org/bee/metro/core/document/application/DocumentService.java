@@ -16,7 +16,10 @@ import org.bee.metro.core.block.domain.Block;
 import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
+import org.bee.metro.core.document.domain.LineColor;
+import org.bee.metro.core.document.domain.Tag;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
+import org.bee.metro.core.document.dto.DocumentTagUpdateRequest;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.bee.metro.core.document.exception.DocumentErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
@@ -120,5 +123,18 @@ public class DocumentService {
             throw new BadRequestException("해당 문서의 수정 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
         }
         documentRepository.updateField(documentId, documentFieldType, value);
+    }
+
+    @Transactional
+    public void updateDocumentTags(UUID memberId, UUID documentId, List<DocumentTagUpdateRequest> tagRequests) {
+        Document document = getDocument(documentId);
+        if (document.isNotOwner(memberId)) {
+            throw new BadRequestException("해당 문서의 수정 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
+        }
+
+        List<Tag> tags = tagRequests.stream()
+                .map(tagRequest -> new Tag(tagRequest.name(), LineColor.valueOf(tagRequest.color().toUpperCase())))
+                .toList();
+        documentRepository.updateTags(documentId, tags);
     }
 }

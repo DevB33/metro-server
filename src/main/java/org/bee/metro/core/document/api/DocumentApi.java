@@ -9,6 +9,7 @@ import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
 import org.bee.metro.core.document.dto.DocumentCreationResponse;
+import org.bee.metro.core.document.dto.DocumentTagsUpdateRequest;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.bee.metro.core.document.dto.DocumentTreeNodeResponse;
 import org.bee.metro.core.document.dto.DocumentUpdateRequest;
@@ -63,15 +64,26 @@ public class DocumentApi {
         return ResponseEntity.ok(document);
     }
 
-    @PatchMapping("/{documentId}")
+    @PatchMapping("/{documentId}/tags")
+    public ResponseEntity<Void> updateDocumentTag(
+            @Login UUID memberId,
+            @PathVariable(value = "documentId") UUID documentId,
+            @RequestBody DocumentTagsUpdateRequest documentTagsUpdateRequest
+    ) {
+        documentService.updateDocumentTags(memberId, documentId, documentTagsUpdateRequest.tags());
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{documentId}/{fieldType}")
     public ResponseEntity<Void> updateDocument(
             @Login UUID memberId,
             @PathVariable(value = "documentId") UUID documentId,
+            @PathVariable(value = "fieldType") String fieldType,
             @RequestBody DocumentUpdateRequest documentUpdateRequest
     ) {
         documentService.updateDocument(
                 memberId, documentId,
-                DocumentFieldType.valueOf(documentUpdateRequest.type().toUpperCase()),
+                DocumentFieldType.valueOf(fieldType.toUpperCase()),
                 documentUpdateRequest.value()
         );
         return ResponseEntity.ok().build();

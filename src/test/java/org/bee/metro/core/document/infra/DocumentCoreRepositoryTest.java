@@ -1,14 +1,20 @@
 package org.bee.metro.core.document.infra;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import org.bee.metro.context.RepositoryTest;
 import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
+import org.bee.metro.core.document.domain.LineColor;
+import org.bee.metro.core.document.domain.Tag;
+import org.bee.metro.global.exception.type.BadRequestException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,10 +24,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 class DocumentCoreRepositoryTest extends RepositoryTest {
 
     private final DocumentRepository documentRepository;
+    private final EntityManager em;
 
     @Autowired
-    DocumentCoreRepositoryTest(DocumentRepository documentRepository) {
+    DocumentCoreRepositoryTest(DocumentRepository documentRepository, EntityManager em) {
         this.documentRepository = documentRepository;
+        this.em = em;
     }
 
     @Nested
@@ -32,7 +40,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             Document document = Document.builder()
                     .id(null)
                     .title("title")
-                    .tag("tag")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
                     .icon("icon")
                     .cover("cover")
                     .parentId(UUID.randomUUID())
@@ -51,7 +59,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             Document document = Document.builder()
                     .id(null)
                     .title("title")
-                    .tag("tag")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
                     .icon("icon")
                     .cover("cover")
                     .parentId(UUID.randomUUID())
@@ -65,7 +73,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             Document updatedDocument = Document.builder()
                     .id(savedDocument.getId())
                     .title("updated title")
-                    .tag("updated tag")
+                    .tag(List.of(new Tag("newTag", LineColor.LINE_ONE)))
                     .icon("updated icon")
                     .cover("updated cover")
                     .parentId(UUID.randomUUID())
@@ -78,7 +86,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
 
             assertAll(
                     () -> assertThat(updatedSavedDocument.getTitle()).isEqualTo("updated title"),
-                    () -> assertThat(updatedSavedDocument.getTag()).isEqualTo("updated tag"),
+                    () -> assertThat(updatedSavedDocument.getTags().get(0).getName()).isEqualTo("newTag"),
                     () -> assertThat(updatedSavedDocument.getIcon()).isEqualTo("updated icon"),
                     () -> assertThat(updatedSavedDocument.getCover()).isEqualTo("updated cover")
             );
@@ -93,7 +101,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             Document document = Document.builder()
                     .id(null)
                     .title("title")
-                    .tag("tag")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
                     .icon("icon")
                     .cover("cover")
                     .parentId(UUID.randomUUID())
@@ -124,7 +132,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             Document document = Document.builder()
                     .id(null)
                     .title("title")
-                    .tag("tag")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
                     .icon("icon")
                     .cover("cover")
                     .parentId(UUID.randomUUID())
@@ -149,7 +157,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             Document document = Document.builder()
                     .id(null)
                     .title("title")
-                    .tag("tag")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
                     .icon("icon")
                     .cover("cover")
                     .parentId(parentId)
@@ -173,7 +181,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
             Document document = Document.builder()
                     .id(null)
                     .title("title")
-                    .tag("tag")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
                     .icon("icon")
                     .cover("cover")
                     .parentId(UUID.randomUUID())
@@ -195,17 +203,15 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
         @ParameterizedTest
         @CsvSource({
                 "TITLE, updated title",
-                "TAG, updated tag",
                 "ICON, updated icon",
                 "COVER, updated cover"
         })
         void 해당_문서의_일부분을_수정한다(String type, String value) {
             DocumentFieldType documentFieldType = DocumentFieldType.valueOf(type);
-
             Document document = Document.builder()
                     .id(null)
                     .title("title")
-                    .tag("tag")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
                     .icon("icon")
                     .cover("cover")
                     .parentId(UUID.randomUUID())
@@ -214,16 +220,48 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
                     .updatedAt(LocalDateTime.now())
                     .build();
             Document savedDocument = documentRepository.save(document);
-            documentRepository.updateField(savedDocument.getId(), documentFieldType, value);
+            flushAndClear();
 
+            documentRepository.updateField(savedDocument.getId(), documentFieldType, value);
             Document updatedDocument = documentRepository.findById(savedDocument.getId()).get();
 
             switch (documentFieldType) {
                 case TITLE -> assertThat(updatedDocument.getTitle()).isEqualTo(value);
-                case TAG -> assertThat(updatedDocument.getTag()).isEqualTo(value);
                 case ICON -> assertThat(updatedDocument.getIcon()).isEqualTo(value);
                 case COVER -> assertThat(updatedDocument.getCover()).isEqualTo(value);
             }
         }
+    }
+
+    @Nested
+    class updateTags_메서드는 {
+
+        @Test
+        void 해당_문서의_태그를_수정한다() {
+            Document document = Document.builder()
+                    .id(null)
+                    .title("title")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
+                    .icon("icon")
+                    .cover("cover")
+                    .parentId(UUID.randomUUID())
+                    .ownerId(UUID.randomUUID())
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+            Document savedDocument = documentRepository.save(document);
+            flushAndClear();
+
+            List<Tag> tags = List.of(new Tag("newTag", LineColor.LINE_ONE));
+            documentRepository.updateTags(savedDocument.getId(), tags);
+            Document updatedDocument = documentRepository.findById(savedDocument.getId()).get();
+
+            assertThat(updatedDocument.getTags().get(0).getName()).isEqualTo("newTag");
+        }
+    }
+
+    private void flushAndClear() {
+        em.flush();
+        em.clear();
     }
 }

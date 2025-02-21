@@ -20,8 +20,12 @@ import java.util.List;
 import java.util.UUID;
 import org.bee.metro.context.DocumentTest;
 import org.bee.metro.core.document.domain.Document;
+import org.bee.metro.core.document.domain.LineColor;
+import org.bee.metro.core.document.domain.Tag;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
+import org.bee.metro.core.document.dto.DocumentTagUpdateRequest;
+import org.bee.metro.core.document.dto.DocumentTagsUpdateRequest;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.bee.metro.core.document.dto.DocumentUpdateRequest;
 import org.junit.jupiter.api.Nested;
@@ -110,7 +114,7 @@ public class DocumentDocument extends DocumentTest {
             DetailDocumentPayload detailDocumentPayload = new DetailDocumentPayload(
                     "title",
                     "icon",
-                    List.of("tag1", "tag2"),
+                    List.of(new Tag("tag", LineColor.LINE_ONE)),
                     "cover",
                     Collections.emptyList()
             );
@@ -125,7 +129,8 @@ public class DocumentDocument extends DocumentTest {
                                     responseFields(
                                             fieldWithPath("title").description("문서 제목"),
                                             fieldWithPath("icon").description("문서 아이콘"),
-                                            fieldWithPath("tags").description("문서 태그 목록"),
+                                            fieldWithPath("tags[].name").description("문서 태그 목록"),
+                                            fieldWithPath("tags[].color").description("문서 태그 색상"),
                                             fieldWithPath("cover").description("문서 커버 이미지"),
                                             fieldWithPath("blocks").description("문서 블록 목록")
                                     )
@@ -139,10 +144,11 @@ public class DocumentDocument extends DocumentTest {
 
         @Test
         void 문서_부분_수정에_성공하면_200을_반환한다() throws Exception {
-            DocumentUpdateRequest documentUpdateRequest = new DocumentUpdateRequest("TITLE", "value");
+            DocumentUpdateRequest documentUpdateRequest = new DocumentUpdateRequest("value");
 
+            String fieldType = "title";
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(patch("/documents/" + documentId)
+            mockMvc.perform(patch("/documents/" + documentId + "/" + fieldType)
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(documentUpdateRequest)))
@@ -150,8 +156,33 @@ public class DocumentDocument extends DocumentTest {
                     .andDo(document("document/update",
                             preprocessRequest(prettyPrint()),
                             requestFields(
-                                    fieldWithPath("type").description("수정할 필드 타입: TITLE, ICON, TAG, COVER"),
                                     fieldWithPath("value").description("수정할 값")
+                            )
+                    ));
+        }
+    }
+
+    @Nested
+    class 문서_태그_수정 {
+
+        @Test
+        void 문서_태그_수정에_성공하면_200을_반환한다() throws Exception {
+            DocumentTagUpdateRequest tagUpdateRequest1 = new DocumentTagUpdateRequest("tag", "line_one");
+            DocumentTagUpdateRequest tagUpdateRequest2 = new DocumentTagUpdateRequest("tag", "line_two");
+            DocumentTagsUpdateRequest tagsUpdateRequest = new DocumentTagsUpdateRequest(
+                    List.of(tagUpdateRequest1, tagUpdateRequest2));
+
+            UUID documentId = UUID.randomUUID();
+            mockMvc.perform(patch("/documents/" + documentId + "/tags")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(tagsUpdateRequest)))
+                    .andExpect(status().isOk())
+                    .andDo(document("document/update-tags",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("tags[].name").description("태그 이름"),
+                                    fieldWithPath("tags[].color").description("태그 색상")
                             )
                     ));
         }
