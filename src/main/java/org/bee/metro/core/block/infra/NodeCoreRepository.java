@@ -3,6 +3,7 @@ package org.bee.metro.core.block.infra;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.domain.node.Node;
 import org.bee.metro.core.block.domain.node.NodeRepository;
+import org.bee.metro.core.block.entity.NodeEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -13,6 +14,8 @@ public class NodeCoreRepository implements NodeRepository {
 
     @Override
     public Node save(Node node) {
-        return null;
+        NodeEntity nodeEntity = NodeEntity.from(node);
+        NodeEntity savedNodeEntity = nodeJpaRepository.save(nodeEntity);
+        return Node.fromEntity(savedNodeEntity);
     }
 }
