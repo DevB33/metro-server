@@ -2,10 +2,12 @@ package org.bee.metro.core.block.domain.node;
 
 import static org.bee.metro.core.block.domain.block.Block.ERROR_IS_INVALID_BLOCK_ORDER;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import org.bee.metro.core.block.entity.NodeEntity;
 import org.bee.metro.core.block.exception.BlockErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
 
@@ -41,6 +43,27 @@ public class Node {
     private void validateBlockId(UUID blockId) {
         if (blockId == null) {
             throw new BadRequestException(ERROR_IS_INVALID_BLOCK_ID, BlockErrorCode.INVALID_BLOCK_ID);
+        }
+    }
+
+    public static Node fromEntity(NodeEntity nodeEntity) {
+        Map<String, String> nodeStyle = convertStyleStringToMap(nodeEntity.getStyle());
+        return Node.builder()
+            .id(nodeEntity.getId())
+            .content(nodeEntity.getContent())
+            .style(nodeStyle)
+            .order(nodeEntity.getOrder())
+            .blockId(nodeEntity.getBlockId())
+            .build();
+    }
+
+    private static Map<String, String> convertStyleStringToMap(String style) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(style, Map.class);
+        } catch (Exception e) {
+            throw new BadRequestException("스타일 정보를 변환하는데 실패했습니다. 스타일: %s".formatted(style),
+                    BlockErrorCode.INVALID_CONVERT_STYLE);
         }
     }
 }
