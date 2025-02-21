@@ -1,6 +1,7 @@
 package org.bee.metro.core.document.entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
@@ -32,7 +33,7 @@ public class TagListConverter implements AttributeConverter<List<Tag>, String> {
     @Override
     public List<Tag> convertToEntityAttribute(String attribute) {
         try {
-            return objectMapper.readValue(attribute, List.class);
+            return objectMapper.readValue(attribute, new TypeReference<List<Tag>>() {});
         } catch (JsonProcessingException e) {
             throw new BadRequestException(ERROR_CONVERT_TO_TAGS.formatted(attribute),
                     DocumentErrorCode.CONVERT_TO_TAGS_FAILED);
