@@ -24,6 +24,8 @@ import org.bee.metro.core.document.domain.LineColor;
 import org.bee.metro.core.document.domain.Tag;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
+import org.bee.metro.core.document.dto.DocumentTagUpdateRequest;
+import org.bee.metro.core.document.dto.DocumentTagsUpdateRequest;
 import org.bee.metro.core.document.dto.DocumentTreeNode;
 import org.bee.metro.core.document.dto.DocumentUpdateRequest;
 import org.junit.jupiter.api.Nested;
@@ -155,6 +157,32 @@ public class DocumentDocument extends DocumentTest {
                             preprocessRequest(prettyPrint()),
                             requestFields(
                                     fieldWithPath("value").description("수정할 값")
+                            )
+                    ));
+        }
+    }
+
+    @Nested
+    class 문서_태그_수정 {
+
+        @Test
+        void 문서_태그_수정에_성공하면_200을_반환한다() throws Exception {
+            DocumentTagUpdateRequest tagUpdateRequest1 = new DocumentTagUpdateRequest("tag", "line_one");
+            DocumentTagUpdateRequest tagUpdateRequest2 = new DocumentTagUpdateRequest("tag", "line_two");
+            DocumentTagsUpdateRequest tagsUpdateRequest = new DocumentTagsUpdateRequest(
+                    List.of(tagUpdateRequest1, tagUpdateRequest2));
+
+            UUID documentId = UUID.randomUUID();
+            mockMvc.perform(patch("/documents/" + documentId + "/tags")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(tagsUpdateRequest)))
+                    .andExpect(status().isOk())
+                    .andDo(document("document/update-tags",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("tags[].name").description("태그 이름"),
+                                    fieldWithPath("tags[].color").description("태그 색상")
                             )
                     ));
         }
