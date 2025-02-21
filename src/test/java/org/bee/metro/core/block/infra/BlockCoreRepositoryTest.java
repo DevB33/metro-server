@@ -28,12 +28,14 @@ class BlockCoreRepositoryTest extends RepositoryTest {
             BlockType type = BlockType.TEXT;
             Long order = 1L;
             UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
 
             Block block = Block.builder()
                     .id(null)
                     .type(type)
                     .order(order)
                     .documentId(documentId)
+                    .memberId(memberId)
                     .build();
 
             Block savedBlock = blockRepository.save(block);
@@ -49,12 +51,14 @@ class BlockCoreRepositoryTest extends RepositoryTest {
             BlockType type = BlockType.TEXT;
             Long order = 1L;
             UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
 
             Block block = Block.builder()
                     .id(null)
                     .type(type)
                     .order(order)
                     .documentId(documentId)
+                    .memberId(memberId)
                     .build();
 
             Block savedBlock = blockRepository.save(block);
@@ -68,6 +72,7 @@ class BlockCoreRepositoryTest extends RepositoryTest {
                     .type(modifiedType)
                     .order(modifiedOrder)
                     .documentId(modifiedDocumentId)
+                    .memberId(memberId)
                     .build();
 
             Block updatedBlock = blockRepository.save(modifiedBlock);
