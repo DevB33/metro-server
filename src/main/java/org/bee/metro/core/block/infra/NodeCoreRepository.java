@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class NodeCoreRepository implements NodeRepository {
+
+    private final NodeJpaRepository nodeJpaRepository;
+
     @Override
     public Node save(Node node) {
         return null;
