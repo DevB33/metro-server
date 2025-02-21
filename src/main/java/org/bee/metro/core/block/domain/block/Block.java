@@ -3,6 +3,7 @@ package org.bee.metro.core.block.domain.block;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import org.bee.metro.core.block.entity.BlockEntity;
 import org.bee.metro.core.block.exception.BlockErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
 
@@ -38,5 +39,14 @@ public class Block {
         if (documentId == null) {
             throw new BadRequestException(ERROR_IS_INVALID_DOCUMENT_ID, BlockErrorCode.INVALID_DOCUMENT_ID);
         }
+    }
+
+    public static Block fromEntity(BlockEntity blockEntity) {
+        return Block.builder()
+            .id(blockEntity.getId())
+            .type(blockEntity.getType())
+            .order(blockEntity.getOrder())
+            .documentId(blockEntity.getDocumentId())
+            .build();
     }
 }

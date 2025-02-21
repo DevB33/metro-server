@@ -10,6 +10,7 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockType;
 
 @Entity
@@ -35,5 +36,14 @@ public class BlockEntity {
         this.type = type;
         this.order = order;
         this.documentId = documentId;
+    }
+
+    public static BlockEntity from(Block block) {
+        return BlockEntity.builder()
+            .id(block.getId())
+            .type(block.getType())
+            .order(block.getOrder())
+            .documentId(block.getDocumentId())
+            .build();
     }
 }
