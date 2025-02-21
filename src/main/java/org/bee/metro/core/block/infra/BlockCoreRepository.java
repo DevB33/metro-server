@@ -5,6 +5,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockRepository;
+import org.bee.metro.core.block.entity.BlockEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -15,7 +16,9 @@ public class BlockCoreRepository implements BlockRepository {
 
     @Override
     public Block save(Block block) {
-        return null;
+        BlockEntity blockEntity = BlockEntity.from(block);
+        BlockEntity savedBlockEntity = blockJpaRepository.save(blockEntity);
+        return Block.fromEntity(savedBlockEntity);
     }
 
     @Override
