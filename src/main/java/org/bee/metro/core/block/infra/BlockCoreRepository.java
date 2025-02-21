@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class BlockCoreRepository implements BlockRepository {
+
+    private final BlockJpaRepository blockJpaRepository;
+
     @Override
     public Block save(Block block) {
         return null;
