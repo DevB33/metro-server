@@ -1,6 +1,6 @@
-package org.bee.metro.core.block.domain;
+package org.bee.metro.core.block.domain.node;
 
-import static org.bee.metro.core.block.domain.Block.ERROR_IS_INVALID_BLOCK_ORDER;
+import static org.bee.metro.core.block.domain.block.Block.ERROR_IS_INVALID_BLOCK_ORDER;
 
 import java.util.Map;
 import java.util.UUID;

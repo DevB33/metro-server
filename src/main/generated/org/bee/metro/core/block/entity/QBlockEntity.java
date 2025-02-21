@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import org.bee.metro.core.block.domain.block.BlockType;
 
 
 /**
@@ -25,7 +26,7 @@ public class QBlockEntity extends EntityPathBase<BlockEntity> {
 
     public final NumberPath<Long> order = createNumber("order", Long.class);
 
-    public final EnumPath<org.bee.metro.core.block.domain.BlockType> type = createEnum("type", org.bee.metro.core.block.domain.BlockType.class);
+    public final EnumPath<BlockType> type = createEnum("type", BlockType.class);
 
     public QBlockEntity(String variable) {
         super(BlockEntity.class, forVariable(variable));

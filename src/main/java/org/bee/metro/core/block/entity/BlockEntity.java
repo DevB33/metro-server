@@ -10,7 +10,7 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.bee.metro.core.block.domain.BlockType;
+import org.bee.metro.core.block.domain.block.BlockType;
 
 @Entity
 @Getter

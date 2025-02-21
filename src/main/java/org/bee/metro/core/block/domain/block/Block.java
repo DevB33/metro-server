@@ -1,4 +1,4 @@
-package org.bee.metro.core.block.domain;
+package org.bee.metro.core.block.domain.block;
 
 import java.util.UUID;
 import lombok.Builder;
