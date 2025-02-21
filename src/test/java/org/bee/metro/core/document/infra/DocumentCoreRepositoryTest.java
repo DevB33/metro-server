@@ -1,6 +1,7 @@
 package org.bee.metro.core.document.infra;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import jakarta.persistence.EntityManager;
@@ -13,6 +14,7 @@ import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
 import org.bee.metro.core.document.domain.LineColor;
 import org.bee.metro.core.document.domain.Tag;
+import org.bee.metro.global.exception.type.BadRequestException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -229,10 +231,37 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
                 case COVER -> assertThat(updatedDocument.getCover()).isEqualTo(value);
             }
         }
+    }
 
-        private void flushAndClear() {
-            em.flush();
-            em.clear();
+    @Nested
+    class updateTags_메서드는 {
+
+        @Test
+        void 해당_문서의_태그를_수정한다() {
+            Document document = Document.builder()
+                    .id(null)
+                    .title("title")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
+                    .icon("icon")
+                    .cover("cover")
+                    .parentId(UUID.randomUUID())
+                    .ownerId(UUID.randomUUID())
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+            Document savedDocument = documentRepository.save(document);
+            flushAndClear();
+
+            List<Tag> tags = List.of(new Tag("newTag", LineColor.LINE_ONE));
+            documentRepository.updateTags(savedDocument.getId(), tags);
+            Document updatedDocument = documentRepository.findById(savedDocument.getId()).get();
+
+            assertThat(updatedDocument.getTags().get(0).getName()).isEqualTo("newTag");
         }
+    }
+
+    private void flushAndClear() {
+        em.flush();
+        em.clear();
     }
 }
