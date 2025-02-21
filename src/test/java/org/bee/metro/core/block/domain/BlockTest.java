@@ -26,6 +26,7 @@ class BlockTest {
             BlockType type = BlockType.TEXT;
             Long order = 1L;
             UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
 
             // when
             Block block = Block.builder()
@@ -33,6 +34,7 @@ class BlockTest {
                     .type(type)
                     .order(order)
                     .documentId(documentId)
+                    .memberId(memberId)
                     .build();
 
             // then
@@ -45,7 +47,7 @@ class BlockTest {
 
         @ParameterizedTest
         @MethodSource("generateInvalidArguments")
-        void 올바르지_않은_인자가_들어오면_예외가_발생한다(Long order, UUID documentId) {
+        void 올바르지_않은_인자가_들어오면_예외가_발생한다(Long order, UUID documentId, UUID memberId) {
             // given
             UUID id = UUID.randomUUID();
             BlockType type = BlockType.TEXT;
@@ -56,13 +58,15 @@ class BlockTest {
                     .type(type)
                     .order(order)
                     .documentId(documentId)
+                    .memberId(memberId)
                     .build());
         }
 
         private static Stream<Arguments> generateInvalidArguments() {
             return Stream.of(
-                    Arguments.of(-1L, UUID.randomUUID()),
-                    Arguments.of(1L, null)
+                    Arguments.of(-1L, UUID.randomUUID(), UUID.randomUUID()),
+                    Arguments.of(1L, null, UUID.randomUUID()),
+                    Arguments.of(1L, UUID.randomUUID(), null)
             );
         }
     }
