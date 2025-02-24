@@ -1,5 +1,6 @@
 package org.bee.metro.core.block.application;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import org.bee.metro.context.ServiceTest;
 import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockType;
 import org.bee.metro.core.block.domain.node.Node;
+import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -27,11 +29,11 @@ class BlockServiceTest extends ServiceTest {
             Block block = blockService.createBlock(memberId, documentId, type, order);
 
             assertAll(
-                () -> assertNotNull(block.getId()),
-                () -> assertEquals(type, block.getType()),
-                () -> assertEquals(order, block.getOrder()),
-                () -> assertEquals(documentId, block.getDocumentId()),
-                () -> assertEquals(memberId, block.getMemberId())
+                    () -> assertNotNull(block.getId()),
+                    () -> assertEquals(type, block.getType()),
+                    () -> assertEquals(order, block.getOrder()),
+                    () -> assertEquals(documentId, block.getDocumentId()),
+                    () -> assertEquals(memberId, block.getMemberId())
             );
         }
 
@@ -62,11 +64,35 @@ class BlockServiceTest extends ServiceTest {
             Node node = blockService.createNode(blockId, documentId, content, order, style);
 
             assertAll(
-                () -> assertNotNull(node.getId()),
-                () -> assertEquals(content, node.getContent()),
-                () -> assertEquals(order, node.getOrder()),
-                () -> assertEquals(blockId, node.getBlockId()),
-                () -> assertEquals(style, node.getStyle())
+                    () -> assertNotNull(node.getId()),
+                    () -> assertEquals(content, node.getContent()),
+                    () -> assertEquals(order, node.getOrder()),
+                    () -> assertEquals(blockId, node.getBlockId()),
+                    () -> assertEquals(style, node.getStyle())
+            );
+        }
+    }
+
+    @Nested
+    class findByDocumentId_메서드는 {
+
+        @Test
+        void 문서_ID를_받아_Block_객체를_조회한다() {
+            UUID documentId = UUID.randomUUID();
+            Block block = blockService.createBlock(UUID.randomUUID(), documentId, BlockType.TEXT, 1L);
+            Node node1 = blockService.createNode(block.getId(), documentId, "content", 1L, Map.of("key", "value"));
+            Node node2 = blockService.createNode(block.getId(), documentId, "content", 2L, Map.of("key", "value"));
+
+            List<DetailBlockPayload> detailBlockPayloadList = blockService.findByDocumentId(documentId);
+
+            assertEquals(1, detailBlockPayloadList.size());
+            DetailBlockPayload detailBlockPayload = detailBlockPayloadList.get(0);
+
+            assertAll(
+                    () -> assertThat(detailBlockPayload.block().getId()).isEqualTo(block.getId()),
+                    () -> assertThat(detailBlockPayload.nodes()).hasSize(3),
+                    () -> assertThat(detailBlockPayload.nodes().get(1).getId()).isEqualTo(node1.getId()),
+                    () -> assertThat(detailBlockPayload.nodes().get(2).getId()).isEqualTo(node2.getId())
             );
         }
     }
