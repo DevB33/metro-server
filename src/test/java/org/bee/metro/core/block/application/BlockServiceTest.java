@@ -3,6 +3,7 @@ package org.bee.metro.core.block.application;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.bee.metro.context.ServiceTest;
 import org.bee.metro.core.block.domain.block.Block;
@@ -45,6 +46,27 @@ class BlockServiceTest extends ServiceTest {
             List<Node> nodeList = nodeRepository.findByBlockId(block.getId());
 
             assertEquals(1, nodeList.size());
+        }
+    }
+
+    @Nested
+    class createNode_메서드는 {
+
+        @Test
+        void 인자를_받아_Node_객체를_저장한다() {
+            UUID blockId = UUID.randomUUID();
+            String content = "content";
+            Long order = 1L;
+            Map<String, String> style = Map.of("key", "value");
+            Node node = blockService.createNode(blockId, content, order, style);
+
+            assertAll(
+                () -> assertNotNull(node.getId()),
+                () -> assertEquals(content, node.getContent()),
+                () -> assertEquals(order, node.getOrder()),
+                () -> assertEquals(blockId, node.getBlockId()),
+                () -> assertEquals(style, node.getStyle())
+            );
         }
     }
 }
