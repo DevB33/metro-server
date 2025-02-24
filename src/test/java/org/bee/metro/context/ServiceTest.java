@@ -2,6 +2,8 @@ package org.bee.metro.context;
 
 import org.bee.metro.core.auth.application.AuthService;
 import org.bee.metro.core.block.application.BlockService;
+import org.bee.metro.core.block.domain.block.BlockRepository;
+import org.bee.metro.core.block.domain.node.NodeRepository;
 import org.bee.metro.core.document.application.DocumentService;
 import org.bee.metro.core.document.domain.DocumentRepository;
 import org.bee.metro.core.member.application.MemberService;
@@ -35,6 +37,12 @@ public abstract class ServiceTest {
 
     @Autowired
     protected AuthService authService;
+
+    @Autowired
+    protected BlockRepository blockRepository;
+
+    @Autowired
+    protected NodeRepository nodeRepository;
 
     @Autowired
     protected DocumentRepository documentRepository;
