@@ -22,10 +22,6 @@ public class BlockService {
     private final BlockRepository blockRepository;
     private final NodeRepository nodeRepository;
 
-    public List<Block> findByDocumentId(UUID documentId) {
-        return Collections.emptyList();
-    }
-
     public Block createBlock(UUID memberId, UUID documentId, BlockType type, Long order) {
         Block block = Block.builder()
                 .id(null)
@@ -62,7 +58,7 @@ public class BlockService {
         return nodeRepository.save(node);
     }
 
-    public List<DetailBlockPayload> findBlockByDocumentId(UUID documentId) {
+    public List<DetailBlockPayload> findByDocumentId(UUID documentId) {
         List<Node> nodeList = nodeRepository.findByDocumentId(documentId);
         List<Block> blockList = blockRepository.findByDocumentId(documentId);
 

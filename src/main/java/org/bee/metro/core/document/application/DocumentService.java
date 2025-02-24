@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.application.BlockService;
 import org.bee.metro.core.block.domain.block.Block;
+import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
@@ -112,7 +113,7 @@ public class DocumentService {
             throw new BadRequestException("해당 문서의 조회 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
         }
 
-        List<Block> blocksInDocument = blockService.findByDocumentId(document.getId());
+        List<DetailBlockPayload> blocksInDocument = blockService.findByDocumentId(document.getId());
         return DetailDocumentPayload.createByDocumentAndBlocks(document, blocksInDocument);
     }
 
