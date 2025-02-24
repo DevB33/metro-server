@@ -15,23 +15,27 @@ import org.bee.metro.global.exception.type.BadRequestException;
 public class Node {
 
     private static final String ERROR_IS_INVALID_BLOCK_ID = "블록의 문서 ID는 필수입니다.";
+    public static final String ERROR_IS_INVALID_DOCUMENT_ID = "문서 ID는 필수입니다.";
 
     private final UUID id;
     private final String content;
     private final Map<String, String> style;
     private final Long order;
     private final UUID blockId;
+    private final UUID documentId;
 
     @Builder
-    public Node(UUID id, String content, Map<String, String> style, Long order, UUID blockId) {
+    public Node(UUID id, String content, Map<String, String> style, Long order, UUID blockId, UUID documentId) {
         validateOrder(order);
         validateBlockId(blockId);
+        validateDocumentId(documentId);
 
         this.id = id;
         this.content = content;
         this.style = style;
         this.order = order;
         this.blockId = blockId;
+        this.documentId = documentId;
     }
 
     private void validateOrder(Long order) {
@@ -46,6 +50,12 @@ public class Node {
         }
     }
 
+    private void validateDocumentId(UUID documentId) {
+        if (documentId == null) {
+            throw new BadRequestException(ERROR_IS_INVALID_DOCUMENT_ID, BlockErrorCode.INVALID_DOCUMENT_ID);
+        }
+    }
+
     public static Node fromEntity(NodeEntity nodeEntity) {
         Map<String, String> nodeStyle = convertStyleStringToMap(nodeEntity.getStyle());
         return Node.builder()
@@ -54,6 +64,7 @@ public class Node {
             .style(nodeStyle)
             .order(nodeEntity.getOrder())
             .blockId(nodeEntity.getBlockId())
+            .documentId(nodeEntity.getDocumentId())
             .build();
     }
 
