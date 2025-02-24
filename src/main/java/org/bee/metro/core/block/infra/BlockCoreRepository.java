@@ -2,6 +2,7 @@ package org.bee.metro.core.block.infra;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockRepository;
@@ -23,6 +24,9 @@ public class BlockCoreRepository implements BlockRepository {
 
     @Override
     public List<Block> findByDocumentId(UUID documentId) {
-        return List.of();
+        List<BlockEntity> blockEntityList = blockJpaRepository.findByDocumentIdOrderByOrder(documentId);
+        return blockEntityList.stream()
+                .map(Block::fromEntity)
+                .collect(Collectors.toList());
     }
 }

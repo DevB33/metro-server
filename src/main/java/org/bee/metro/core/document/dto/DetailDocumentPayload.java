@@ -2,6 +2,7 @@ package org.bee.metro.core.document.dto;
 
 import java.util.List;
 import org.bee.metro.core.block.domain.block.Block;
+import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.Tag;
 
@@ -10,10 +11,11 @@ public record DetailDocumentPayload(
         String icon,
         List<Tag> tags,
         String cover,
-        List<Block> blocks
+        List<DetailBlockPayload> blocks
 ) {
 
-    public static DetailDocumentPayload createByDocumentAndBlocks(Document document, List<Block> blocksInDocument) {
+    public static DetailDocumentPayload createByDocumentAndBlocks(Document document,
+                                                                  List<DetailBlockPayload> blocksInDocument) {
         return new DetailDocumentPayload(
                 document.getTitle(),
                 document.getIcon(),

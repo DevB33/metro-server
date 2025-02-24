@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NodeJpaRepository extends JpaRepository<NodeEntity, UUID> {
     List<NodeEntity> findByBlockId(UUID blockId);
+    List<NodeEntity> findByDocumentIdOrderByOrder(UUID documentId);
 }

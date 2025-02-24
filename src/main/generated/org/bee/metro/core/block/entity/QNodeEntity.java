@@ -23,6 +23,8 @@ public class QNodeEntity extends EntityPathBase<NodeEntity> {
 
     public final StringPath content = createString("content");
 
+    public final ComparablePath<java.util.UUID> documentId = createComparable("documentId", java.util.UUID.class);
+
     public final ComparablePath<java.util.UUID> id = createComparable("id", java.util.UUID.class);
 
     public final NumberPath<Long> order = createNumber("order", Long.class);

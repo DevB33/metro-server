@@ -29,6 +29,7 @@ class NodeCoreRepositoryTest extends RepositoryTest {
             String content = "content";
             Long order = 1L;
             UUID blockId = UUID.randomUUID();
+            UUID documentId = UUID.randomUUID();
             Map<String, String> attributes = Map.of("key", "value");
 
             // when
@@ -38,6 +39,7 @@ class NodeCoreRepositoryTest extends RepositoryTest {
                     .style(attributes)
                     .order(order)
                     .blockId(blockId)
+                    .documentId(documentId)
                     .build();
 
             Node savedNode = nodeRepository.save(node);
@@ -56,12 +58,14 @@ class NodeCoreRepositoryTest extends RepositoryTest {
             String content = "content";
             Long order = 1L;
             UUID blockId = UUID.randomUUID();
+            UUID documentId = UUID.randomUUID();
 
             Node node = Node.builder()
                     .id(null)
                     .content(content)
                     .order(order)
                     .blockId(blockId)
+                    .documentId(documentId)
                     .build();
 
             Node savedNode = nodeRepository.save(node);
@@ -76,6 +80,7 @@ class NodeCoreRepositoryTest extends RepositoryTest {
                     .content(updatedContent)
                     .order(updatedOrder)
                     .blockId(updatedBlockId)
+                    .documentId(documentId)
                     .build();
 
             Node savedUpdatedNode = nodeRepository.save(updatedNode);

@@ -2,6 +2,7 @@ package org.bee.metro.core.block.infra;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.UUID;
 import org.bee.metro.context.RepositoryTest;
 import org.bee.metro.core.block.domain.block.Block;
@@ -81,6 +82,78 @@ class BlockCoreRepositoryTest extends RepositoryTest {
             assertThat(updatedBlock.getType()).isEqualTo(modifiedType);
             assertThat(updatedBlock.getOrder()).isEqualTo(modifiedOrder);
             assertThat(updatedBlock.getDocumentId()).isEqualTo(modifiedDocumentId);
+        }
+    }
+
+    @Nested
+    class findByDocumentId_메서드는 {
+
+        @Test
+        void 문서_아이디로_블록을_조회한다() {
+            BlockType type = BlockType.TEXT;
+            Long order = 1L;
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+
+            Block block = Block.builder()
+                    .id(null)
+                    .type(type)
+                    .order(order)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+
+            blockRepository.save(block);
+
+            BlockType anotherType = BlockType.IMAGE;
+            Long anotherOrder = 2L;
+
+            Block anotherBlock = Block.builder()
+                    .id(null)
+                    .type(anotherType)
+                    .order(anotherOrder)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+
+            blockRepository.save(anotherBlock);
+
+            assertThat(blockRepository.findByDocumentId(documentId)).hasSize(2);
+        }
+
+        @Test
+        void 블록의_순서로_정렬하여_반환한다() {
+            BlockType type = BlockType.TEXT;
+            Long order = 1L;
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+
+            Block block = Block.builder()
+                    .id(null)
+                    .type(type)
+                    .order(order)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+
+            blockRepository.save(block);
+
+            BlockType anotherType = BlockType.IMAGE;
+            Long anotherOrder = 2L;
+
+            Block anotherBlock = Block.builder()
+                    .id(null)
+                    .type(anotherType)
+                    .order(anotherOrder)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+
+            blockRepository.save(anotherBlock);
+
+            List<Block> blocks = blockRepository.findByDocumentId(documentId);
+            assertThat(blocks.get(0).getOrder()).isEqualTo(1L);
+            assertThat(blocks.get(1).getOrder()).isEqualTo(2L);
         }
     }
 }

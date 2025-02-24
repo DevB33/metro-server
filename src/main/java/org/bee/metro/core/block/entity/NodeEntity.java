@@ -33,13 +33,16 @@ public class NodeEntity {
 
     private UUID blockId;
 
+    private UUID documentId;
+
     @Builder
-    public NodeEntity(UUID id, String content, String style, Long order, UUID blockId) {
+    public NodeEntity(UUID id, String content, String style, Long order, UUID blockId, UUID documentId) {
         this.id = id;
         this.content = content;
         this.style = style;
         this.order = order;
         this.blockId = blockId;
+        this.documentId = documentId;
     }
 
     public static NodeEntity from(Node node) {
@@ -49,6 +52,7 @@ public class NodeEntity {
             .style(convertStyleMapToString(node.getStyle()))
             .order(node.getOrder())
             .blockId(node.getBlockId())
+            .documentId(node.getDocumentId())
             .build();
     }
 

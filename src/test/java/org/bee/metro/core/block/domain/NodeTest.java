@@ -27,6 +27,7 @@ class NodeTest {
             Map<String, String> style = Map.of("font-size", "12px");
             Long order = 1L;
             UUID blockId = UUID.randomUUID();
+            UUID documentId = UUID.randomUUID();
 
             // when
             Node node = Node.builder()
@@ -35,6 +36,7 @@ class NodeTest {
                     .style(style)
                     .order(order)
                     .blockId(blockId)
+                    .documentId(documentId)
                     .build();
 
             // then
@@ -44,11 +46,12 @@ class NodeTest {
             assertThat(node.getStyle()).isEqualTo(style);
             assertThat(node.getOrder()).isEqualTo(order);
             assertThat(node.getBlockId()).isEqualTo(blockId);
+            assertThat(node.getDocumentId()).isEqualTo(documentId);
         }
 
         @ParameterizedTest
         @MethodSource("generateInvalidArguments")
-        void 올바르지_않은_인자가_들어오면_예외가_발생한다(Long order, UUID blockId) {
+        void 올바르지_않은_인자가_들어오면_예외가_발생한다(Long order, UUID blockId, UUID documentId) {
             // given
             UUID id = UUID.randomUUID();
             String content = "Invalid Node";
@@ -61,13 +64,15 @@ class NodeTest {
                     .style(style)
                     .order(order)
                     .blockId(blockId)
+                    .documentId(documentId)
                     .build());
         }
 
         private static Stream<Arguments> generateInvalidArguments() {
             return Stream.of(
-                    Arguments.of(-1L, UUID.randomUUID()),
-                    Arguments.of(1L, null)
+                    Arguments.of(-1L, UUID.randomUUID(), UUID.randomUUID()),
+                    Arguments.of(1L, null, UUID.randomUUID()),
+                    Arguments.of(1L, UUID.randomUUID(), null)
             );
         }
     }
