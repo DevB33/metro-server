@@ -23,6 +23,8 @@ public class QBlockEntity extends EntityPathBase<BlockEntity> {
 
     public final ComparablePath<java.util.UUID> id = createComparable("id", java.util.UUID.class);
 
+    public final ComparablePath<java.util.UUID> memberId = createComparable("memberId", java.util.UUID.class);
+
     public final NumberPath<Long> order = createNumber("order", Long.class);
 
     public final EnumPath<org.bee.metro.core.block.domain.block.BlockType> type = createEnum("type", org.bee.metro.core.block.domain.block.BlockType.class);
