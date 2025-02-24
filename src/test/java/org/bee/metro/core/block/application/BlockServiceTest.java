@@ -55,10 +55,11 @@ class BlockServiceTest extends ServiceTest {
         @Test
         void 인자를_받아_Node_객체를_저장한다() {
             UUID blockId = UUID.randomUUID();
+            UUID documentId = UUID.randomUUID();
             String content = "content";
             Long order = 1L;
             Map<String, String> style = Map.of("key", "value");
-            Node node = blockService.createNode(blockId, content, order, style);
+            Node node = blockService.createNode(blockId, documentId, content, order, style);
 
             assertAll(
                 () -> assertNotNull(node.getId()),
