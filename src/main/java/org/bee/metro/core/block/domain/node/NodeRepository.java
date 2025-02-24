@@ -6,4 +6,5 @@ import java.util.UUID;
 public interface NodeRepository {
     Node save(Node node);
     List<Node> findByBlockId(UUID blockId);
+    List<Node> findByDocumentId(UUID documentId);
 }

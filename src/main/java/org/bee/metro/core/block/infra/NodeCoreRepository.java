@@ -29,4 +29,12 @@ public class NodeCoreRepository implements NodeRepository {
                 .map(Node::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Node> findByDocumentId(UUID documentId) {
+        List<NodeEntity> nodeEntityList = nodeJpaRepository.findByDocumentIdOrderByOrder(documentId);
+        return nodeEntityList.stream()
+                .map(Node::fromEntity)
+                .collect(Collectors.toList());
+    }
 }
