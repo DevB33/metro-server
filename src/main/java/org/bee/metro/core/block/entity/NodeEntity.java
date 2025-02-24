@@ -1,15 +1,18 @@
 package org.bee.metro.core.block.entity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Map;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.bee.metro.core.block.domain.node.Node;
 
 @Entity
 @Getter
@@ -37,5 +40,24 @@ public class NodeEntity {
         this.style = style;
         this.order = order;
         this.blockId = blockId;
+    }
+
+    public static NodeEntity from(Node node) {
+        return NodeEntity.builder()
+            .id(node.getId())
+            .content(node.getContent())
+            .style(convertStyleMapToString(node.getStyle()))
+            .order(node.getOrder())
+            .blockId(node.getBlockId())
+            .build();
+    }
+
+    private static String convertStyleMapToString(Map<String, String> style) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(style);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

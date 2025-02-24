@@ -1,6 +1,10 @@
 package org.bee.metro.context;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bee.metro.core.block.infra.BlockCoreRepository;
+import org.bee.metro.core.block.infra.BlockJpaRepository;
+import org.bee.metro.core.block.infra.NodeCoreRepository;
+import org.bee.metro.core.block.infra.NodeJpaRepository;
 import org.bee.metro.core.document.infra.DocumentCoreRepository;
 import org.bee.metro.core.document.infra.DocumentJpaRepository;
 import org.bee.metro.core.document.infra.DocumentQueryDslRepository;
@@ -12,8 +16,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
 @Import({
-        JpaConfig.class, MemberCoreRepository.class, DocumentCoreRepository.class,
-        DocumentQueryDslRepository.class, ObjectMapper.class
+        JpaConfig.class, MemberCoreRepository.class, DocumentCoreRepository.class, BlockCoreRepository.class,
+        NodeCoreRepository.class, DocumentQueryDslRepository.class, ObjectMapper.class
 })
 @DataJpaTest
 public abstract class RepositoryTest {
@@ -23,4 +27,10 @@ public abstract class RepositoryTest {
 
     @Autowired
     protected DocumentJpaRepository documentJpaRepository;
+
+    @Autowired
+    protected BlockJpaRepository blockJpaRepository;
+
+    @Autowired
+    protected NodeJpaRepository nodeJpaRepository;
 }

@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .configurationSource(request -> {
                             var corsConfig = new CorsConfiguration();
                             corsConfig.setAllowedOrigins(List.of(allowedOrigins));
-                            corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+                            corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
                             corsConfig.setAllowedHeaders(List.of("Authorization", "Content-Type"));
                             corsConfig.setAllowCredentials(true);
                             corsConfig.setExposedHeaders(List.of("Custom-Header"));

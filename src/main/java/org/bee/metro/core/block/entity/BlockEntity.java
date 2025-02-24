@@ -10,7 +10,8 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.bee.metro.core.block.domain.BlockType;
+import org.bee.metro.core.block.domain.block.Block;
+import org.bee.metro.core.block.domain.block.BlockType;
 
 @Entity
 @Getter
@@ -29,11 +30,24 @@ public class BlockEntity {
 
     private UUID documentId;
 
+    private UUID memberId;
+
     @Builder
-    public BlockEntity(UUID id, BlockType type, Long order, UUID documentId) {
+    public BlockEntity(UUID id, BlockType type, Long order, UUID documentId, UUID memberId) {
         this.id = id;
         this.type = type;
         this.order = order;
         this.documentId = documentId;
+        this.memberId = memberId;
+    }
+
+    public static BlockEntity from(Block block) {
+        return BlockEntity.builder()
+                .id(block.getId())
+                .type(block.getType())
+                .order(block.getOrder())
+                .documentId(block.getDocumentId())
+                .memberId(block.getMemberId())
+                .build();
     }
 }

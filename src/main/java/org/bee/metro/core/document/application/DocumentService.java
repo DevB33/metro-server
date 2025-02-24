@@ -12,7 +12,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.application.BlockService;
-import org.bee.metro.core.block.domain.Block;
+import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.DocumentRepository;
