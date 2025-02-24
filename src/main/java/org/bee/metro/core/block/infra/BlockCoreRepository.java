@@ -24,7 +24,7 @@ public class BlockCoreRepository implements BlockRepository {
 
     @Override
     public List<Block> findByDocumentId(UUID documentId) {
-        List<BlockEntity> blockEntityList = blockJpaRepository.findByDocumentId(documentId);
+        List<BlockEntity> blockEntityList = blockJpaRepository.findByDocumentIdOrderByOrder(documentId);
         return blockEntityList.stream()
                 .map(Block::fromEntity)
                 .collect(Collectors.toList());
