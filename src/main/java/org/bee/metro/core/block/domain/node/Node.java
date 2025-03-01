@@ -77,4 +77,26 @@ public class Node {
                     BlockErrorCode.INVALID_CONVERT_STYLE);
         }
     }
+
+    public Node updateContent(String content) {
+        return Node.builder()
+            .id(this.id)
+            .content(content)
+            .style(this.style)
+            .order(this.order)
+            .blockId(this.blockId)
+            .documentId(this.documentId)
+            .build();
+    }
+
+    public Node updateStyle(Map<String, String> style) {
+        return Node.builder()
+            .id(this.id)
+            .content(this.content)
+            .style(style)
+            .order(this.order)
+            .blockId(this.blockId)
+            .documentId(this.documentId)
+            .build();
+    }
 }
