@@ -89,6 +89,8 @@ public class BlockService {
         if (node.isNotOwner(memberId)) {
             throw new BadRequestException("해당 노드의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
         }
-        nodeRepository.save(node);
+
+        Node updatedNode = node.updateContent(content);
+        nodeRepository.save(updatedNode);
     }
 }
