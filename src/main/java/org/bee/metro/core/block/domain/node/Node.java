@@ -99,4 +99,8 @@ public class Node {
             .documentId(this.documentId)
             .build();
     }
+
+    public boolean isNotOwner(UUID memberId) {
+        return !this.documentId.equals(memberId);
+    }
 }
