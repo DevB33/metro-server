@@ -1,6 +1,7 @@
 package org.bee.metro.core.block.infra;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,10 @@ public class NodeCoreRepository implements NodeRepository {
         return nodeEntityList.stream()
                 .map(Node::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Node> findById(UUID id) {
+        return nodeJpaRepository.findById(id).map(Node::fromEntity);
     }
 }
