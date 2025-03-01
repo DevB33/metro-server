@@ -156,4 +156,29 @@ class BlockCoreRepositoryTest extends RepositoryTest {
             assertThat(blocks.get(1).getOrder()).isEqualTo(2L);
         }
     }
+
+    @Nested
+    class existsByDocumentIdAndOrderBetween_메서드는 {
+
+        @Test
+        void 문서_아이디와_순서_범위로_블록이_존재하는지_확인한다() {
+            BlockType type = BlockType.TEXT;
+            Long order = 1L;
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+
+            Block block = Block.builder()
+                    .id(null)
+                    .type(type)
+                    .order(order)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+
+            blockRepository.save(block);
+
+            assertThat(blockRepository.existsByDocumentIdAndOrderBetween(documentId, 1L, 1L)).isTrue();
+            assertThat(blockRepository.existsByDocumentIdAndOrderBetween(documentId, 2L, 2L)).isFalse();
+        }
+    }
 }
