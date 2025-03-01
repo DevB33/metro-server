@@ -1,5 +1,6 @@
 package org.bee.metro.core.block.application;
 
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,7 @@ public class BlockService {
                 () -> new NotFoundException("해당 노드가 존재하지 않습니다.", BlockErrorCode.NOT_FOUND_NODE));
     }
 
+    @Transactional
     public void updateNodeContent(UUID nodeId, UUID memberId, String content) {
         Node node = getNode(nodeId);
         if (node.isNotOwner(memberId)) {
@@ -94,6 +96,7 @@ public class BlockService {
         nodeRepository.save(updatedNode);
     }
 
+    @Transactional
     public void updateNodeStyle(UUID nodeId, UUID memberId, Map<String, String> style) {
         Node node = getNode(nodeId);
         if (node.isNotOwner(memberId)) {
