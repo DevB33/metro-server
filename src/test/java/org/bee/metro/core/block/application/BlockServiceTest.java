@@ -96,4 +96,31 @@ class BlockServiceTest extends ServiceTest {
             );
         }
     }
+
+    @Nested
+    class updateNodeContent_메서드는 {
+
+        @Test
+        void 내용을_수정한_새로운_객체를_생성한다() {
+            Node node = Node.builder()
+                    .content("content")
+                    .style(Map.of("key", "value"))
+                    .order(1L)
+                    .documentId(UUID.randomUUID())
+                    .blockId(UUID.randomUUID())
+                    .build();
+            Node savedNode = nodeRepository.save(node);
+
+            String updatedContent = "updatedContent";
+            blockService.updateNodeContent(savedNode.getId(), UUID.randomUUID(), updatedContent);
+
+            Node updatedNode = nodeRepository.findById(savedNode.getId()).orElseThrow();
+            assertAll(
+                    () -> assertThat(updatedNode.getId()).isEqualTo(savedNode.getId()),
+                    () -> assertThat(updatedNode.getContent()).isEqualTo("updatedContent")
+            );
+        }
+    }
+
+
 }

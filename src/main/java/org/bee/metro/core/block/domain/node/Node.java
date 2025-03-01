@@ -102,6 +102,6 @@ public class Node {
 
     public boolean isNotOwner(UUID memberId) {
         // TODO: 추후 노드 도메인 내 memberId 추가 구현
-        return true;
+        return false;
     }
 }
