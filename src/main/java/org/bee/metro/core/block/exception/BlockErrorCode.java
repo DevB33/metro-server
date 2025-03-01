@@ -7,7 +7,9 @@ public enum BlockErrorCode implements ErrorCode {
     INVALID_DOCUMENT_ID("B002", "블록의 문서 ID는 필수입니다."),
     INVALID_BLOCK_ID("B003", "블록의 ID는 필수입니다."),
     INVALID_CONVERT_STYLE("B004", "스타일 정보를 변환하는데 실패했습니다."),
-    INVALID_MEMBER_ID("B005", "멤버 ID는 필수입니다.");
+    INVALID_MEMBER_ID("B005", "멤버 ID는 필수입니다."),
+    NOT_FOUND_NODE("B006", "노드가 존재하지 않습니다."),
+    UNAUTHORIZED("B007", "해당 권한이 없습니다.");
 
     private final String code;
     private final String message;

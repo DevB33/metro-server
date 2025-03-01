@@ -92,4 +92,52 @@ class NodeCoreRepositoryTest extends RepositoryTest {
             assertThat(savedUpdatedNode.getBlockId()).isEqualTo(updatedBlockId);
         }
     }
+
+    @Nested
+    class findById_메서드는 {
+
+        @Test
+        void 존재하는_노드를_조회한다() {
+            // given
+            String content = "content";
+            Long order = 1L;
+            UUID blockId = UUID.randomUUID();
+            UUID documentId = UUID.randomUUID();
+            Map<String, String> attributes = Map.of("key", "value");
+
+            Node node = Node.builder()
+                    .id(null)
+                    .content(content)
+                    .style(attributes)
+                    .order(order)
+                    .blockId(blockId)
+                    .documentId(documentId)
+                    .build();
+
+            Node savedNode = nodeRepository.save(node);
+
+            // when
+            Node foundNode = nodeRepository.findById(savedNode.getId()).orElse(null);
+
+            // then
+            assertThat(foundNode).isNotNull();
+            assertThat(foundNode.getId()).isEqualTo(savedNode.getId());
+            assertThat(foundNode.getContent()).isEqualTo(content);
+            assertThat(foundNode.getStyle()).isEqualTo(attributes);
+            assertThat(foundNode.getOrder()).isEqualTo(order);
+            assertThat(foundNode.getBlockId()).isEqualTo(blockId);
+        }
+
+        @Test
+        void 존재하지_않는_노드를_조회하면_null을_반환한다() {
+            // given
+            UUID id = UUID.randomUUID();
+
+            // when
+            Node foundNode = nodeRepository.findById(id).orElse(null);
+
+            // then
+            assertThat(foundNode).isNull();
+        }
+    }
 }

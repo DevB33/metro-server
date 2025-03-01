@@ -1,7 +1,7 @@
 package org.bee.metro.core.block.application;
 
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -13,6 +13,9 @@ import org.bee.metro.core.block.domain.block.BlockType;
 import org.bee.metro.core.block.domain.node.Node;
 import org.bee.metro.core.block.domain.node.NodeRepository;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
+import org.bee.metro.core.block.exception.BlockErrorCode;
+import org.bee.metro.global.exception.type.BadRequestException;
+import org.bee.metro.global.exception.type.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -75,5 +78,32 @@ public class BlockService {
             detailBlockPayloadList.add(detailBlockPayload);
         });
         return detailBlockPayloadList;
+    }
+
+    private Node getNode(UUID nodeId) {
+        return nodeRepository.findById(nodeId).orElseThrow(
+                () -> new NotFoundException("해당 노드가 존재하지 않습니다.", BlockErrorCode.NOT_FOUND_NODE));
+    }
+
+    @Transactional
+    public void updateNodeContent(UUID nodeId, UUID memberId, String content) {
+        Node node = getNode(nodeId);
+        if (node.isNotOwner(memberId)) {
+            throw new BadRequestException("해당 노드의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+        }
+
+        Node updatedNode = node.updateContent(content);
+        nodeRepository.save(updatedNode);
+    }
+
+    @Transactional
+    public void updateNodeStyle(UUID nodeId, UUID memberId, Map<String, String> style) {
+        Node node = getNode(nodeId);
+        if (node.isNotOwner(memberId)) {
+            throw new BadRequestException("해당 노드의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+        }
+
+        Node updatedNode = node.updateStyle(style);
+        nodeRepository.save(updatedNode);
     }
 }

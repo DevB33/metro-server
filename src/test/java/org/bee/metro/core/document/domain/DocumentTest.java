@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
+import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.global.exception.type.BadRequestException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -82,6 +83,69 @@ class DocumentTest {
             return Stream.of(
                     Arguments.of(UUID.randomUUID(), null)
             );
+        }
+    }
+
+    @Nested
+    class updateField_메서드는 {
+
+        @ParameterizedTest
+        @MethodSource("generateDocumentFieldTypeAndValue")
+        void 해당_필드를_수정한_새로운_객체를_반환한다(DocumentFieldType type, String value) {
+            Document document = Document.builder()
+                    .id(UUID.randomUUID())
+                    .title("title")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
+                    .icon("icon")
+                    .cover("cover")
+                    .parentId(UUID.randomUUID())
+                    .ownerId(UUID.randomUUID())
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+
+            Document updatedDocument = document.updateField(type, value);
+
+            switch (type) {
+                case TITLE -> assertThat(updatedDocument.getTitle()).isEqualTo(value);
+                case ICON -> assertThat(updatedDocument.getIcon()).isEqualTo(value);
+                case COVER -> assertThat(updatedDocument.getCover()).isEqualTo(value);
+            }
+        }
+
+        private static Stream<Arguments> generateDocumentFieldTypeAndValue() {
+            return Stream.of(
+                    Arguments.of(DocumentFieldType.TITLE, "new title"),
+                    Arguments.of(DocumentFieldType.ICON, "new icon"),
+                    Arguments.of(DocumentFieldType.COVER, "new cover")
+            );
+        }
+    }
+
+    @Nested
+    class updateTagField_메서드는 {
+
+        @Test
+        void 태그를_수정한_새로운_객체를_반환한다() {
+            // given
+            Document document = Document.builder()
+                    .id(UUID.randomUUID())
+                    .title("title")
+                    .tag(List.of(new Tag("tag", LineColor.LINE_ONE)))
+                    .icon("icon")
+                    .cover("cover")
+                    .parentId(UUID.randomUUID())
+                    .ownerId(UUID.randomUUID())
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+            List<Tag> tags = List.of(new Tag("new tag", LineColor.LINE_TWO));
+
+            // when
+            Document updatedDocument = document.updateTagField(tags);
+
+            // then
+            assertThat(updatedDocument.getTags()).isEqualTo(tags);
         }
     }
 }
