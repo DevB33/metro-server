@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.entity.DocumentEntity;
 import org.bee.metro.core.document.exception.DocumentErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
@@ -70,5 +71,33 @@ public class Document {
 
     public boolean isNotOwner(UUID ownerId) {
         return !this.ownerId.equals(ownerId);
+    }
+
+    public Document updateField(DocumentFieldType documentFieldType, String value) {
+        return Document.builder()
+                .id(this.id)
+                .title(documentFieldType == DocumentFieldType.TITLE ? value : this.title)
+                .tag(this.tags)
+                .icon(documentFieldType == DocumentFieldType.ICON ? value : this.icon)
+                .cover(documentFieldType == DocumentFieldType.COVER ? value : this.cover)
+                .parentId(this.parentId)
+                .ownerId(this.ownerId)
+                .createdAt(this.createdAt)
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
+
+    public Document updateTagField(List<Tag> tags) {
+        return Document.builder()
+            .id(this.id)
+            .title(this.title)
+            .tag(tags)
+            .icon(this.icon)
+            .cover(this.cover)
+            .parentId(this.parentId)
+            .ownerId(this.ownerId)
+            .createdAt(this.createdAt)
+            .updatedAt(LocalDateTime.now())
+            .build();
     }
 }
