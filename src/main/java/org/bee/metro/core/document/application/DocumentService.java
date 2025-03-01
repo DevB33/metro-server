@@ -123,7 +123,9 @@ public class DocumentService {
         if (document.isNotOwner(memberId)) {
             throw new BadRequestException("해당 문서의 수정 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
         }
-        documentRepository.updateField(documentId, documentFieldType, value);
+
+        Document updatedDocument = document.updateField(documentFieldType, value);
+        documentRepository.save(updatedDocument);
     }
 
     @Transactional
@@ -136,6 +138,7 @@ public class DocumentService {
         List<Tag> tags = tagRequests.stream()
                 .map(tagRequest -> new Tag(tagRequest.name(), LineColor.valueOf(tagRequest.color().toUpperCase())))
                 .toList();
-        documentRepository.updateTags(documentId, tags);
+        Document updatedDocument = document.updateTagField(tags);
+        documentRepository.save(updatedDocument);
     }
 }
