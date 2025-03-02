@@ -5,12 +5,14 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Map;
 import java.util.UUID;
 import org.bee.metro.context.DocumentTest;
+import org.bee.metro.core.block.dto.NodeContentUpdateRequest;
 import org.bee.metro.core.block.dto.NodeCreationRequest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,6 +47,28 @@ public class NodeDocument extends DocumentTest {
                                     fieldWithPath("order").description("순서"),
                                     fieldWithPath("style").description("스타일"),
                                     fieldWithPath("style.key").description("스타일 키")
+                            )
+                    ));
+        }
+    }
+
+    @Nested
+    class 노드_내용_수정 {
+
+        @Test
+        void 노드_내용_수정에_성공하면_200을_반환한다() throws Exception {
+            NodeContentUpdateRequest nodeContentUpdateRequest = new NodeContentUpdateRequest("content");
+
+            UUID nodeId = UUID.randomUUID();
+            mockMvc.perform(patch("/nodes/" + nodeId + "/content")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(nodeContentUpdateRequest)))
+                    .andExpect(status().isOk())
+                    .andDo(document("node/update-content",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("content").description("내용")
                             )
                     ));
         }
