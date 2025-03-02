@@ -288,4 +288,63 @@ class BlockServiceTest extends ServiceTest {
                     .isInstanceOf(BadRequestException.class);
         }
     }
+
+    @Nested
+    class deleteBlockInRange_메서드는 {
+
+        @Test
+        void 한개의_블록을_삭제한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            blockRepository.save(block);
+
+            blockService.deleteBlockInRange(documentId, memberId, block.getOrder(), block.getOrder());
+
+            List<Block> blockList = blockRepository.findByDocumentId(documentId);
+            assertThat(blockList).isEmpty();
+        }
+
+        @Test
+        void 범위_내의_블록을_모두_삭제한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block1 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            blockRepository.save(block1);
+
+            Block block2 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(2L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            blockRepository.save(block2);
+
+            Block block3 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(3L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock3 = blockRepository.save(block3);
+
+            blockService.deleteBlockInRange(documentId, memberId, block1.getOrder(), block1.getOrder() + 1);
+
+            List<Block> blockList = blockRepository.findByDocumentId(documentId);
+            assertAll(
+                    () -> assertThat(blockList).hasSize(1),
+                    () -> assertThat(blockList.get(0).getId()).isEqualTo(savedBlock3.getId())
+            );
+        }
+    }
 }
