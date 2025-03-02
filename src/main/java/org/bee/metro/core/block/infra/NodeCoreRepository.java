@@ -43,4 +43,14 @@ public class NodeCoreRepository implements NodeRepository {
     public Optional<Node> findById(UUID id) {
         return nodeJpaRepository.findById(id).map(Node::fromEntity);
     }
+
+    @Override
+    public void deleteByDoucmentId(UUID documentId) {
+        nodeJpaRepository.deleteByDocumentId(documentId);
+    }
+
+    @Override
+    public void deleteByBlockId(UUID blockId) {
+        nodeJpaRepository.deleteByBlockId(blockId);
+    }
 }

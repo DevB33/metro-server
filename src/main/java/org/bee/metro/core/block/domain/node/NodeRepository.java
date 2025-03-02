@@ -9,4 +9,6 @@ public interface NodeRepository {
     List<Node> findByBlockId(UUID blockId);
     List<Node> findByDocumentId(UUID documentId);
     Optional<Node> findById(UUID id);
+    void deleteByDoucmentId(UUID documentId);
+    void deleteByBlockId(UUID blockId);
 }
