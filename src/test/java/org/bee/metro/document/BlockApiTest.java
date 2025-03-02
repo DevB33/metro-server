@@ -128,10 +128,10 @@ class BlockApiTest extends DocumentTest {
     }
 
     @Nested
-    class 문서_순서_변경 {
+    class 블록_순서_변경 {
 
         @Test
-        void 문서_순서_변경에_성공하면_200을_반환한다() throws Exception {
+        void 블록_순서_변경에_성공하면_200을_반환한다() throws Exception {
             UUID documentId = UUID.randomUUID();
             BlockOrderUpdateRequest request = new BlockOrderUpdateRequest(
                     documentId,
@@ -156,4 +156,5 @@ class BlockApiTest extends DocumentTest {
                     ));
         }
     }
+
 }
