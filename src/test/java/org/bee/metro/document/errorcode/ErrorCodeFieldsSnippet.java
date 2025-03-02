@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.bee.metro.core.auth.exception.AuthErrorCode;
+import org.bee.metro.core.block.exception.BlockErrorCode;
+import org.bee.metro.core.document.exception.DocumentErrorCode;
 import org.bee.metro.core.member.exception.MemberErrorCode;
 import org.bee.metro.global.exception.ErrorCode;
 import org.bee.metro.global.exception.GlobalErrorCode;
@@ -16,6 +18,8 @@ public class ErrorCodeFieldsSnippet extends TemplatedSnippet {
     private List<Class<? extends ErrorCode>> errorCodes = List.of(
             AuthErrorCode.class,
             MemberErrorCode.class,
+            BlockErrorCode.class,
+            DocumentErrorCode.class,
             GlobalErrorCode.class
     );
 
