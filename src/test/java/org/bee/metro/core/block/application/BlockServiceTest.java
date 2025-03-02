@@ -383,4 +383,71 @@ class BlockServiceTest extends ServiceTest {
             assertThat(nodeList).isEmpty();
         }
     }
+
+    @Nested
+    class deleteByDocumentId_메서드는 {
+
+        @Test
+        void 문서_내의_블록을_모두_삭제한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block1 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+
+            Block block2 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(2L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+
+            blockRepository.save(block1);
+            blockRepository.save(block2);
+
+            blockService.deleteByDocumentId(documentId, memberId);
+
+            List<Block> blockList = blockRepository.findByDocumentId(documentId);
+            assertThat(blockList).isEmpty();
+        }
+
+        @Test
+        void 문서_내의_노드를_모두_삭제한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock = blockRepository.save(block);
+
+            Node node1 = Node.builder()
+                    .content("content")
+                    .style(Map.of("key", "value"))
+                    .order(1L)
+                    .blockId(savedBlock.getId())
+                    .documentId(documentId)
+                    .build();
+            nodeRepository.save(node1);
+
+            Node node2 = Node.builder()
+                    .content("content")
+                    .style(Map.of("key", "value"))
+                    .order(2L)
+                    .blockId(savedBlock.getId())
+                    .documentId(documentId)
+                    .build();
+            nodeRepository.save(node2);
+
+            blockService.deleteByDocumentId(documentId, memberId);
+
+            List<Node> nodeList = nodeRepository.findByDocumentId(documentId);
+            assertThat(nodeList).isEmpty();
+        }
+    }
 }
