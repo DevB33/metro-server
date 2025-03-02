@@ -639,7 +639,7 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4NzE3Nywic3ViIjoiOTNjM2RiMzYtZDY0NS00ODg0LWJjOGMtMGQ0YjFlYTE4ODFhIiwiZXhwIjoxNzQxNDkxOTc3fQ.LeaUUJV2FQ8fhXJsIkWgWiU5Nla7eDpcNaooL8eE2DHaGtO4ryNLnjwWAieA6zGX
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4OTAxNiwic3ViIjoiODdhNzdhZWEtYmNkOC00MGM0LTgyZTYtYjQ3MjI3NWViOTU2IiwiZXhwIjoxNzQxNDkzODE2fQ.jCPh3Kp4Cmq5nv0ZaW6RESWCIL3Gn76b0OVeEAxXICO2yLAmmF98fItVsSYOspKc
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -711,12 +711,12 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /documents HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4NzE3Nywic3ViIjoiY2M3ZTZjYzktZTNhNi00MzQzLWJmNTQtOGQ0NTQyMjU0NzA2IiwiZXhwIjoxNzQxNDkxOTc3fQ.DiDBoZg3SPP4mBZn4gkncJZG1bq157VjAP3yZLzwdWiie4ZKDFxR0kCpNpQV-z2F
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4OTAxNiwic3ViIjoiMDkyMGEyMjktZTMzYi00NWVmLTlmYWYtOTZmY2ZjNzA0NDQ5IiwiZXhwIjoxNzQxNDkzODE2fQ.0jWDAnVZQRtsxl9d7bXHv8Siq9nio1AG7a1zJozf7KHGTEwDZiwocymw_SJ2APZO
 Content-Length: 57
 Host: localhost:8080
 
 {
-  "parentId" : "ad2111b4-3b06-4a68-87bb-5a16b9adcb7c"
+  "parentId" : "f68909a0-7da3-467a-9a95-cf19c0fab98c"
 }</code></pre>
 </div>
 </div>
@@ -788,8 +788,8 @@ Host: localhost:8080
 <h4 id="_문서_삭제_http_request"><a class="link" href="#_문서_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /documents/5b028398-acb5-4ab6-85ae-83740406e6ba HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4NzE3Nywic3ViIjoiZDIxMjc4NzktZWM3MC00ZDdiLTk3MzItZjkxOGJjNjI4MWViIiwiZXhwIjoxNzQxNDkxOTc3fQ.LOWdmLTI64Wq0O9ErSkcpVyXIKqi7SmvRSFHxGXrnnvhYJBUy5CGsV3YrHXm3Syi
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /documents/3629ebb9-cd44-4328-84af-09a2a0dfb541 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4OTAxNiwic3ViIjoiNTczMmJiNzMtOTU2OS00MDFlLTk0MGItZTQ0NDU1MDgzZjg2IiwiZXhwIjoxNzQxNDkzODE2fQ.T_opFGV7lI6Yo7NWybnZGjZ3bzs2559W83lZln6hVMTYdfSVXXs-Vqy7Sra1teMG
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -801,8 +801,8 @@ Host: localhost:8080</code></pre>
 <h4 id="_문서_상세_조회_http_request"><a class="link" href="#_문서_상세_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents/1bffb40c-096f-4437-b7d0-f3e1d8a80cf7 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4NzE3Nywic3ViIjoiZjY4NjdiMmMtOTkwNC00ZTk0LWEzNGEtMjVmN2VkNmNiMGQwIiwiZXhwIjoxNzQxNDkxOTc3fQ.fO7JI6Njtz9M499sOh6AHAUrFTUpt_WbnraBl7-S28b3p42PA1S4b44UEkjyHTcB
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents/55b8ac87-e26f-431e-aeb2-3a2eebcd4330 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4OTAxNiwic3ViIjoiOTFmYmUzYmEtYmRhMi00NjY0LWFhZTAtZTE5MjI0YTI5ZjAyIiwiZXhwIjoxNzQxNDkzODE2fQ.1giuV0DZRAMLMXQeGyiQxDJXUzgrRARnTu802jqHWIjtFzlkkSLjf1ARrIvkOc6F
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -879,9 +879,9 @@ Host: localhost:8080</code></pre>
 <h4 id="_문서_부분_수정_http_request"><a class="link" href="#_문서_부분_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/d5d556b2-f9a7-4c4c-9d71-88f7723a9d6c/title HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/76adcc2e-d107-4d47-b3d3-9af80260b18c/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4NzE3Nywic3ViIjoiZjBjNmQ5MGItYTUzNC00M2VmLWFlYTEtYzdiMGY4NjM5ODY3IiwiZXhwIjoxNzQxNDkxOTc3fQ.NiB-juKInlVOEgIwpNHe04p_cdj0NGZwwg0tuedDG5PLAiaqkZz7_eJLfQ85VH4u
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4OTAxNiwic3ViIjoiZWUyNDViNWYtM2I4Mi00ZTE3LThkNDctODRkNTMyMGVhYzhhIiwiZXhwIjoxNzQxNDkzODE2fQ.fp0I1BFC9bHaHRq4eP0vlXh54HbB7FTy9psMbQTZJxZfXyXNFEUOqGQDB1WciV2F
 Content-Length: 23
 Host: localhost:8080
 
@@ -928,9 +928,9 @@ Host: localhost:8080
 <h4 id="_문서_태그_수정_http_request"><a class="link" href="#_문서_태그_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/fa7b67c3-e797-404a-82e7-5b5ed05500cf/tags HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/7170f7bb-8485-4f07-a82b-036665ab4ca3/tags HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4NzE3Nywic3ViIjoiNzY5YjllZDYtNjA0ZS00Y2JkLTgzYjEtMjYxMjQ0ZmVhMGE2IiwiZXhwIjoxNzQxNDkxOTc3fQ.kJRatZWbyN82oGESW9ZPi6k8X8tyeUd2lwwTAWa6029TTDWm_-cyYZchi7a1tG3h
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4OTAxNiwic3ViIjoiYzM5YzFiNzItYTIzZC00ZWYwLWI0NTAtMzc2MWYwMDBjOGJkIiwiZXhwIjoxNzQxNDkzODE2fQ.YTURmO7LsQvNPaVJzJ-g-_iUgOjAg01cb_nHTbnoJ_fiAclGLpQoqU-7AdpGI_PR
 Content-Length: 121
 Host: localhost:8080
 
@@ -997,12 +997,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /blocks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4NzE3Nywic3ViIjoiMmM3MDVmNzUtZjc5Yy00ZjVkLWFhMmYtODNjOWY3Y2UwNDM3IiwiZXhwIjoxNzQxNDkxOTc3fQ.KGGXbTHH697ilr5P6c6PeXNoCPVoIP7nIBFtHfDxTRHJeFpAReERT1_NHwQ0bLUZ
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4OTAxNiwic3ViIjoiMDZmNmMxNmUtMDIzYi00MmQ1LWFjYzItNTVhOWI3ZjY1YzJiIiwiZXhwIjoxNzQxNDkzODE2fQ.g2lgATr9uYKflSBMkzsmf7mIrBoG5Hxt79btgjlS1wSZ50IzB6NV1rU0Tz5ZbloI
 Content-Length: 98
 Host: localhost:8080
 
 {
-  "documentId" : "5025b044-f684-41d2-a4ca-eea765d3c82a",
+  "documentId" : "6f7c1e75-54be-42f1-8f77-c2c05d1744e8",
   "type" : "TEXT",
   "upperOrder" : 1
 }</code></pre>
@@ -1088,21 +1088,170 @@ Host: localhost:8080
 <h3 id="_블록_리스트_조회"><a class="link" href="#_블록_리스트_조회">블록 리스트 조회</a></h3>
 <div class="sect3">
 <h4 id="_블록_리스트_조회_http_request"><a class="link" href="#_블록_리스트_조회_http_request">HTTP request</a></h4>
-<div class="paragraph">
-<p>Snippet http-request not found for operation::block/list</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /blocks HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg4OTAxNiwic3ViIjoiNjAxNjI4ZDEtNGU0NS00ODdmLWEyMjYtOGI1OGQ5MGQyMDI2IiwiZXhwIjoxNzQxNDkzODE2fQ.Pv75cdKmu4mADGGQ8CYWd3FfrABSMJ42FcBd2DNOwh97n2EFUki4WKrPqQtG6hTI
+Content-Length: 59
+Host: localhost:8080
+
+{
+  "documentId" : "93dbd9ab-ec6e-4036-acb4-e751aa697409"
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_블록_리스트_조회_request_fields"><a class="link" href="#_블록_리스트_조회_request_fields">Request fields</a></h4>
-<div class="paragraph">
-<p>Snippet request-fields not found for operation::block/list</p>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약사항</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>documentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_블록_리스트_조회_response_fields"><a class="link" href="#_블록_리스트_조회_response_fields">Response fields</a></h4>
-<div class="paragraph">
-<p>Snippet response-fields not found for operation::block/list</p>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Block 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록 타입</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록 순서</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.documentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록에 포함된 노드 목록</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 스타일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].style.key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타일 키</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 순서</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].blockId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].documentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
