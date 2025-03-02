@@ -480,6 +480,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_범위_기반_블록_삭제">범위 기반 블록 삭제</a></li>
 </ul>
 </li>
+<li><a href="#node">노드 API</a>
+<ul class="sectlevel2">
+<li><a href="#_노드_생성">노드 생성</a></li>
+<li><a href="#_노드_내용_수정">노드 내용 수정</a></li>
+<li><a href="#_노드_스타일_수정">노드 스타일 수정</a></li>
+</ul>
+</li>
 <li><a href="#error-code">에러 코드</a>
 <ul class="sectlevel2">
 <li><a href="#error-code_error_code">Error code</a></li>
@@ -639,7 +646,7 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiOWYzMTY1YzAtODkyMi00ZGQxLTg0MDEtMzg0ZjUwMzRlMmE0IiwiZXhwIjoxNzQxNDk3NzM0fQ.UPjaOKfUXRNn2JsmldtP--P7UZMP21p-Kl3LGovlsQfyYnkja-PNhK9W_hw2m1ML
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3NCwic3ViIjoiODNiODUzNmUtNTcwNC00NTRlLThiNWItMzY0N2U1ZjU1ZDgxIiwiZXhwIjoxNzQxNDk4NDc0fQ.L3F1wByiLd6gpqNz_Aj4uf_eBqukvFsAP3AHrPxfugQKQhtqOBuskdjPgtHF-6fi
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -711,12 +718,12 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /documents HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiYTA0NDRmY2ItOGU3ZS00NmQwLWI1YTUtOTIxZWYzNjQyMmE5IiwiZXhwIjoxNzQxNDk3NzM0fQ.P7epNv-paVUYe4xLRi46f2dAyrbKU7JFiwvJkfyJZTEvlGcYLulOESdnA0U_RWIB
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3NCwic3ViIjoiMmEyNzBiMjYtMmI5Zi00MmFkLTgxNTctNWU0NjFhZDJmMjcyIiwiZXhwIjoxNzQxNDk4NDc0fQ.rb9davTrFoef9sGgw-Rx_xrW7gCQv5cUTtAfuyMUv36BBgfzEbM2s7yQBGJHgi5G
 Content-Length: 57
 Host: localhost:8080
 
 {
-  "parentId" : "fea56e47-9552-4fc1-8908-712e08f1d10e"
+  "parentId" : "26e6f6ac-96b2-4b29-b3e9-714317c0f2f3"
 }</code></pre>
 </div>
 </div>
@@ -788,8 +795,8 @@ Host: localhost:8080
 <h4 id="_문서_삭제_http_request"><a class="link" href="#_문서_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /documents/fd1aeaa4-0d49-44c2-8be3-3fe39b831f95 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiNWJkN2Y0Y2MtNjdhMy00ZTAxLTg1NDktYTIzNzczYTk5MGFjIiwiZXhwIjoxNzQxNDk3NzM0fQ.fiNGxoKJsv1fekevf2PMdRISwCK7Bk5nAd0B3OeIticeDCzsDpch98D_XlwSl2G3
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /documents/3276dcd9-6968-486c-bc0a-8f7496b9d47f HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3NCwic3ViIjoiYjFhMjg5NGItODBmOS00M2U2LTg2YTMtNzk4MzkyYjBiMTUyIiwiZXhwIjoxNzQxNDk4NDc0fQ.zqiYFVhDnTqox5XYNaRx_mxAK8dfa5dPT-Yroi7Mwq0rW8xDE1jgMs6yWmxjF9LY
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -801,8 +808,8 @@ Host: localhost:8080</code></pre>
 <h4 id="_문서_상세_조회_http_request"><a class="link" href="#_문서_상세_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents/7fd3b90c-6fb3-4598-a857-2207bca59b9b HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiZjM5Y2JmMWYtM2ZhMy00OTJhLWJhOGMtYzJjMzdmZDQzMDYxIiwiZXhwIjoxNzQxNDk3NzM0fQ.c_MORmdHQmxG4vtg7ZJReR153RyAUTt7Ez8HO2wl65F5B9S0Dfq1Nv1-diMwDroO
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents/e1e9314f-9c06-491e-be67-e163e9a5da43 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3Mywic3ViIjoiM2VhYWEyYjgtYWY0NS00OGFhLWFkYWItZDk4ODBhMDc3YTNiIiwiZXhwIjoxNzQxNDk4NDczfQ.MVUqcOwDq_gpyKxDJwLKF8XboDeefXXHIV5d6un5FgpeUKv_4tww-bXGlYEpYrjB
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -879,9 +886,9 @@ Host: localhost:8080</code></pre>
 <h4 id="_문서_부분_수정_http_request"><a class="link" href="#_문서_부분_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/ce418224-7438-4ef1-a159-c3fd3727da8b/title HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/15d99254-32b1-4c37-8197-8aebd5f8cb30/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiOTMzN2Y3YjItNTFmZS00NDViLTkyN2MtY2NmNmE4OTU1NzZkIiwiZXhwIjoxNzQxNDk3NzM0fQ.1WMT-7LQ9_JpZi4r9mDBMJ7KbYJ0H5cF3rioAriqAyBoeLc-gG8FRCfLTOyXmvsz
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3Mywic3ViIjoiZTY2ZGI0MGQtYmVlMC00ODlmLTkyNTgtMjk4ZDIyOTg0MDU5IiwiZXhwIjoxNzQxNDk4NDczfQ.4BnHYKVN8GXg_HlaqZA1DGsPOmIw06NcFWmj2339UgPTmMITLBNhqoYVSqWO5qi1
 Content-Length: 23
 Host: localhost:8080
 
@@ -928,9 +935,9 @@ Host: localhost:8080
 <h4 id="_문서_태그_수정_http_request"><a class="link" href="#_문서_태그_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/e9a32d80-6dd4-416f-b841-3e34e213e75d/tags HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/54f33008-2a7c-4b7b-8a32-e690452cab14/tags HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiMTg3ZjY5MzctNDgzMS00MWEzLTk1N2MtMjhiMDRjNDU3NjU3IiwiZXhwIjoxNzQxNDk3NzM0fQ.qgZi8a_9_jg_GNWkt02wd7s2VtiwexYX3aMXcOnjnR7y7mwhwt5Rfri_PB1LiVb5
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3Mywic3ViIjoiZjg5NGQwYzQtMTdlYi00ZTMyLThlMzEtZjhmZDNhMzE0YjI2IiwiZXhwIjoxNzQxNDk4NDczfQ.6ph7Zh4h92c7w-OYgJwOZB9iAvJUoVoFgy1zaff2jx-eDQzKjG0u_wFNFUzRe4fJ
 Content-Length: 121
 Host: localhost:8080
 
@@ -997,12 +1004,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /blocks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiY2UzZDMyYWMtZThhMy00YzZjLWEwMzctNzE5MzVmOGNkNzkyIiwiZXhwIjoxNzQxNDk3NzM0fQ.k3RBcVgoFqm2aZU2SMZlimmu78BwdIkeRqMwbRqNSvczPLwKtdgOMEFOJaI_NoAO
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3Mywic3ViIjoiZmNkZDFiNGYtYTU4Yy00ZmI5LThjMmUtZDljMDgyMTQzN2Q1IiwiZXhwIjoxNzQxNDk4NDczfQ.71cQhIix8Z8v2jOxW6W0oimwSuKVf6oXzZhKrKP6ScBintqbLrFR_KKHDAiE_VvP
 Content-Length: 98
 Host: localhost:8080
 
 {
-  "documentId" : "c2607f36-c7d9-44ad-9928-6d02dc702496",
+  "documentId" : "f2ae77c9-0332-44d4-aff1-4d10df7c0708",
   "type" : "TEXT",
   "upperOrder" : 1
 }</code></pre>
@@ -1092,12 +1099,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /blocks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiY2ZjODE5MGYtYTZiOS00ZWE2LWJjOGEtMzhhNWRmODYyYWNkIiwiZXhwIjoxNzQxNDk3NzM0fQ._wTP7e-96Yyv4EYG-RJx_fMmdLDgg4UDXI5u6O7ydDc44ras5JoF1YA2eUOlNdsN
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3Mywic3ViIjoiZTEzYmU5NjUtMjg5MC00NTYwLTkzNjktZjAzMGRjMzQxMzIwIiwiZXhwIjoxNzQxNDk4NDczfQ.qEzLWkgUug0hnOcdrjqdoxwsvIa-U3pGwQQ4gc6c492-VzuyoZ5rYt5FCi1SM0t9
 Content-Length: 59
 Host: localhost:8080
 
 {
-  "documentId" : "81b2a7d8-0832-4408-8979-66bf357e5594"
+  "documentId" : "9e36c771-d00b-433a-a761-a18076ca2e6a"
 }</code></pre>
 </div>
 </div>
@@ -1262,12 +1269,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /blocks/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiNzg1MTdhZTQtYWIwMy00NDE1LTlhNjctYjRmMGFiOTJkMzA1IiwiZXhwIjoxNzQxNDk3NzM0fQ.6rfVOaDlaGaRFkNiOSXlxtGwwlguAtyoofFZwDCoElwkWNcH8sXgoje7_f9nVW7T
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3Mywic3ViIjoiYzRjMjBjNzYtZmNiNy00ZWE3LTgxOTAtOWJiM2EwM2Q1OTMxIiwiZXhwIjoxNzQxNDk4NDczfQ.JyhhXwIVsnev9jILX7IepkhgmE2XjL-drCsBbt30StOCXnIZ6UvI7oNkLZzsO0if
 Content-Length: 117
 Host: localhost:8080
 
 {
-  "documentId" : "4714c05e-b6bd-4a9c-9626-26c68833b630",
+  "documentId" : "e074b3f3-f16d-40a1-883f-3310766f3ee4",
   "startOrder" : 1,
   "endOrder" : 2,
   "upperOrder" : 3
@@ -1335,12 +1342,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /blocks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MjkzNCwic3ViIjoiYWIxMGQ2NjUtMzMwNC00N2QxLWJmNWItNTM4ZWY2OGI2Zjk3IiwiZXhwIjoxNzQxNDk3NzM0fQ.d9XXwYb1wh60PAa2XRQCKUAFGBboPtUXztqi-llxNW4XAUffFJ8NsGEHT_fyV2Gq
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3Mywic3ViIjoiNTk0OGVkMTYtNDNjMy00OWIyLWFkN2MtN2M4YTFiYWM5Y2E5IiwiZXhwIjoxNzQxNDk4NDczfQ.bAxcOzCnaEwm3x2qteqBs80vOXPJc-qwK31xflGAsdCBzlg88LWoynzevP-Elfdo
 Content-Length: 97
 Host: localhost:8080
 
 {
-  "documentId" : "ee2fe6cb-d65c-49ba-ab4e-0469ca662bd6",
+  "documentId" : "f3bcdd15-11d1-4dfc-94f5-6b6dad5496bd",
   "startOrder" : 1,
   "endOrder" : 2
 }</code></pre>
@@ -1390,6 +1397,131 @@ Host: localhost:8080
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="node"><a class="link" href="#node">노드 API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_노드_생성"><a class="link" href="#_노드_생성">노드 생성</a></h3>
+<div class="sect3">
+<h4 id="_노드_생성_http_request"><a class="link" href="#_노드_생성_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /nodes HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5MzY3NCwic3ViIjoiNDgyY2U5YTAtM2YyZC00NzYyLTg3NDYtNmQwYzYxMzgzN2IyIiwiZXhwIjoxNzQxNDk4NDc0fQ.vO4bIzkoKEP-e5VXwp0Qukdgmb47Th2jlcZUDPh-YiAYUAHx1ul-3ZN-KFWE9H-K
+Content-Length: 192
+Host: localhost:8080
+
+{
+  "blockId" : "9a94e4ab-cace-4d31-9312-00919746ec68",
+  "documentId" : "edd79e07-75a0-4e1a-9868-621e38f12c21",
+  "content" : "content",
+  "order" : 1,
+  "style" : {
+    "key" : "value"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_노드_생성_request_fields"><a class="link" href="#_노드_생성_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약사항</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blockId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록 ID</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>documentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">순서</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타일</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style.key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타일 키</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_노드_내용_수정"><a class="link" href="#_노드_내용_수정">노드 내용 수정</a></h3>
+<div class="sect3">
+<h4 id="_노드_내용_수정_http_request"><a class="link" href="#_노드_내용_수정_http_request">HTTP request</a></h4>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::node/update-content</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_노드_내용_수정_request_fields"><a class="link" href="#_노드_내용_수정_request_fields">Request fields</a></h4>
+<div class="paragraph">
+<p>Snippet request-fields not found for operation::node/update-content</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_노드_스타일_수정"><a class="link" href="#_노드_스타일_수정">노드 스타일 수정</a></h3>
+<div class="sect3">
+<h4 id="_노드_스타일_수정_http_request"><a class="link" href="#_노드_스타일_수정_http_request">HTTP request</a></h4>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::node/update-style</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_노드_스타일_수정_request_fields"><a class="link" href="#_노드_스타일_수정_request_fields">Request fields</a></h4>
+<div class="paragraph">
+<p>Snippet request-fields not found for operation::node/update-style</p>
+</div>
 </div>
 </div>
 </div>
@@ -1524,7 +1656,7 @@ Host: localhost:8080
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2025-03-02 12:43:09 +0900
+Last updated 2025-03-02 14:26:48 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
