@@ -346,5 +346,41 @@ class BlockServiceTest extends ServiceTest {
                     () -> assertThat(blockList.get(0).getId()).isEqualTo(savedBlock3.getId())
             );
         }
+
+        @Test
+        void 블록이_삭제되면_하위의_노드도_삭제된다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock = blockRepository.save(block);
+
+            Node node1 = Node.builder()
+                    .content("content")
+                    .style(Map.of("key", "value"))
+                    .order(1L)
+                    .blockId(savedBlock.getId())
+                    .documentId(documentId)
+                    .build();
+            nodeRepository.save(node1);
+
+            Node node2 = Node.builder()
+                    .content("content")
+                    .style(Map.of("key", "value"))
+                    .order(2L)
+                    .blockId(savedBlock.getId())
+                    .documentId(documentId)
+                    .build();
+            nodeRepository.save(node2);
+
+            blockService.deleteBlockInRange(documentId, memberId, savedBlock.getOrder(), savedBlock.getOrder());
+
+            List<Node> nodeList = nodeRepository.findByDocumentId(documentId);
+            assertThat(nodeList).isEmpty();
+        }
     }
 }
