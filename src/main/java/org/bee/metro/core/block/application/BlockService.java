@@ -146,4 +146,15 @@ public class BlockService {
         return blockRepository.existsByDocumentIdAndOrderBetween(
                 documentId, upperOrder + 1, upperOrder + range);
     }
+
+    @Transactional
+    public void deleteBlockInRange(UUID documentId, UUID memberId, Long startOrder, Long endOrder) {
+        List<Block> blockList = blockRepository.findByDocumentId(documentId);
+        blockList.stream().forEach(block -> {
+            if (block.isNotOwner(memberId)) {
+                throw new BadRequestException("해당 블록의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+            }
+        });
+        blockRepository.deleteByDocumentIdAndOrderBetween(documentId, startOrder, endOrder);
+    }
 }
