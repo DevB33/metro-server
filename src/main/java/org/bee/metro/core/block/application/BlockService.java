@@ -110,6 +110,7 @@ public class BlockService {
         nodeRepository.save(updatedNode);
     }
 
+    @Transactional
     public void updateNodeOrder(UUID documentId, UUID memberId, Long startOrder, Long endOrder, Long upperOrder) {
         Document document = documentService.getDocument(documentId);
         if (document.isNotOwner(memberId)) {
@@ -117,12 +118,29 @@ public class BlockService {
         }
 
         Long range = endOrder - startOrder + 1;
+        List<Block> blockList = blockRepository.findByDocumentId(documentId);
         if (existsBlockInRange(documentId, range, upperOrder)) {
-            // 뒤의 블록 업데이트
+            moveBlocksBack(upperOrder, blockList, range);
         }
+        arrangeBlocks(startOrder, endOrder, upperOrder, blockList);
+    }
 
-        // 리스트 다 불러와서 순서 조정한다음 다 세이브
+    private void arrangeBlocks(Long startOrder, Long endOrder, Long upperOrder, List<Block> blockList) {
+        for (Block block: blockList) {
+            if (startOrder <= block.getOrder() && block.getOrder() <= endOrder) {
+                Block updatedBlock = block.updateOrder(upperOrder + block.getOrder() - startOrder + 1);
+                blockRepository.save(updatedBlock);
+            }
+        }
+    }
 
+    private void moveBlocksBack(Long upperOrder, List<Block> blockList, Long range) {
+        for (Block block: blockList) {
+            if (block.getOrder() > upperOrder) {
+                Block updatedBlock = block.updateOrder(block.getOrder() + range);
+                blockRepository.save(updatedBlock);
+            }
+        }
     }
 
     private Boolean existsBlockInRange(UUID documentId, Long range, Long upperOrder) {

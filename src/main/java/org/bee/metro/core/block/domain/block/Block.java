@@ -60,4 +60,14 @@ public class Block {
             .memberId(blockEntity.getMemberId())
             .build();
     }
+
+    public Block updateOrder(Long order) {
+        return Block.builder()
+            .id(this.id)
+            .type(this.type)
+            .order(order)
+            .documentId(this.documentId)
+            .memberId(this.memberId)
+            .build();
+    }
 }
