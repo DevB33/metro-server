@@ -9,6 +9,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,6 +22,7 @@ import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockType;
 import org.bee.metro.core.block.domain.node.Node;
 import org.bee.metro.core.block.dto.BlockCreationRequest;
+import org.bee.metro.core.block.dto.BlockOrderUpdateRequest;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.block.dto.DetailBlocksRequest;
 import org.junit.jupiter.api.Nested;
@@ -120,6 +122,36 @@ class BlockApiTest extends DocumentTest {
                                     fieldWithPath("blocks[].nodes[].order").description("노드 순서"),
                                     fieldWithPath("blocks[].nodes[].blockId").description("블록 ID"),
                                     fieldWithPath("blocks[].nodes[].documentId").description("문서 ID")
+                            )
+                    ));
+        }
+    }
+
+    @Nested
+    class 문서_순서_변경 {
+
+        @Test
+        void 문서_순서_변경에_성공하면_200을_반환한다() throws Exception {
+            UUID documentId = UUID.randomUUID();
+            BlockOrderUpdateRequest request = new BlockOrderUpdateRequest(
+                    documentId,
+                    1L,
+                    2L,
+                    3L
+            );
+
+            mockMvc.perform(patch("/blocks/order")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk())
+                    .andDo(document("block/update-order",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("documentId").description("문서 ID"),
+                                    fieldWithPath("startOrder").description("시작 순서"),
+                                    fieldWithPath("endOrder").description("끝 순서"),
+                                    fieldWithPath("upperOrder").description("상위 순서")
                             )
                     ));
         }
