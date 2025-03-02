@@ -10,6 +10,7 @@ import org.bee.metro.core.block.dto.BlockCreationResponse;
 import org.bee.metro.global.auth.annotation.Login;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ public class BlockApi {
 
     @PostMapping
     public ResponseEntity<BlockCreationResponse> createBlock(
-            @Login UUID memberId, BlockCreationRequest blockCreationRequest
+            @Login UUID memberId, @RequestBody BlockCreationRequest blockCreationRequest
     ) {
         Block createdBlock = blockService.createBlock(
                 memberId,
