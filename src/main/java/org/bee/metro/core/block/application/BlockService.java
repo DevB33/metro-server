@@ -108,11 +108,16 @@ public class BlockService {
     }
 
     @Transactional
-    public void updateNodeOrder(UUID documentId, UUID memberId, Long startOrder, Long endOrder, Long upperOrder) {
+    public void updateBlocksOrder(UUID documentId, UUID memberId, Long startOrder, Long endOrder, Long upperOrder) {
         Long range = endOrder - startOrder + 1;
         List<Block> blockList = blockRepository.findByDocumentId(documentId);
 
-        // TODO: memberId 로직 구현 필요
+        blockList.stream().forEach(block -> {
+            if (block.isNotOwner(memberId)) {
+                throw new BadRequestException("해당 블록의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+            }
+        });
+
         if (existsBlockInRange(documentId, range, upperOrder)) {
             moveBlocksBack(upperOrder, blockList, range);
         }

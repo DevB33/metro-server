@@ -70,4 +70,8 @@ public class Block {
             .memberId(this.memberId)
             .build();
     }
+
+    public boolean isNotOwner(UUID memberId) {
+        return !this.memberId.equals(memberId);
+    }
 }
