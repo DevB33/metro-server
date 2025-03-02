@@ -14,8 +14,6 @@ import org.bee.metro.core.block.domain.node.Node;
 import org.bee.metro.core.block.domain.node.NodeRepository;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.block.exception.BlockErrorCode;
-import org.bee.metro.core.document.application.DocumentService;
-import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.global.exception.type.BadRequestException;
 import org.bee.metro.global.exception.type.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,7 +24,6 @@ public class BlockService {
 
     private final BlockRepository blockRepository;
     private final NodeRepository nodeRepository;
-    private final DocumentService documentService;
 
     public Block createBlock(UUID memberId, UUID documentId, BlockType type, Long order) {
         Block block = Block.builder()
@@ -112,13 +109,10 @@ public class BlockService {
 
     @Transactional
     public void updateNodeOrder(UUID documentId, UUID memberId, Long startOrder, Long endOrder, Long upperOrder) {
-        Document document = documentService.getDocument(documentId);
-        if (document.isNotOwner(memberId)) {
-            throw new BadRequestException("해당 문서의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
-        }
-
         Long range = endOrder - startOrder + 1;
         List<Block> blockList = blockRepository.findByDocumentId(documentId);
+
+        // TODO: memberId 로직 구현 필요
         if (existsBlockInRange(documentId, range, upperOrder)) {
             moveBlocksBack(upperOrder, blockList, range);
         }
