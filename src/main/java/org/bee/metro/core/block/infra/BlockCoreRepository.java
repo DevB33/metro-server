@@ -34,4 +34,9 @@ public class BlockCoreRepository implements BlockRepository {
     public Boolean existsByDocumentIdAndOrderBetween(UUID documentId, Long startOrder, Long endOrder) {
         return blockJpaRepository.existsByDocumentIdAndOrderBetween(documentId, startOrder, endOrder);
     }
+
+    @Override
+    public void deleteByDocumentIdAndOrderBetween(UUID documentId, Long startOrder, Long endOrder) {
+        blockJpaRepository.deleteByDocumentIdAndOrderBetween(documentId, startOrder, endOrder);
+    }
 }

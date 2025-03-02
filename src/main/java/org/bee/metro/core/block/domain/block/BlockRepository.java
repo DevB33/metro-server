@@ -7,4 +7,5 @@ public interface BlockRepository {
     Block save(Block block);
     List<Block> findByDocumentId(UUID documentId);
     Boolean existsByDocumentIdAndOrderBetween(UUID documentId, Long startOrder, Long endOrder);
+    void deleteByDocumentIdAndOrderBetween(UUID documentId, Long startOrder, Long endOrder);
 }
