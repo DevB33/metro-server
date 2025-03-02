@@ -155,6 +155,16 @@ public class BlockService {
                 throw new BadRequestException("해당 블록의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
             }
         });
+
+        deleteNodeByBlockId(startOrder, endOrder, blockList);
         blockRepository.deleteByDocumentIdAndOrderBetween(documentId, startOrder, endOrder);
+    }
+
+    private void deleteNodeByBlockId(Long startOrder, Long endOrder, List<Block> blockList) {
+        for (Block block: blockList) {
+            if (startOrder <= block.getOrder() && block.getOrder() <= endOrder) {
+                nodeRepository.deleteByBlockId(block.getId());
+            }
+        }
     }
 }
