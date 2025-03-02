@@ -39,4 +39,9 @@ public class BlockCoreRepository implements BlockRepository {
     public void deleteByDocumentIdAndOrderBetween(UUID documentId, Long startOrder, Long endOrder) {
         blockJpaRepository.deleteByDocumentIdAndOrderBetween(documentId, startOrder, endOrder);
     }
+
+    @Override
+    public void deleteByDocumentId(UUID documentId) {
+        blockJpaRepository.deleteByDocumentId(documentId);
+    }
 }
