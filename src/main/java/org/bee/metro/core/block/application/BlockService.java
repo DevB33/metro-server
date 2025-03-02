@@ -58,6 +58,7 @@ public class BlockService {
                 .blockId(blockId)
                 .documentId(documentId)
                 .build();
+        // TODO: 이후 노드들 order 조정 로직 추가
         return nodeRepository.save(node);
     }
 
