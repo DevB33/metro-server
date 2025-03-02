@@ -1,0 +1,11 @@
+[[node]]
+== 노드 API
+
+=== 노드 생성
+operation::node/create[snippets='http-request,request-fields']
+
+=== 노드 내용 수정
+operation::node/update-content[snippets='http-request,request-fields']
+
+=== 노드 스타일 수정
+operation::node/update-style[snippets='http-request,request-fields']
