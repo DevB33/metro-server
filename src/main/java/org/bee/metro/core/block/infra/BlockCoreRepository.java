@@ -29,4 +29,9 @@ public class BlockCoreRepository implements BlockRepository {
                 .map(Block::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Boolean existsByDocumentIdAndOrderBetween(UUID documentId, Long startOrder, Long endOrder) {
+        return blockJpaRepository.existsByDocumentIdAndOrderBetween(documentId, startOrder, endOrder);
+    }
 }

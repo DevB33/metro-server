@@ -106,4 +106,44 @@ public class BlockService {
         Node updatedNode = node.updateStyle(style);
         nodeRepository.save(updatedNode);
     }
+
+    @Transactional
+    public void updateBlocksOrder(UUID documentId, UUID memberId, Long startOrder, Long endOrder, Long upperOrder) {
+        Long range = endOrder - startOrder + 1;
+        List<Block> blockList = blockRepository.findByDocumentId(documentId);
+
+        blockList.stream().forEach(block -> {
+            if (block.isNotOwner(memberId)) {
+                throw new BadRequestException("해당 블록의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+            }
+        });
+
+        if (existsBlockInRange(documentId, range, upperOrder)) {
+            moveBlocksBack(upperOrder, blockList, range);
+        }
+        arrangeBlocks(startOrder, endOrder, upperOrder, blockList);
+    }
+
+    private void arrangeBlocks(Long startOrder, Long endOrder, Long upperOrder, List<Block> blockList) {
+        for (Block block: blockList) {
+            if (startOrder <= block.getOrder() && block.getOrder() <= endOrder) {
+                Block updatedBlock = block.updateOrder(upperOrder + block.getOrder() - startOrder + 1);
+                blockRepository.save(updatedBlock);
+            }
+        }
+    }
+
+    private void moveBlocksBack(Long upperOrder, List<Block> blockList, Long range) {
+        for (Block block: blockList) {
+            if (block.getOrder() > upperOrder) {
+                Block updatedBlock = block.updateOrder(block.getOrder() + range);
+                blockRepository.save(updatedBlock);
+            }
+        }
+    }
+
+    private Boolean existsBlockInRange(UUID documentId, Long range, Long upperOrder) {
+        return blockRepository.existsByDocumentIdAndOrderBetween(
+                documentId, upperOrder + 1, upperOrder + range);
+    }
 }

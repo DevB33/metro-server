@@ -1,6 +1,7 @@
 package org.bee.metro.core.block.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockType;
 import org.bee.metro.core.block.domain.node.Node;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
+import org.bee.metro.global.exception.type.BadRequestException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -144,6 +146,146 @@ class BlockServiceTest extends ServiceTest {
                     () -> assertThat(updatedNode.getId()).isEqualTo(savedNode.getId()),
                     () -> assertThat(updatedNode.getStyle()).isEqualTo(updatedStyle)
             );
+        }
+    }
+
+    @Nested
+    class updateBlocksOrder_메서드는 {
+
+        @Test
+        void 블록의_순서를_수정한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block1 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock1 = blockRepository.save(block1);
+
+            Block block2 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(2L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock2 = blockRepository.save(block2);
+
+            blockService.updateBlocksOrder(documentId, memberId, savedBlock1.getOrder(), savedBlock1.getOrder(),
+                    savedBlock2.getOrder());
+
+            List<Block> updatedBlock = blockRepository.findByDocumentId(documentId);
+            assertAll(
+                    () -> assertThat(updatedBlock).hasSize(2),
+                    () -> assertThat(updatedBlock.get(0).getId()).isEqualTo(savedBlock2.getId()),
+                    () -> assertThat(updatedBlock.get(0).getOrder()).isEqualTo(2L),
+                    () -> assertThat(updatedBlock.get(1).getId()).isEqualTo(savedBlock1.getId()),
+                    () -> assertThat(updatedBlock.get(1).getOrder()).isEqualTo(3L)
+            );
+        }
+
+        @Test
+        void 여러_개의_블록_순서를_수정한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block1 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock1 = blockRepository.save(block1);
+
+            Block block2 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(2L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock2 = blockRepository.save(block2);
+
+            Block block3 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(3L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock3 = blockRepository.save(block3);
+
+            blockService.updateBlocksOrder(documentId, memberId, savedBlock1.getOrder(), savedBlock1.getOrder() + 1,
+                    savedBlock3.getOrder());
+
+            List<Block> updatedBlock = blockRepository.findByDocumentId(documentId);
+            assertAll(
+                    () -> assertThat(updatedBlock).hasSize(3),
+                    () -> assertThat(updatedBlock.get(0).getId()).isEqualTo(savedBlock3.getId()),
+                    () -> assertThat(updatedBlock.get(0).getOrder()).isEqualTo(3L),
+                    () -> assertThat(updatedBlock.get(1).getId()).isEqualTo(savedBlock1.getId()),
+                    () -> assertThat(updatedBlock.get(1).getOrder()).isEqualTo(4L),
+                    () -> assertThat(updatedBlock.get(2).getId()).isEqualTo(savedBlock2.getId()),
+                    () -> assertThat(updatedBlock.get(2).getOrder()).isEqualTo(5L)
+            );
+        }
+
+        @Test
+        void 순서_변경이_중간이라면_중간_블록은_뒤로_보내진다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block1 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock1 = blockRepository.save(block1);
+
+            Block block2 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(2L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock2 = blockRepository.save(block2);
+
+            Block block3 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(3L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock3 = blockRepository.save(block3);
+
+            blockService.updateBlocksOrder(documentId, memberId, savedBlock1.getOrder(), savedBlock1.getOrder(), savedBlock2.getOrder());
+
+            List<Block> updatedBlock = blockRepository.findByDocumentId(documentId);
+            assertAll(
+                    () -> assertThat(updatedBlock).hasSize(3),
+                    () -> assertThat(updatedBlock.get(0).getId()).isEqualTo(savedBlock2.getId()),
+                    () -> assertThat(updatedBlock.get(0).getOrder()).isEqualTo(2L),
+                    () -> assertThat(updatedBlock.get(1).getId()).isEqualTo(savedBlock1.getId()),
+                    () -> assertThat(updatedBlock.get(1).getOrder()).isEqualTo(3L),
+                    () -> assertThat(updatedBlock.get(2).getId()).isEqualTo(savedBlock3.getId()),
+                    () -> assertThat(updatedBlock.get(2).getOrder()).isEqualTo(4L)
+            );
+        }
+
+        @Test
+        void 해당_블록들의_소유자가_아니라면_예외가_발생한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock = blockRepository.save(block);
+
+            assertThatThrownBy(
+                    () -> blockService.updateBlocksOrder(documentId, UUID.randomUUID(), savedBlock.getOrder(),
+                            savedBlock.getOrder(), savedBlock.getOrder()))
+                    .isInstanceOf(BadRequestException.class);
         }
     }
 }
