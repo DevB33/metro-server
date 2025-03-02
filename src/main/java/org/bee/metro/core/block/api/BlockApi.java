@@ -8,12 +8,14 @@ import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockType;
 import org.bee.metro.core.block.dto.BlockCreationRequest;
 import org.bee.metro.core.block.dto.BlockCreationResponse;
+import org.bee.metro.core.block.dto.BlockOrderUpdateRequest;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.block.dto.DetailBlocksRequest;
 import org.bee.metro.core.block.dto.DetailBlocksResponse;
 import org.bee.metro.global.auth.annotation.Login;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +45,19 @@ public class BlockApi {
     public ResponseEntity<DetailBlocksResponse> findBlocks(@RequestBody DetailBlocksRequest detailBlocksRequest) {
         List<DetailBlockPayload> detailBlockPayloads = blockService.findByDocumentId(detailBlocksRequest.documentId());
         return ResponseEntity.ok(new DetailBlocksResponse(detailBlockPayloads));
+    }
+
+    @PatchMapping("/order")
+    public ResponseEntity<Void> updateBlockOrder(
+            @Login UUID memberId, @RequestBody BlockOrderUpdateRequest blockOrderUpdateRequest
+    ) {
+        blockService.updateBlocksOrder(
+                blockOrderUpdateRequest.documentId(),
+                memberId,
+                blockOrderUpdateRequest.startOrder(),
+                blockOrderUpdateRequest.endOrder(),
+                blockOrderUpdateRequest.upperOrder()
+        );
+        return ResponseEntity.ok().build();
     }
 }
