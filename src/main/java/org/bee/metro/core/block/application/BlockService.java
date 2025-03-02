@@ -167,4 +167,17 @@ public class BlockService {
             }
         }
     }
+
+    @Transactional
+    public void deleteByDocumentId(UUID documentId, UUID memberId) {
+        List<Block> blockList = blockRepository.findByDocumentId(documentId);
+        blockList.stream().forEach(block -> {
+            if (block.isNotOwner(memberId)) {
+                throw new BadRequestException("해당 블록의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+            }
+        });
+
+        nodeRepository.deleteByDoucmentId(documentId);
+        blockRepository.deleteByDocumentId(documentId);
+    }
 }

@@ -12,7 +12,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.application.BlockService;
-import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
@@ -89,6 +88,8 @@ public class DocumentService {
         if (document.isNotOwner(ownerId)) {
             throw new BadRequestException("해당 문서의 삭제 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
         }
+
+        blockService.deleteByDocumentId(id, ownerId);
         deleteDocumentTree(document);
     }
 
