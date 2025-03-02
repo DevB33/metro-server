@@ -8,6 +8,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -22,6 +23,7 @@ import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockType;
 import org.bee.metro.core.block.domain.node.Node;
 import org.bee.metro.core.block.dto.BlockCreationRequest;
+import org.bee.metro.core.block.dto.BlockDeletionRequest;
 import org.bee.metro.core.block.dto.BlockOrderUpdateRequest;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.block.dto.DetailBlocksRequest;
@@ -157,4 +159,31 @@ class BlockApiTest extends DocumentTest {
         }
     }
 
+    @Nested
+    class 블록_범위_삭제 {
+
+        @Test
+        void 블록_삭제를_성공하면_200을_반환한다() throws Exception {
+            UUID documentId = UUID.randomUUID();
+            BlockDeletionRequest request = new BlockDeletionRequest(
+                    documentId,
+                    1L,
+                    2L
+            );
+
+            mockMvc.perform(delete("/blocks")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk())
+                    .andDo(document("block/delete",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("documentId").description("문서 ID"),
+                                    fieldWithPath("startOrder").description("시작 순서"),
+                                    fieldWithPath("endOrder").description("끝 순서")
+                            )
+                    ));
+        }
+    }
 }
