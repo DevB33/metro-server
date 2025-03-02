@@ -14,7 +14,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -31,7 +30,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
-class BlockApiTest extends DocumentTest {
+class BlockDocument extends DocumentTest {
 
     @Nested
     class 블록_생성 {

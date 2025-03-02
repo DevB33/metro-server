@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.bee.metro.core.auth.api.AuthApi;
 import org.bee.metro.core.auth.application.AuthService;
 import org.bee.metro.core.block.api.BlockApi;
+import org.bee.metro.core.block.api.NodeApi;
 import org.bee.metro.core.block.application.BlockService;
 import org.bee.metro.core.document.api.DocumentApi;
 import org.bee.metro.core.document.application.DocumentService;
@@ -26,7 +27,7 @@ import org.springframework.security.test.context.TestSecurityContextHolder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(value = {AuthApi.class, DocumentApi.class, BlockApi.class})
+@WebMvcTest(value = {AuthApi.class, DocumentApi.class, BlockApi.class, NodeApi.class})
 @Import({SecurityConfig.class})
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
