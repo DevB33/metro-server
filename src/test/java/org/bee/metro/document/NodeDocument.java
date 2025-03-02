@@ -14,6 +14,7 @@ import java.util.UUID;
 import org.bee.metro.context.DocumentTest;
 import org.bee.metro.core.block.dto.NodeContentUpdateRequest;
 import org.bee.metro.core.block.dto.NodeCreationRequest;
+import org.bee.metro.core.block.dto.NodeStyleUpdateRequest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -69,6 +70,29 @@ public class NodeDocument extends DocumentTest {
                             preprocessRequest(prettyPrint()),
                             requestFields(
                                     fieldWithPath("content").description("내용")
+                            )
+                    ));
+        }
+    }
+
+    @Nested
+    class 노드_스타일_수정 {
+
+        @Test
+        void 노드_스타일_수정에_성공하면_200을_반환한다() throws Exception {
+            NodeStyleUpdateRequest nodeStyleUpdateRequest = new NodeStyleUpdateRequest(Map.of("key", "value"));
+
+            UUID nodeId = UUID.randomUUID();
+            mockMvc.perform(patch("/nodes/" + nodeId + "/style")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(nodeStyleUpdateRequest)))
+                    .andExpect(status().isOk())
+                    .andDo(document("node/update-style",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("style").description("스타일"),
+                                    fieldWithPath("style.key").description("스타일 키")
                             )
                     ));
         }
