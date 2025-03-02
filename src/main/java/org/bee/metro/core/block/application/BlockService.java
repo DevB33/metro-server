@@ -146,4 +146,38 @@ public class BlockService {
         return blockRepository.existsByDocumentIdAndOrderBetween(
                 documentId, upperOrder + 1, upperOrder + range);
     }
+
+    @Transactional
+    public void deleteBlockInRange(UUID documentId, UUID memberId, Long startOrder, Long endOrder) {
+        List<Block> blockList = blockRepository.findByDocumentId(documentId);
+        blockList.stream().forEach(block -> {
+            if (block.isNotOwner(memberId)) {
+                throw new BadRequestException("해당 블록의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+            }
+        });
+
+        deleteNodeByBlockId(startOrder, endOrder, blockList);
+        blockRepository.deleteByDocumentIdAndOrderBetween(documentId, startOrder, endOrder);
+    }
+
+    private void deleteNodeByBlockId(Long startOrder, Long endOrder, List<Block> blockList) {
+        for (Block block: blockList) {
+            if (startOrder <= block.getOrder() && block.getOrder() <= endOrder) {
+                nodeRepository.deleteByBlockId(block.getId());
+            }
+        }
+    }
+
+    @Transactional
+    public void deleteByDocumentId(UUID documentId, UUID memberId) {
+        List<Block> blockList = blockRepository.findByDocumentId(documentId);
+        blockList.stream().forEach(block -> {
+            if (block.isNotOwner(memberId)) {
+                throw new BadRequestException("해당 블록의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+            }
+        });
+
+        nodeRepository.deleteByDoucmentId(documentId);
+        blockRepository.deleteByDocumentId(documentId);
+    }
 }

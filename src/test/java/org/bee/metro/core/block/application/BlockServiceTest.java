@@ -288,4 +288,166 @@ class BlockServiceTest extends ServiceTest {
                     .isInstanceOf(BadRequestException.class);
         }
     }
+
+    @Nested
+    class deleteBlockInRange_메서드는 {
+
+        @Test
+        void 한개의_블록을_삭제한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            blockRepository.save(block);
+
+            blockService.deleteBlockInRange(documentId, memberId, block.getOrder(), block.getOrder());
+
+            List<Block> blockList = blockRepository.findByDocumentId(documentId);
+            assertThat(blockList).isEmpty();
+        }
+
+        @Test
+        void 범위_내의_블록을_모두_삭제한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block1 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            blockRepository.save(block1);
+
+            Block block2 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(2L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            blockRepository.save(block2);
+
+            Block block3 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(3L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock3 = blockRepository.save(block3);
+
+            blockService.deleteBlockInRange(documentId, memberId, block1.getOrder(), block1.getOrder() + 1);
+
+            List<Block> blockList = blockRepository.findByDocumentId(documentId);
+            assertAll(
+                    () -> assertThat(blockList).hasSize(1),
+                    () -> assertThat(blockList.get(0).getId()).isEqualTo(savedBlock3.getId())
+            );
+        }
+
+        @Test
+        void 블록이_삭제되면_하위의_노드도_삭제된다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock = blockRepository.save(block);
+
+            Node node1 = Node.builder()
+                    .content("content")
+                    .style(Map.of("key", "value"))
+                    .order(1L)
+                    .blockId(savedBlock.getId())
+                    .documentId(documentId)
+                    .build();
+            nodeRepository.save(node1);
+
+            Node node2 = Node.builder()
+                    .content("content")
+                    .style(Map.of("key", "value"))
+                    .order(2L)
+                    .blockId(savedBlock.getId())
+                    .documentId(documentId)
+                    .build();
+            nodeRepository.save(node2);
+
+            blockService.deleteBlockInRange(documentId, memberId, savedBlock.getOrder(), savedBlock.getOrder());
+
+            List<Node> nodeList = nodeRepository.findByDocumentId(documentId);
+            assertThat(nodeList).isEmpty();
+        }
+    }
+
+    @Nested
+    class deleteByDocumentId_메서드는 {
+
+        @Test
+        void 문서_내의_블록을_모두_삭제한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block1 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+
+            Block block2 = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(2L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+
+            blockRepository.save(block1);
+            blockRepository.save(block2);
+
+            blockService.deleteByDocumentId(documentId, memberId);
+
+            List<Block> blockList = blockRepository.findByDocumentId(documentId);
+            assertThat(blockList).isEmpty();
+        }
+
+        @Test
+        void 문서_내의_노드를_모두_삭제한다() {
+            UUID documentId = UUID.randomUUID();
+            UUID memberId = UUID.randomUUID();
+            Block block = Block.builder()
+                    .type(BlockType.TEXT)
+                    .order(1L)
+                    .documentId(documentId)
+                    .memberId(memberId)
+                    .build();
+            Block savedBlock = blockRepository.save(block);
+
+            Node node1 = Node.builder()
+                    .content("content")
+                    .style(Map.of("key", "value"))
+                    .order(1L)
+                    .blockId(savedBlock.getId())
+                    .documentId(documentId)
+                    .build();
+            nodeRepository.save(node1);
+
+            Node node2 = Node.builder()
+                    .content("content")
+                    .style(Map.of("key", "value"))
+                    .order(2L)
+                    .blockId(savedBlock.getId())
+                    .documentId(documentId)
+                    .build();
+            nodeRepository.save(node2);
+
+            blockService.deleteByDocumentId(documentId, memberId);
+
+            List<Node> nodeList = nodeRepository.findByDocumentId(documentId);
+            assertThat(nodeList).isEmpty();
+        }
+    }
 }
