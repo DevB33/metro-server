@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.application.BlockService;
 import org.bee.metro.core.block.dto.NodeContentUpdateRequest;
 import org.bee.metro.core.block.dto.NodeCreationRequest;
+import org.bee.metro.core.block.dto.NodeStyleUpdateRequest;
 import org.bee.metro.global.auth.annotation.Login;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -43,6 +44,20 @@ public class NodeApi {
                 nodeId,
                 memberId,
                 request.content()
+        );
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{nodeId}/style")
+    public ResponseEntity<Void> updateNodeStyle(
+            @Login UUID memberId,
+            @PathVariable(name = "nodeId") UUID nodeId,
+            @RequestBody NodeStyleUpdateRequest request
+    ) {
+        blockService.updateNodeStyle(
+                nodeId,
+                memberId,
+                request.style()
         );
         return ResponseEntity.ok().build();
     }
