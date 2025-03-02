@@ -9,4 +9,5 @@
 
 include::auth.adoc[]
 include::document.adoc[]
+include::block.adoc[]
 include::errorCode.adoc[]
