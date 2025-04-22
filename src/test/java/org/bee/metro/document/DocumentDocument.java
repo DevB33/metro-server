@@ -50,11 +50,11 @@ public class DocumentDocument extends DocumentTest {
                     .andDo(document("document/list",
                             preprocessRequest(prettyPrint()),
                             responseFields(
-                                    fieldWithPath("node").description("문서 목록"),
-                                    fieldWithPath("node[].id").description("문서 ID"),
-                                    fieldWithPath("node[].title").description("문서 제목"),
-                                    fieldWithPath("node[].icon").description("문서 아이콘"),
-                                    fieldWithPath("node[].children").description("하위 문서 목록")
+                                    fieldWithPath("notes").description("문서 목록"),
+                                    fieldWithPath("notes[].id").description("문서 ID"),
+                                    fieldWithPath("notes[].title").description("문서 제목"),
+                                    fieldWithPath("notes[].icon").description("문서 아이콘"),
+                                    fieldWithPath("notes[].children").description("하위 문서 목록")
                             )
                     ));
         }
