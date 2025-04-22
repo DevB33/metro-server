@@ -36,7 +36,7 @@ public class BlockApi {
     ) {
         Block createdBlock = blockService.createBlock(
                 memberId,
-                blockCreationRequest.documentId(),
+                blockCreationRequest.noteId(),
                 BlockType.valueOf(blockCreationRequest.type().toUpperCase()),
                 blockCreationRequest.upperOrder() + 1
         );
@@ -45,7 +45,7 @@ public class BlockApi {
 
     @GetMapping
     public ResponseEntity<DetailBlocksResponse> findBlocks(@RequestBody DetailBlocksRequest detailBlocksRequest) {
-        List<DetailBlockPayload> detailBlockPayloads = blockService.findByDocumentId(detailBlocksRequest.documentId());
+        List<DetailBlockPayload> detailBlockPayloads = blockService.findByDocumentId(detailBlocksRequest.noteId());
         return ResponseEntity.ok(new DetailBlocksResponse(detailBlockPayloads));
     }
 
@@ -54,7 +54,7 @@ public class BlockApi {
             @Login UUID memberId, @RequestBody BlockOrderUpdateRequest blockOrderUpdateRequest
     ) {
         blockService.updateBlocksOrder(
-                blockOrderUpdateRequest.documentId(),
+                blockOrderUpdateRequest.noteId(),
                 memberId,
                 blockOrderUpdateRequest.startOrder(),
                 blockOrderUpdateRequest.endOrder(),
@@ -68,7 +68,7 @@ public class BlockApi {
             @Login UUID memberId, @RequestBody BlockDeletionRequest blockDeletionRequest
     ) {
         blockService.deleteBlockInRange(
-                blockDeletionRequest.documentId(),
+                blockDeletionRequest.noteId(),
                 memberId,
                 blockDeletionRequest.startOrder(),
                 blockDeletionRequest.endOrder()

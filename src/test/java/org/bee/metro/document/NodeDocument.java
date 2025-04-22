@@ -43,7 +43,7 @@ public class NodeDocument extends DocumentTest {
                             preprocessRequest(prettyPrint()),
                             requestFields(
                                     fieldWithPath("blockId").description("블록 ID"),
-                                    fieldWithPath("documentId").description("문서 ID"),
+                                    fieldWithPath("noteId").description("문서 ID"),
                                     fieldWithPath("content").description("내용"),
                                     fieldWithPath("order").description("순서"),
                                     fieldWithPath("style").description("스타일"),

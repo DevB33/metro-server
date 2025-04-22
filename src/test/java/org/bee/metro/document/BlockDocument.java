@@ -59,7 +59,7 @@ class BlockDocument extends DocumentTest {
                     .andDo(document("block/create",
                             preprocessRequest(prettyPrint()),
                             requestFields(
-                                    fieldWithPath("documentId").description("문서 ID"),
+                                    fieldWithPath("noteId").description("문서 ID"),
                                     fieldWithPath("type").description("블록 타입"),
                                     fieldWithPath("upperOrder").description("블록 순서")
                             ),
@@ -106,7 +106,7 @@ class BlockDocument extends DocumentTest {
                     .andDo(document("block/list",
                             preprocessRequest(prettyPrint()),
                             requestFields(
-                                    fieldWithPath("documentId").description("문서 ID")
+                                    fieldWithPath("noteId").description("문서 ID")
                             ),
                             responseFields(
                                     fieldWithPath("blocks").description("Block 리스트"),
@@ -149,7 +149,7 @@ class BlockDocument extends DocumentTest {
                     .andDo(document("block/update-order",
                             preprocessRequest(prettyPrint()),
                             requestFields(
-                                    fieldWithPath("documentId").description("문서 ID"),
+                                    fieldWithPath("noteId").description("문서 ID"),
                                     fieldWithPath("startOrder").description("시작 순서"),
                                     fieldWithPath("endOrder").description("끝 순서"),
                                     fieldWithPath("upperOrder").description("상위 순서")
@@ -178,7 +178,7 @@ class BlockDocument extends DocumentTest {
                     .andDo(document("block/delete",
                             preprocessRequest(prettyPrint()),
                             requestFields(
-                                    fieldWithPath("documentId").description("문서 ID"),
+                                    fieldWithPath("noteId").description("문서 ID"),
                                     fieldWithPath("startOrder").description("시작 순서"),
                                     fieldWithPath("endOrder").description("끝 순서")
                             )
