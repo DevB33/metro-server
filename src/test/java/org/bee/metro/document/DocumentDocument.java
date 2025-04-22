@@ -44,7 +44,7 @@ public class DocumentDocument extends DocumentTest {
                     new DocumentTreeNode(UUID.randomUUID(), "name1", "icon1", Collections.emptyList()));
             given(documentService.getDocumentsByOwnerId(any())).willReturn(documentTreeNodes);
 
-            mockMvc.perform(get("/documents")
+            mockMvc.perform(get("/notes")
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/list",
@@ -73,7 +73,7 @@ public class DocumentDocument extends DocumentTest {
             given(documentService.createDocument(any(), any())).willReturn(document);
 
             DocumentCreationRequest documentCreationRequest = new DocumentCreationRequest(UUID.randomUUID());
-            mockMvc.perform(post("/documents")
+            mockMvc.perform(post("/notes")
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(documentCreationRequest)))
@@ -96,7 +96,7 @@ public class DocumentDocument extends DocumentTest {
         @Test
         void 문서_삭제가_성공하면_200을_반환한다() throws Exception {
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(delete("/documents/" + documentId)
+            mockMvc.perform(delete("/notes/" + documentId)
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/delete",
@@ -120,7 +120,7 @@ public class DocumentDocument extends DocumentTest {
             given(documentService.findDocumentById(any(), any())).willReturn(detailDocumentPayload);
 
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(get("/documents/" + documentId)
+            mockMvc.perform(get("/notes/" + documentId)
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/detail",
@@ -147,7 +147,7 @@ public class DocumentDocument extends DocumentTest {
 
             String fieldType = "title";
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(patch("/documents/" + documentId + "/" + fieldType)
+            mockMvc.perform(patch("/notes/" + documentId + "/" + fieldType)
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(documentUpdateRequest)))
@@ -172,7 +172,7 @@ public class DocumentDocument extends DocumentTest {
                     List.of(tagUpdateRequest1, tagUpdateRequest2));
 
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(patch("/documents/" + documentId + "/tags")
+            mockMvc.perform(patch("/notes/" + documentId + "/tags")
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(tagsUpdateRequest)))
