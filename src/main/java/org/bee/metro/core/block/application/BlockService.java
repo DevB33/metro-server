@@ -104,6 +104,11 @@ public class BlockService {
     }
 
     @Transactional
+    public void updateNodes(UUID memberId, UUID blockId, List<InnerNode> nodes) {
+
+    }
+
+    @Transactional
     public void updateBlocksOrder(UUID documentId, UUID memberId, Long startOrder, Long endOrder, Long upperOrder) {
         Long range = endOrder - startOrder + 1;
         List<Block> blockList = blockRepository.findByDocumentId(documentId);
