@@ -1,6 +1,7 @@
 package org.bee.metro.core.block.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockType;
+import org.bee.metro.core.block.domain.node.Node;
 
 @Entity
 @Getter
@@ -31,6 +33,9 @@ public class BlockEntity {
     private UUID documentId;
 
     private UUID memberId;
+
+    @Convert(converter = NodeConverter.class)
+    private Node node;
 
     @Builder
     public BlockEntity(UUID id, BlockType type, Long order, UUID documentId, UUID memberId) {
