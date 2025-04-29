@@ -9,7 +9,9 @@ public enum BlockErrorCode implements ErrorCode {
     INVALID_CONVERT_STYLE("B004", "스타일 정보를 변환하는데 실패했습니다."),
     INVALID_MEMBER_ID("B005", "멤버 ID는 필수입니다."),
     NOT_FOUND_NODE("B006", "노드가 존재하지 않습니다."),
-    UNAUTHORIZED("B007", "해당 권한이 없습니다.");
+    UNAUTHORIZED("B007", "해당 권한이 없습니다."),
+    CONVERT_TO_STRING_FAILED("B008", "해당 노드을 문자열로 변경할 수 없습니다."),
+    CONVERT_TO_NODES_FAILED("B009", "해당 문자열을 노드로 변경할 수 없습니다."),;
 
     private final String code;
     private final String message;
