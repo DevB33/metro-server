@@ -54,7 +54,7 @@ public class BlockApi {
     }
 
     @PatchMapping("/{blockId}/nodes")
-    public ResponseEntity<Void> updateNodeOrder(
+    public ResponseEntity<Void> updateNodes(
             @Login UUID memberId,
             @PathVariable(name = "blockId") UUID blockId,
             @RequestBody BlockNodesUpdateRequest blockNodesUpdateRequest

@@ -103,9 +103,27 @@ public class BlockService {
         nodeRepository.save(updatedNode);
     }
 
+    public Block getBlock(UUID blockId) {
+        return blockRepository.findById(blockId).orElseThrow(
+                () -> new NotFoundException("해당 블록이 존재하지 않습니다.", BlockErrorCode.NOT_FOUND_BLOCK));
+    }
+
     @Transactional
     public void updateNodes(UUID memberId, UUID blockId, List<InnerNode> nodes) {
+        Block block = getBlock(blockId);
+        if (block.isNotOwner(memberId)) {
+            throw new BadRequestException("해당 블록의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+        }
 
+        Block updatedBlock = Block.builder()
+                .id(block.getId())
+                .type(block.getType())
+                .order(block.getOrder())
+                .documentId(block.getDocumentId())
+                .memberId(block.getMemberId())
+                .nodes(nodes)
+                .build();
+        blockRepository.save(updatedBlock);
     }
 
     @Transactional
