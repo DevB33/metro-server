@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
-import org.bee.metro.core.block.domain.node.Node;
 import org.bee.metro.core.block.entity.BlockEntity;
 import org.bee.metro.core.block.exception.BlockErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
@@ -21,10 +20,10 @@ public class Block {
     private final Long order;
     private final UUID documentId;
     private final UUID memberId;
-    private final List<Node> nodes;
+    private final List<InnerNode> nodes;
 
     @Builder
-    public Block(UUID id, BlockType type, Long order, UUID documentId, UUID memberId, List<Node> nodes) {
+    public Block(UUID id, BlockType type, Long order, UUID documentId, UUID memberId, List<InnerNode> nodes) {
         validateOrder(order);
         validateDocumentId(documentId);
         validateMemberId(memberId);

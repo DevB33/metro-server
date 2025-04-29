@@ -26,7 +26,7 @@ public class QBlockEntity extends EntityPathBase<BlockEntity> {
 
     public final ComparablePath<java.util.UUID> memberId = createComparable("memberId", java.util.UUID.class);
 
-    public final ListPath<org.bee.metro.core.block.domain.node.Node, SimplePath<org.bee.metro.core.block.domain.node.Node>> nodes = this.<org.bee.metro.core.block.domain.node.Node, SimplePath<org.bee.metro.core.block.domain.node.Node>>createList("nodes", org.bee.metro.core.block.domain.node.Node.class, SimplePath.class, PathInits.DIRECT2);
+    public final ListPath<org.bee.metro.core.block.domain.block.InnerNode, SimplePath<org.bee.metro.core.block.domain.block.InnerNode>> nodes = this.<org.bee.metro.core.block.domain.block.InnerNode, SimplePath<org.bee.metro.core.block.domain.block.InnerNode>>createList("nodes", org.bee.metro.core.block.domain.block.InnerNode.class, SimplePath.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> order = createNumber("order", Long.class);
 

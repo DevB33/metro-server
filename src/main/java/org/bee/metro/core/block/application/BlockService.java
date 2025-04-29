@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockRepository;
 import org.bee.metro.core.block.domain.block.BlockType;
+import org.bee.metro.core.block.domain.block.InnerNode;
 import org.bee.metro.core.block.domain.node.Node;
 import org.bee.metro.core.block.domain.node.NodeRepository;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
@@ -32,21 +33,17 @@ public class BlockService {
                 .order(order)
                 .documentId(documentId)
                 .memberId(memberId)
+                .nodes(new ArrayList<>())
                 .build();
         Block savedBlock = blockRepository.save(block);
         // TODO: 이후 블록들 order 조정 로직 추가
-        createDefaultNode(savedBlock.getId(), documentId);
+        // createDefaultNode(savedBlock.getId(), documentId);
         return savedBlock;
     }
 
     private void createDefaultNode(UUID blockId, UUID documentId) {
-        Node node = Node.builder()
-                .id(null)
-                .order(0L)
-                .blockId(blockId)
-                .documentId(documentId)
-                .build();
-        nodeRepository.save(node);
+        InnerNode node = InnerNode.builder().build();
+        // nodeRepository.save(node);
     }
 
     public Node createNode(UUID blockId, UUID documentId, String content, Long order, Map<String, String> style) {
@@ -63,19 +60,17 @@ public class BlockService {
     }
 
     public List<DetailBlockPayload> findByDocumentId(UUID documentId) {
-        List<Node> nodeList = nodeRepository.findByDocumentId(documentId);
         List<Block> blockList = blockRepository.findByDocumentId(documentId);
-
-        Map<UUID, List<Node>> nodeMapByBlockId = nodeList.stream()
-                .collect(Collectors.groupingBy(Node::getBlockId));
-        return createBlockList(blockList, nodeMapByBlockId);
+        return blockList.stream()
+                .map(block -> new DetailBlockPayload(block))
+                .collect(Collectors.toList());
     }
 
     private List<DetailBlockPayload> createBlockList(List<Block> blockList, Map<UUID, List<Node>> nodeMapByBlockId) {
         List<DetailBlockPayload> detailBlockPayloadList = new ArrayList<>();
         blockList.forEach(block -> {
             List<Node> nodes = nodeMapByBlockId.get(block.getId());
-            DetailBlockPayload detailBlockPayload = new DetailBlockPayload(block, nodes);
+            DetailBlockPayload detailBlockPayload = new DetailBlockPayload(block);
             detailBlockPayloadList.add(detailBlockPayload);
         });
         return detailBlockPayloadList;

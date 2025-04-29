@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockType;
-import org.bee.metro.core.block.domain.node.Node;
+import org.bee.metro.core.block.domain.block.InnerNode;
 
 @Entity
 @Getter
@@ -36,10 +36,10 @@ public class BlockEntity {
     private UUID memberId;
 
     @Convert(converter = NodeConverter.class)
-    private List<Node> nodes;
+    private List<InnerNode> nodes;
 
     @Builder
-    public BlockEntity(UUID id, BlockType type, Long order, UUID documentId, UUID memberId, List<Node> nodes) {
+    public BlockEntity(UUID id, BlockType type, Long order, UUID documentId, UUID memberId, List<InnerNode> nodes) {
         this.id = id;
         this.type = type;
         this.order = order;
