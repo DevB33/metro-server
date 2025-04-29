@@ -26,14 +26,14 @@ public class BlockService {
     private final BlockRepository blockRepository;
     private final NodeRepository nodeRepository;
 
-    public Block createBlock(UUID memberId, UUID documentId, BlockType type, Long order) {
+    public Block createBlock(UUID memberId, UUID documentId, BlockType type, Long order, List<InnerNode> nodes) {
         Block block = Block.builder()
                 .id(null)
                 .type(type)
                 .order(order)
                 .documentId(documentId)
                 .memberId(memberId)
-                .nodes(new ArrayList<>())
+                .nodes(nodes)
                 .build();
         Block savedBlock = blockRepository.save(block);
         // TODO: 이후 블록들 order 조정 로직 추가
@@ -93,6 +93,23 @@ public class BlockService {
     }
 
     @Transactional
+    public void updateBlockType(UUID memberId, UUID blockId, BlockType type) {
+        Block block = getBlock(blockId);
+        if (block.isNotOwner(memberId)) {
+            throw new BadRequestException("해당 블록의 수정 권한이 없습니다.", BlockErrorCode.UNAUTHORIZED);
+        }
+
+        Block updatedBlock = Block.builder()
+                .id(block.getId())
+                .type(type)
+                .documentId(block.getDocumentId())
+                .memberId(block.getMemberId())
+                .nodes(block.getNodes())
+                .build();
+        blockRepository.save(updatedBlock);
+    }
+
+    @Transactional
     public void updateNodeStyle(UUID nodeId, UUID memberId, Map<String, String> style) {
         Node node = getNode(nodeId);
         if (node.isNotOwner(memberId)) {
@@ -146,7 +163,7 @@ public class BlockService {
     }
 
     private void arrangeBlocks(Long startOrder, Long endOrder, Long upperOrder, List<Block> blockList) {
-        for (Block block: blockList) {
+        for (Block block : blockList) {
             if (startOrder <= block.getOrder() && block.getOrder() <= endOrder) {
                 Block updatedBlock = block.updateOrder(upperOrder + block.getOrder() - startOrder + 1);
                 blockRepository.save(updatedBlock);
@@ -155,7 +172,7 @@ public class BlockService {
     }
 
     private void moveBlocksBack(Long upperOrder, List<Block> blockList, Long range) {
-        for (Block block: blockList) {
+        for (Block block : blockList) {
             if (block.getOrder() > upperOrder) {
                 Block updatedBlock = block.updateOrder(block.getOrder() + range);
                 blockRepository.save(updatedBlock);
@@ -182,7 +199,7 @@ public class BlockService {
     }
 
     private void deleteNodeByBlockId(Long startOrder, Long endOrder, List<Block> blockList) {
-        for (Block block: blockList) {
+        for (Block block : blockList) {
             if (startOrder <= block.getOrder() && block.getOrder() <= endOrder) {
                 nodeRepository.deleteByBlockId(block.getId());
             }

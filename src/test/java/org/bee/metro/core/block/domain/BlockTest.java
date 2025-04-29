@@ -23,7 +23,7 @@ class BlockTest {
         void 올바른_인자가_들어오면_객체가_생성된다() {
             // given
             UUID id = UUID.randomUUID();
-            BlockType type = BlockType.TEXT;
+            BlockType type = BlockType.DEFAULT;
             Long order = 1L;
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
@@ -50,7 +50,7 @@ class BlockTest {
         void 올바르지_않은_인자가_들어오면_예외가_발생한다(Long order, UUID documentId, UUID memberId) {
             // given
             UUID id = UUID.randomUUID();
-            BlockType type = BlockType.TEXT;
+            BlockType type = BlockType.DEFAULT;
 
             // expect
             assertThrows(BadRequestException.class, () -> Block.builder()

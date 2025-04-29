@@ -25,6 +25,7 @@ import org.bee.metro.core.block.dto.BlockCreationRequest;
 import org.bee.metro.core.block.dto.BlockDeletionRequest;
 import org.bee.metro.core.block.dto.BlockNodesUpdateRequest;
 import org.bee.metro.core.block.dto.BlockOrderUpdateRequest;
+import org.bee.metro.core.block.dto.BlockTypeUpdateRequest;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.block.dto.DetailBlocksRequest;
 import org.junit.jupiter.api.Nested;
@@ -38,19 +39,25 @@ class BlockDocument extends DocumentTest {
 
         @Test
         void 블록_생성에_성공하면_200을_반환한다() throws Exception {
+            List<InnerNode> nodes = List.of(
+                    new InnerNode("content1", Map.of("key", "value1")),
+                    new InnerNode("content2", Map.of("key", "value2"))
+            );
             BlockCreationRequest request = new BlockCreationRequest(
                     UUID.randomUUID(),
-                    "TEXT",
-                    1L
+                    "DEFAULT",
+                    1L,
+                    nodes
             );
             Block block = Block.builder()
                     .id(UUID.randomUUID())
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(UUID.randomUUID())
                     .memberId(randomId)
+                    .nodes(nodes)
                     .build();
-            given(blockService.createBlock(any(), any(), any(), any())).willReturn(block);
+            given(blockService.createBlock(any(), any(), any(), any(), any())).willReturn(block);
 
             mockMvc.perform(post("/blocks")
                             .header("Authorization", accessToken)
@@ -62,7 +69,11 @@ class BlockDocument extends DocumentTest {
                             requestFields(
                                     fieldWithPath("noteId").description("문서 ID"),
                                     fieldWithPath("type").description("블록 타입"),
-                                    fieldWithPath("upperOrder").description("블록 순서")
+                                    fieldWithPath("upperOrder").description("블록 순서"),
+                                    fieldWithPath("nodes").description("노드 리스트"),
+                                    fieldWithPath("nodes[].content").description("노드 내용"),
+                                    fieldWithPath("nodes[].style").description("노드 스타일"),
+                                    fieldWithPath("nodes[].style.key").description("스타일 키")
                             ),
                             responseFields(
                                     fieldWithPath("id").description("생성된 블록 ID")
@@ -89,7 +100,7 @@ class BlockDocument extends DocumentTest {
 
             Block block = Block.builder()
                     .id(blockId)
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(UUID.randomUUID())
                     .memberId(randomId)
@@ -178,6 +189,28 @@ class BlockDocument extends DocumentTest {
                                     fieldWithPath("startOrder").description("시작 순서"),
                                     fieldWithPath("endOrder").description("끝 순서"),
                                     fieldWithPath("upperOrder").description("상위 순서")
+                            )
+                    ));
+        }
+    }
+
+    @Nested
+    class 블록_타입_변경 {
+
+        @Test
+        void 블록_타입_변경에_성공하면_200을_반환한다() throws Exception {
+            UUID blockId = UUID.randomUUID();
+            BlockTypeUpdateRequest request = new BlockTypeUpdateRequest("DEFAULT");
+
+            mockMvc.perform(patch("/blocks/" + blockId + "/type")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk())
+                    .andDo(document("block/update-type",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("type").description("블록 타입")
                             )
                     ));
         }
