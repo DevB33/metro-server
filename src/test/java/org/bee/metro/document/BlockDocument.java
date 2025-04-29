@@ -141,7 +141,7 @@ class BlockDocument extends DocumentTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(request)))
                     .andExpect(status().isOk())
-                    .andDo(document("block/update-nodes",
+                    .andDo(document("block/update-node",
                             preprocessRequest(prettyPrint()),
                             requestFields(
                                     fieldWithPath("nodes").description("블록 노드 리스트"),

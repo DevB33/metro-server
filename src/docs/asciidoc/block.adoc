@@ -8,7 +8,7 @@ operation::block/create[snippets='http-request,request-fields,response-fields']
 operation::block/list[snippets='http-request,request-fields,response-fields']
 
 === 블록 노드 변경
-operation::block/update-node[snippets='http-request,request-fields,response-fields']
+operation::block/update-node[snippets='http-request,request-fields']
 
 === 블록 순서 변경
 operation::block/update-order[snippets='http-request,request-fields']

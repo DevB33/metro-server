@@ -103,11 +103,13 @@ public class BlockService {
         nodeRepository.save(updatedNode);
     }
 
+    // TODO : 서비스 및 인프라 테스트 코드 작성
     public Block getBlock(UUID blockId) {
         return blockRepository.findById(blockId).orElseThrow(
                 () -> new NotFoundException("해당 블록이 존재하지 않습니다.", BlockErrorCode.NOT_FOUND_BLOCK));
     }
 
+    // TODO : 서비스 및 인프라 테스트 코드 작성
     @Transactional
     public void updateNodes(UUID memberId, UUID blockId, List<InnerNode> nodes) {
         Block block = getBlock(blockId);
