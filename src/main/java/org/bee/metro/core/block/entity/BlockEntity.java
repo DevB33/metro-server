@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,15 +36,16 @@ public class BlockEntity {
     private UUID memberId;
 
     @Convert(converter = NodeConverter.class)
-    private Node node;
+    private List<Node> nodes;
 
     @Builder
-    public BlockEntity(UUID id, BlockType type, Long order, UUID documentId, UUID memberId) {
+    public BlockEntity(UUID id, BlockType type, Long order, UUID documentId, UUID memberId, List<Node> nodes) {
         this.id = id;
         this.type = type;
         this.order = order;
         this.documentId = documentId;
         this.memberId = memberId;
+        this.nodes = nodes;
     }
 
     public static BlockEntity from(Block block) {
@@ -53,6 +55,7 @@ public class BlockEntity {
                 .order(block.getOrder())
                 .documentId(block.getDocumentId())
                 .memberId(block.getMemberId())
+                .nodes(block.getNodes())
                 .build();
     }
 }

@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -24,6 +25,8 @@ public class QBlockEntity extends EntityPathBase<BlockEntity> {
     public final ComparablePath<java.util.UUID> id = createComparable("id", java.util.UUID.class);
 
     public final ComparablePath<java.util.UUID> memberId = createComparable("memberId", java.util.UUID.class);
+
+    public final ListPath<org.bee.metro.core.block.domain.node.Node, SimplePath<org.bee.metro.core.block.domain.node.Node>> nodes = this.<org.bee.metro.core.block.domain.node.Node, SimplePath<org.bee.metro.core.block.domain.node.Node>>createList("nodes", org.bee.metro.core.block.domain.node.Node.class, SimplePath.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> order = createNumber("order", Long.class);
 

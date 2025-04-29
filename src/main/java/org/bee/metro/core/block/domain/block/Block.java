@@ -1,8 +1,10 @@
 package org.bee.metro.core.block.domain.block;
 
+import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import org.bee.metro.core.block.domain.node.Node;
 import org.bee.metro.core.block.entity.BlockEntity;
 import org.bee.metro.core.block.exception.BlockErrorCode;
 import org.bee.metro.global.exception.type.BadRequestException;
@@ -19,9 +21,10 @@ public class Block {
     private final Long order;
     private final UUID documentId;
     private final UUID memberId;
+    private final List<Node> nodes;
 
     @Builder
-    public Block(UUID id, BlockType type, Long order, UUID documentId, UUID memberId) {
+    public Block(UUID id, BlockType type, Long order, UUID documentId, UUID memberId, List<Node> nodes) {
         validateOrder(order);
         validateDocumentId(documentId);
         validateMemberId(memberId);
@@ -31,6 +34,7 @@ public class Block {
         this.order = order;
         this.documentId = documentId;
         this.memberId = memberId;
+        this.nodes = nodes;
     }
 
     private void validateOrder(Long order) {
@@ -58,6 +62,7 @@ public class Block {
             .order(blockEntity.getOrder())
             .documentId(blockEntity.getDocumentId())
             .memberId(blockEntity.getMemberId())
+            .nodes(blockEntity.getNodes())
             .build();
     }
 
@@ -68,6 +73,7 @@ public class Block {
             .order(order)
             .documentId(this.documentId)
             .memberId(this.memberId)
+            .nodes(this.nodes)
             .build();
     }
 
