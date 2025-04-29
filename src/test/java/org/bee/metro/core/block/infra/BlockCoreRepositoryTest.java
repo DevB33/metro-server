@@ -26,7 +26,7 @@ class BlockCoreRepositoryTest extends RepositoryTest {
 
         @Test
         void 아이디가_없다면_블록을_생성한다() {
-            BlockType type = BlockType.TEXT;
+            BlockType type = BlockType.DEFAULT;
             Long order = 1L;
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
@@ -49,7 +49,7 @@ class BlockCoreRepositoryTest extends RepositoryTest {
 
         @Test
         void 아이디가_존재하면_블록을_수정한다() {
-            BlockType type = BlockType.TEXT;
+            BlockType type = BlockType.DEFAULT;
             Long order = 1L;
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
@@ -64,7 +64,7 @@ class BlockCoreRepositoryTest extends RepositoryTest {
 
             Block savedBlock = blockRepository.save(block);
 
-            BlockType modifiedType = BlockType.IMAGE;
+            BlockType modifiedType = BlockType.DEFAULT;
             Long modifiedOrder = 2L;
             UUID modifiedDocumentId = UUID.randomUUID();
 
@@ -90,7 +90,7 @@ class BlockCoreRepositoryTest extends RepositoryTest {
 
         @Test
         void 문서_아이디로_블록을_조회한다() {
-            BlockType type = BlockType.TEXT;
+            BlockType type = BlockType.DEFAULT;
             Long order = 1L;
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
@@ -105,7 +105,7 @@ class BlockCoreRepositoryTest extends RepositoryTest {
 
             blockRepository.save(block);
 
-            BlockType anotherType = BlockType.IMAGE;
+            BlockType anotherType = BlockType.DEFAULT;
             Long anotherOrder = 2L;
 
             Block anotherBlock = Block.builder()
@@ -123,7 +123,7 @@ class BlockCoreRepositoryTest extends RepositoryTest {
 
         @Test
         void 블록의_순서로_정렬하여_반환한다() {
-            BlockType type = BlockType.TEXT;
+            BlockType type = BlockType.DEFAULT;
             Long order = 1L;
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
@@ -138,7 +138,7 @@ class BlockCoreRepositoryTest extends RepositoryTest {
 
             blockRepository.save(block);
 
-            BlockType anotherType = BlockType.IMAGE;
+            BlockType anotherType = BlockType.DEFAULT;
             Long anotherOrder = 2L;
 
             Block anotherBlock = Block.builder()
@@ -162,7 +162,7 @@ class BlockCoreRepositoryTest extends RepositoryTest {
 
         @Test
         void 문서_아이디와_순서_범위로_블록이_존재하는지_확인한다() {
-            BlockType type = BlockType.TEXT;
+            BlockType type = BlockType.DEFAULT;
             Long order = 1L;
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();

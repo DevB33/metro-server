@@ -26,17 +26,19 @@ class BlockServiceTest extends ServiceTest {
         void 인자를_받아_Block_객체를_저장한다() {
             UUID memberId = UUID.randomUUID();
             UUID documentId = UUID.randomUUID();
-            BlockType type = BlockType.TEXT;
+            BlockType type = BlockType.DEFAULT;
             Long order = 1L;
+            List<InnerNode> nodes = List.of(new InnerNode("content", Map.of("key", "value")));
 
-            Block block = blockService.createBlock(memberId, documentId, type, order);
+            Block block = blockService.createBlock(memberId, documentId, type, order, nodes);
 
             assertAll(
                     () -> assertNotNull(block.getId()),
                     () -> assertEquals(type, block.getType()),
                     () -> assertEquals(order, block.getOrder()),
                     () -> assertEquals(documentId, block.getDocumentId()),
-                    () -> assertEquals(memberId, block.getMemberId())
+                    () -> assertEquals(memberId, block.getMemberId()),
+                    () -> assertEquals(nodes, block.getNodes())
             );
         }
 
@@ -44,11 +46,11 @@ class BlockServiceTest extends ServiceTest {
         void 생성_시_기본_Node를_생성한다() {
             UUID memberId = UUID.randomUUID();
             UUID documentId = UUID.randomUUID();
-            BlockType type = BlockType.TEXT;
+            BlockType type = BlockType.DEFAULT;
             Long order = 1L;
 
-            Block block = blockService.createBlock(memberId, documentId, type, order);
-            List<Node> nodeList = nodeRepository.findByBlockId(block.getId());
+            // Block block = blockService.createBlock(memberId, documentId, type, order);
+            // List<Node> nodeList = nodeRepository.findByBlockId(block.getId());
 
             // Node 변경에 따라 테스트를 삭제합니다
             // assertEquals(1, nodeList.size());
@@ -85,7 +87,8 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             InnerNode node1 = new InnerNode("content",  Map.of("key", "value"));
             InnerNode node2 = new InnerNode("content",  Map.of("key", "value"));
-            Block block = blockService.createBlock(UUID.randomUUID(), documentId, BlockType.TEXT, 1L);
+            List<InnerNode> innerNodeList = List.of(node1, node2);
+            Block block = blockService.createBlock(UUID.randomUUID(), documentId, BlockType.DEFAULT, 1L, innerNodeList);
 
             List<DetailBlockPayload> detailBlockPayloadList = blockService.findByDocumentId(documentId);
 
@@ -94,7 +97,7 @@ class BlockServiceTest extends ServiceTest {
 
             assertAll(
                     () -> assertThat(detailBlockPayload.block().getId()).isEqualTo(block.getId()),
-                    () -> assertThat(detailBlockPayload.block().getNodes()).hasSize(0)
+                    () -> assertThat(detailBlockPayload.block().getNodes()).hasSize(2)
             );
         }
     }
@@ -157,7 +160,7 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
             Block block1 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -165,7 +168,7 @@ class BlockServiceTest extends ServiceTest {
             Block savedBlock1 = blockRepository.save(block1);
 
             Block block2 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(2L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -190,7 +193,7 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
             Block block1 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -198,7 +201,7 @@ class BlockServiceTest extends ServiceTest {
             Block savedBlock1 = blockRepository.save(block1);
 
             Block block2 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(2L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -206,7 +209,7 @@ class BlockServiceTest extends ServiceTest {
             Block savedBlock2 = blockRepository.save(block2);
 
             Block block3 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(3L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -233,7 +236,7 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
             Block block1 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -241,7 +244,7 @@ class BlockServiceTest extends ServiceTest {
             Block savedBlock1 = blockRepository.save(block1);
 
             Block block2 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(2L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -249,7 +252,7 @@ class BlockServiceTest extends ServiceTest {
             Block savedBlock2 = blockRepository.save(block2);
 
             Block block3 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(3L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -275,7 +278,7 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
             Block block = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -297,7 +300,7 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
             Block block = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -315,7 +318,7 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
             Block block1 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -323,7 +326,7 @@ class BlockServiceTest extends ServiceTest {
             blockRepository.save(block1);
 
             Block block2 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(2L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -331,7 +334,7 @@ class BlockServiceTest extends ServiceTest {
             blockRepository.save(block2);
 
             Block block3 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(3L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -352,7 +355,7 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
             Block block = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -392,14 +395,14 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
             Block block1 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(documentId)
                     .memberId(memberId)
                     .build();
 
             Block block2 = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(2L)
                     .documentId(documentId)
                     .memberId(memberId)
@@ -419,7 +422,7 @@ class BlockServiceTest extends ServiceTest {
             UUID documentId = UUID.randomUUID();
             UUID memberId = UUID.randomUUID();
             Block block = Block.builder()
-                    .type(BlockType.TEXT)
+                    .type(BlockType.DEFAULT)
                     .order(1L)
                     .documentId(documentId)
                     .memberId(memberId)
