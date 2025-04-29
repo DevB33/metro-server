@@ -23,6 +23,7 @@ import org.bee.metro.core.block.domain.block.BlockType;
 import org.bee.metro.core.block.domain.block.InnerNode;
 import org.bee.metro.core.block.dto.BlockCreationRequest;
 import org.bee.metro.core.block.dto.BlockDeletionRequest;
+import org.bee.metro.core.block.dto.BlockNodesUpdateRequest;
 import org.bee.metro.core.block.dto.BlockOrderUpdateRequest;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.block.dto.DetailBlocksRequest;
@@ -120,6 +121,33 @@ class BlockDocument extends DocumentTest {
                                     fieldWithPath("blocks[].block.nodes[].content").description("노드 내용"),
                                     fieldWithPath("blocks[].block.nodes[].style").description("노드 스타일"),
                                     fieldWithPath("blocks[].block.nodes[].style.key").description("스타일 키")
+                            )
+                    ));
+        }
+    }
+
+    @Nested
+    class 블록_노드_변경 {
+
+        @Test
+        void 블록_노드_변경에_성공하면_200을_반환한다() throws Exception {
+            UUID blockId = UUID.randomUUID();
+            BlockNodesUpdateRequest request = new BlockNodesUpdateRequest(
+                    List.of(new InnerNode("content", Map.of("key", "value")))
+            );
+
+            mockMvc.perform(patch("/blocks/" + blockId + "/nodes")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk())
+                    .andDo(document("block/update-nodes",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("nodes").description("블록 노드 리스트"),
+                                    fieldWithPath("nodes[].content").description("노드 내용"),
+                                    fieldWithPath("nodes[].style").description("노드 스타일"),
+                                    fieldWithPath("nodes[].style.key").description("스타일 키")
                             )
                     ));
         }
