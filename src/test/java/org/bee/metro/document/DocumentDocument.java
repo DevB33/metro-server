@@ -114,8 +114,7 @@ public class DocumentDocument extends DocumentTest {
                     "title",
                     "icon",
                     List.of(new Tag("tag", LineColor.LINE_ONE)),
-                    "cover",
-                    Collections.emptyList()
+                    "cover"
             );
             given(documentService.findDocumentById(any(), any())).willReturn(detailDocumentPayload);
 
@@ -130,8 +129,7 @@ public class DocumentDocument extends DocumentTest {
                                             fieldWithPath("icon").description("문서 아이콘"),
                                             fieldWithPath("tags[].name").description("문서 태그 목록"),
                                             fieldWithPath("tags[].color").description("문서 태그 색상"),
-                                            fieldWithPath("cover").description("문서 커버 이미지"),
-                                            fieldWithPath("blocks").description("문서 블록 목록")
+                                            fieldWithPath("cover").description("문서 커버 이미지")
                                     )
                             )
                     );
