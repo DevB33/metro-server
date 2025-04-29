@@ -1,6 +1,7 @@
 package org.bee.metro.core.block.infra;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,12 @@ public class BlockCoreRepository implements BlockRepository {
         BlockEntity blockEntity = BlockEntity.from(block);
         BlockEntity savedBlockEntity = blockJpaRepository.save(blockEntity);
         return Block.fromEntity(savedBlockEntity);
+    }
+
+    @Override
+    public Optional<Block> findById(UUID blockId) {
+        Optional<BlockEntity> blockEntity = blockJpaRepository.findById(blockId);
+        return blockEntity.map(Block::fromEntity);
     }
 
     @Override

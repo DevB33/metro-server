@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public record NodeCreationRequest(
         UUID blockId,
-        UUID documentId,
+        UUID noteId,
         String content,
         Long order,
         Map<String, String> style

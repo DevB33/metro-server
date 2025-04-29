@@ -1,17 +1,20 @@
 package org.bee.metro.core.block.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.bee.metro.core.block.domain.block.Block;
 import org.bee.metro.core.block.domain.block.BlockType;
+import org.bee.metro.core.block.domain.block.InnerNode;
 
 @Entity
 @Getter
@@ -32,13 +35,17 @@ public class BlockEntity {
 
     private UUID memberId;
 
+    @Convert(converter = NodeConverter.class)
+    private List<InnerNode> nodes;
+
     @Builder
-    public BlockEntity(UUID id, BlockType type, Long order, UUID documentId, UUID memberId) {
+    public BlockEntity(UUID id, BlockType type, Long order, UUID documentId, UUID memberId, List<InnerNode> nodes) {
         this.id = id;
         this.type = type;
         this.order = order;
         this.documentId = documentId;
         this.memberId = memberId;
+        this.nodes = nodes;
     }
 
     public static BlockEntity from(Block block) {
@@ -48,6 +55,7 @@ public class BlockEntity {
                 .order(block.getOrder())
                 .documentId(block.getDocumentId())
                 .memberId(block.getMemberId())
+                .nodes(block.getNodes())
                 .build();
     }
 }

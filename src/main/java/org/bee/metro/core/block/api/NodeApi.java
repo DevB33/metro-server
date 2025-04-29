@@ -26,7 +26,7 @@ public class NodeApi {
     public ResponseEntity<Void> createNode(@RequestBody NodeCreationRequest nodeCreationRequest) {
         blockService.createNode(
                 nodeCreationRequest.blockId(),
-                nodeCreationRequest.documentId(),
+                nodeCreationRequest.noteId(),
                 nodeCreationRequest.content(),
                 nodeCreationRequest.order(),
                 nodeCreationRequest.style()

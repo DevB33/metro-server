@@ -114,8 +114,7 @@ public class DocumentService {
             throw new BadRequestException("해당 문서의 조회 권한이 없습니다.", DocumentErrorCode.UNAUTHORIZED);
         }
 
-        List<DetailBlockPayload> blocksInDocument = blockService.findByDocumentId(document.getId());
-        return DetailDocumentPayload.createByDocumentAndBlocks(document, blocksInDocument);
+        return DetailDocumentPayload.createByDocumentAndBlocks(document);
     }
 
     @Transactional

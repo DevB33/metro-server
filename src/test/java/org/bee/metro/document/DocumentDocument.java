@@ -44,17 +44,17 @@ public class DocumentDocument extends DocumentTest {
                     new DocumentTreeNode(UUID.randomUUID(), "name1", "icon1", Collections.emptyList()));
             given(documentService.getDocumentsByOwnerId(any())).willReturn(documentTreeNodes);
 
-            mockMvc.perform(get("/documents")
+            mockMvc.perform(get("/notes")
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/list",
                             preprocessRequest(prettyPrint()),
                             responseFields(
-                                    fieldWithPath("node").description("문서 목록"),
-                                    fieldWithPath("node[].id").description("문서 ID"),
-                                    fieldWithPath("node[].title").description("문서 제목"),
-                                    fieldWithPath("node[].icon").description("문서 아이콘"),
-                                    fieldWithPath("node[].children").description("하위 문서 목록")
+                                    fieldWithPath("notes").description("문서 목록"),
+                                    fieldWithPath("notes[].id").description("문서 ID"),
+                                    fieldWithPath("notes[].title").description("문서 제목"),
+                                    fieldWithPath("notes[].icon").description("문서 아이콘"),
+                                    fieldWithPath("notes[].children").description("하위 문서 목록")
                             )
                     ));
         }
@@ -73,7 +73,7 @@ public class DocumentDocument extends DocumentTest {
             given(documentService.createDocument(any(), any())).willReturn(document);
 
             DocumentCreationRequest documentCreationRequest = new DocumentCreationRequest(UUID.randomUUID());
-            mockMvc.perform(post("/documents")
+            mockMvc.perform(post("/notes")
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(documentCreationRequest)))
@@ -96,7 +96,7 @@ public class DocumentDocument extends DocumentTest {
         @Test
         void 문서_삭제가_성공하면_200을_반환한다() throws Exception {
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(delete("/documents/" + documentId)
+            mockMvc.perform(delete("/notes/" + documentId)
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/delete",
@@ -114,13 +114,12 @@ public class DocumentDocument extends DocumentTest {
                     "title",
                     "icon",
                     List.of(new Tag("tag", LineColor.LINE_ONE)),
-                    "cover",
-                    Collections.emptyList()
+                    "cover"
             );
             given(documentService.findDocumentById(any(), any())).willReturn(detailDocumentPayload);
 
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(get("/documents/" + documentId)
+            mockMvc.perform(get("/notes/" + documentId)
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/detail",
@@ -130,8 +129,7 @@ public class DocumentDocument extends DocumentTest {
                                             fieldWithPath("icon").description("문서 아이콘"),
                                             fieldWithPath("tags[].name").description("문서 태그 목록"),
                                             fieldWithPath("tags[].color").description("문서 태그 색상"),
-                                            fieldWithPath("cover").description("문서 커버 이미지"),
-                                            fieldWithPath("blocks").description("문서 블록 목록")
+                                            fieldWithPath("cover").description("문서 커버 이미지")
                                     )
                             )
                     );
@@ -147,7 +145,7 @@ public class DocumentDocument extends DocumentTest {
 
             String fieldType = "title";
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(patch("/documents/" + documentId + "/" + fieldType)
+            mockMvc.perform(patch("/notes/" + documentId + "/" + fieldType)
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(documentUpdateRequest)))
@@ -172,7 +170,7 @@ public class DocumentDocument extends DocumentTest {
                     List.of(tagUpdateRequest1, tagUpdateRequest2));
 
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(patch("/documents/" + documentId + "/tags")
+            mockMvc.perform(patch("/notes/" + documentId + "/tags")
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(tagsUpdateRequest)))
