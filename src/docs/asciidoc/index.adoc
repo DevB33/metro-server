@@ -8,6 +8,7 @@
 :docinfo: shared-head
 
 include::auth.adoc[]
+include::member.adoc[]
 include::document.adoc[]
 include::block.adoc[]
 include::node.adoc[]

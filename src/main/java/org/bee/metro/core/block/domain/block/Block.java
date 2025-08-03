@@ -23,7 +23,6 @@ public class Block {
     @Builder
     public Block(UUID id, BlockType type, Long order, UUID documentId, UUID memberId) {
         validateOrder(order);
-        validateDocumentId(documentId);
         validateMemberId(memberId);
 
         this.id = id;

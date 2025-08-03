@@ -12,6 +12,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.bee.metro.core.block.application.BlockService;
+import org.bee.metro.core.block.domain.block.Block;
+import org.bee.metro.core.block.domain.block.BlockType;
+import org.bee.metro.core.block.domain.block.InnerNode;
 import org.bee.metro.core.block.dto.DetailBlockPayload;
 import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
@@ -60,6 +63,7 @@ public class DocumentService {
         while (!queue.isEmpty()) {
             DocumentTreeNode currentNode = queue.poll();
             List<Document> childDocuments = documentsByParentId.getOrDefault(currentNode.id(), Collections.emptyList());
+            childDocuments.sort((d1, d2) -> Long.compare(d1.getOrder(), d2.getOrder()));
 
             for (Document childDocument : childDocuments) {
                 DocumentTreeNode childNode = DocumentTreeNode.createByDocument(childDocument);
@@ -69,12 +73,36 @@ public class DocumentService {
         }
     }
 
-    public Document createDocument(UUID ownerId, UUID parentId) {
+    public Document createDocument(UUID ownerId, UUID parentId, Long order) {
         Document document = Document.builder()
                 .parentId(parentId)
                 .ownerId(ownerId)
+                .order(order)
                 .build();
-        return documentRepository.save(document);
+
+        Document savedDocument = documentRepository.save(document);
+        blockService.createBlock(ownerId, parentId, BlockType.PAGE, order,
+                List.of(new InnerNode(savedDocument.getId().toString(), null, null)));
+        return savedDocument;
+    }
+
+    public Document createDocumentAtList(UUID ownerId, UUID parentId) {
+        List<DetailBlockPayload> blocks = blockService.findByDocumentId(parentId);
+        Long order = blocks.isEmpty() ? 0L : blocks.stream()
+                .mapToLong(DetailBlockPayload::order)
+                .max()
+                .orElse(0L) + 1;
+
+        Document document = Document.builder()
+                .parentId(parentId)
+                .ownerId(ownerId)
+                .order(order)
+                .build();
+        Document savedDocument = documentRepository.save(document);
+
+        blockService.createBlock(ownerId, parentId, BlockType.PAGE, order,
+                List.of(new InnerNode(savedDocument.getId().toString(), null, null)));
+        return savedDocument;
     }
 
     public Document getDocument(UUID id) {
@@ -91,6 +119,7 @@ public class DocumentService {
 
         blockService.deleteByDocumentId(id, ownerId);
         deleteDocumentTree(document);
+        blockService.deleteBlockInRange(document.getParentId(), ownerId, document.getOrder(), document.getOrder());
     }
 
     private void deleteDocumentTree(Document document) {

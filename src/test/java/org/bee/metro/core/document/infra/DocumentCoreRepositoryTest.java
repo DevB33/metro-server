@@ -160,6 +160,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
                     .cover("cover")
                     .parentId(parentId)
                     .ownerId(UUID.randomUUID())
+                    .order(1L)
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
                     .build();
@@ -184,6 +185,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
                     .cover("cover")
                     .parentId(UUID.randomUUID())
                     .ownerId(UUID.randomUUID())
+                    .order(1L)
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
                     .build();
@@ -214,6 +216,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
                     .cover("cover")
                     .parentId(UUID.randomUUID())
                     .ownerId(UUID.randomUUID())
+                    .order(1L)
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
                     .build();
@@ -244,6 +247,7 @@ class DocumentCoreRepositoryTest extends RepositoryTest {
                     .cover("cover")
                     .parentId(UUID.randomUUID())
                     .ownerId(UUID.randomUUID())
+                    .order(1L)
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
                     .build();

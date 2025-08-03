@@ -1,14 +1,20 @@
 [[block]]
 == 블록 API
 
-=== 블록 생성
+=== 텍스트 블록 생성
 operation::block/create[snippets='http-request,request-fields,response-fields']
 
 === 블록 리스트 조회
-operation::block/list[snippets='http-request,request-fields,response-fields']
+operation::block/list[snippets='http-request,response-fields']
+
+=== 블록 노드 변경
+operation::block/update-node[snippets='http-request,request-fields']
 
 === 블록 순서 변경
 operation::block/update-order[snippets='http-request,request-fields']
+
+=== 텍스트 블록 타입 변경
+operation::block/update-type[snippets='http-request,request-fields']
 
 === 범위 기반 블록 삭제
 operation::block/delete[snippets='http-request,request-fields']

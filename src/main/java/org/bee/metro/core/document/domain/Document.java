@@ -2,6 +2,7 @@ package org.bee.metro.core.document.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Document {
     private final String cover;
     private final UUID parentId;
     private final UUID ownerId;
+    private final Long order;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
@@ -28,7 +30,7 @@ public class Document {
 
     @Builder
     public Document(UUID id, String title, List<Tag> tag, String icon, String cover, UUID parentId, UUID ownerId,
-                    LocalDateTime createdAt, LocalDateTime updatedAt) {
+                    Long order, LocalDateTime createdAt, LocalDateTime updatedAt) {
         validateOwnerId(ownerId);
 
         this.id = id;
@@ -38,6 +40,7 @@ public class Document {
         this.cover = cover;
         this.parentId = makeValidParentId(parentId);
         this.ownerId = ownerId;
+        this.order = order;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -51,6 +54,7 @@ public class Document {
             .cover(documentEntity.getCover())
             .parentId(documentEntity.getParentId())
             .ownerId(documentEntity.getOwnerId())
+            .order(documentEntity.getOrder())
             .createdAt(documentEntity.getCreatedAt())
             .updatedAt(documentEntity.getUpdatedAt())
             .build();
@@ -82,6 +86,7 @@ public class Document {
                 .cover(documentFieldType == DocumentFieldType.COVER ? value : this.cover)
                 .parentId(this.parentId)
                 .ownerId(this.ownerId)
+                .order(documentFieldType == DocumentFieldType.ORDER ? Long.parseLong(value) : this.order)
                 .createdAt(this.createdAt)
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -96,6 +101,7 @@ public class Document {
             .cover(this.cover)
             .parentId(this.parentId)
             .ownerId(this.ownerId)
+            .order(this.order)
             .createdAt(this.createdAt)
             .updatedAt(LocalDateTime.now())
             .build();

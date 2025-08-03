@@ -100,6 +100,7 @@ class DocumentTest {
                     .cover("cover")
                     .parentId(UUID.randomUUID())
                     .ownerId(UUID.randomUUID())
+                    .order(1L)
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
                     .build();
@@ -110,6 +111,7 @@ class DocumentTest {
                 case TITLE -> assertThat(updatedDocument.getTitle()).isEqualTo(value);
                 case ICON -> assertThat(updatedDocument.getIcon()).isEqualTo(value);
                 case COVER -> assertThat(updatedDocument.getCover()).isEqualTo(value);
+                case ORDER -> assertThat(updatedDocument.getOrder()).isEqualTo(Long.parseLong(value));
             }
         }
 

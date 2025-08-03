@@ -9,6 +9,8 @@ public record DocumentTreeNode(
         UUID id,
         String title,
         String icon,
+        Long order,
+        UUID parentId,
         List<DocumentTreeNode> children
 ) {
 
@@ -17,6 +19,8 @@ public record DocumentTreeNode(
                 document.getId(),
                 document.getTitle(),
                 document.getIcon(),
+                document.getOrder(),
+                document.getParentId(),
                 new ArrayList<>()
         );
     }

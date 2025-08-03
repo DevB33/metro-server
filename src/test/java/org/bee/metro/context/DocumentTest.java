@@ -10,6 +10,8 @@ import org.bee.metro.core.block.api.NodeApi;
 import org.bee.metro.core.block.application.BlockService;
 import org.bee.metro.core.document.api.DocumentApi;
 import org.bee.metro.core.document.application.DocumentService;
+import org.bee.metro.core.member.api.MemberApi;
+import org.bee.metro.core.member.application.MemberService;
 import org.bee.metro.global.auth.jwt.RefreshTokenProvider;
 import org.bee.metro.global.config.SecurityConfig;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +29,7 @@ import org.springframework.security.test.context.TestSecurityContextHolder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(value = {AuthApi.class, DocumentApi.class, BlockApi.class, NodeApi.class})
+@WebMvcTest(value = {AuthApi.class, DocumentApi.class, BlockApi.class, NodeApi.class, MemberApi.class})
 @Import({SecurityConfig.class})
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
@@ -47,6 +49,9 @@ public abstract class DocumentTest {
 
     @MockitoBean
     protected AuthService authService;
+
+    @MockitoBean
+    protected MemberService memberService;
 
     @Autowired
     protected ObjectMapper objectMapper;

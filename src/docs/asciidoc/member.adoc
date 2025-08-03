@@ -1,0 +1,5 @@
+[[member]]
+== 사용자 API
+
+=== 사용자 조회
+operation::member/find[snippets='http-request,response-fields']

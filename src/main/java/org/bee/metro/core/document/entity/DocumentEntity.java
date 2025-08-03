@@ -45,11 +45,15 @@ public class DocumentEntity extends BaseEntity {
     @Column(nullable = true)
     private UUID parentId;
 
+    @Column(nullable = true)
     private UUID ownerId;
+
+    @Column(name="document_order", nullable = true)
+    private Long order;
 
     @Builder
     public DocumentEntity(UUID id, String title, List<Tag> tags, String icon, String cover, UUID parentId,
-                          UUID ownerId) {
+                          UUID ownerId, UUID blockId, Long order) {
         this.id = id;
         this.title = title;
         this.tags = tags;
@@ -57,6 +61,7 @@ public class DocumentEntity extends BaseEntity {
         this.cover = cover;
         this.parentId = parentId;
         this.ownerId = ownerId;
+        this.order = order;
     }
 
     public static DocumentEntity from(Document document) {
@@ -71,6 +76,7 @@ public class DocumentEntity extends BaseEntity {
                 .cover(document.getCover())
                 .parentId(document.getParentId())
                 .ownerId(document.getOwnerId())
+                .order(document.getOrder())
                 .build();
     }
 }

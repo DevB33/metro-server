@@ -22,6 +22,7 @@ import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.domain.LineColor;
 import org.bee.metro.core.document.domain.Tag;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
+import org.bee.metro.core.document.dto.DocumentCreationAtListRequest;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
 import org.bee.metro.core.document.dto.DocumentTagUpdateRequest;
 import org.bee.metro.core.document.dto.DocumentTagsUpdateRequest;
@@ -41,20 +42,23 @@ public class DocumentDocument extends DocumentTest {
         @Test
         void 문서_리스트_조회가_성공하면_200을_반환한다() throws Exception {
             List<DocumentTreeNode> documentTreeNodes = List.of(
-                    new DocumentTreeNode(UUID.randomUUID(), "name1", "icon1", Collections.emptyList()));
+                    new DocumentTreeNode(UUID.randomUUID(), "name1", "icon1",
+                           1L, UUID.randomUUID(),Collections.emptyList()));
             given(documentService.getDocumentsByOwnerId(any())).willReturn(documentTreeNodes);
 
-            mockMvc.perform(get("/documents")
+            mockMvc.perform(get("/notes")
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/list",
                             preprocessRequest(prettyPrint()),
                             responseFields(
-                                    fieldWithPath("node").description("문서 목록"),
-                                    fieldWithPath("node[].id").description("문서 ID"),
-                                    fieldWithPath("node[].title").description("문서 제목"),
-                                    fieldWithPath("node[].icon").description("문서 아이콘"),
-                                    fieldWithPath("node[].children").description("하위 문서 목록")
+                                    fieldWithPath("notes").description("문서 목록"),
+                                    fieldWithPath("notes[].id").description("문서 ID"),
+                                    fieldWithPath("notes[].title").description("문서 제목"),
+                                    fieldWithPath("notes[].icon").description("문서 아이콘"),
+                                    fieldWithPath("notes[].order").description("문서 순서"),
+                                    fieldWithPath("notes[].parentId").description("문서 부모 ID"),
+                                    fieldWithPath("notes[].children").description("하위 문서 목록")
                             )
                     ));
         }
@@ -70,15 +74,46 @@ public class DocumentDocument extends DocumentTest {
                     .ownerId(randomId)
                     .parentId(UUID.randomUUID())
                     .build();
-            given(documentService.createDocument(any(), any())).willReturn(document);
+            given(documentService.createDocument(any(), any(), any())).willReturn(document);
 
-            DocumentCreationRequest documentCreationRequest = new DocumentCreationRequest(UUID.randomUUID());
-            mockMvc.perform(post("/documents")
+            DocumentCreationRequest documentCreationRequest = new DocumentCreationRequest(UUID.randomUUID(), 1L);
+            mockMvc.perform(post("/notes")
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(documentCreationRequest)))
                     .andExpect(status().isOk())
                     .andDo(document("document/create",
+                            preprocessRequest(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("parentId").description("부모 문서 ID"),
+                                    fieldWithPath("upperOrder").description("상위 문서의 순서")
+                            ),
+                            responseFields(
+                                    fieldWithPath("id").description("생성된 문서 ID")
+                            )
+                    ));
+        }
+    }
+
+    @Nested
+    class 문서_리스트에서_생성 {
+
+        @Test
+        void 문서_리스트에서_생성이_성공하면_200을_반환한다() throws Exception {
+            Document document = Document.builder()
+                    .id(UUID.randomUUID())
+                    .ownerId(randomId)
+                    .parentId(UUID.randomUUID())
+                    .build();
+            given(documentService.createDocumentAtList(any(), any())).willReturn(document);
+
+            DocumentCreationAtListRequest documentCreationRequest = new DocumentCreationAtListRequest(UUID.randomUUID());
+            mockMvc.perform(post("/notes/list")
+                            .header("Authorization", accessToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(documentCreationRequest)))
+                    .andExpect(status().isOk())
+                    .andDo(document("document/create-at-list",
                             preprocessRequest(prettyPrint()),
                             requestFields(
                                     fieldWithPath("parentId").description("부모 문서 ID")
@@ -96,7 +131,7 @@ public class DocumentDocument extends DocumentTest {
         @Test
         void 문서_삭제가_성공하면_200을_반환한다() throws Exception {
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(delete("/documents/" + documentId)
+            mockMvc.perform(delete("/notes/" + documentId)
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/delete",
@@ -114,13 +149,12 @@ public class DocumentDocument extends DocumentTest {
                     "title",
                     "icon",
                     List.of(new Tag("tag", LineColor.LINE_ONE)),
-                    "cover",
-                    Collections.emptyList()
+                    "cover"
             );
             given(documentService.findDocumentById(any(), any())).willReturn(detailDocumentPayload);
 
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(get("/documents/" + documentId)
+            mockMvc.perform(get("/notes/" + documentId)
                             .header("Authorization", accessToken))
                     .andExpect(status().isOk())
                     .andDo(document("document/detail",
@@ -130,8 +164,7 @@ public class DocumentDocument extends DocumentTest {
                                             fieldWithPath("icon").description("문서 아이콘"),
                                             fieldWithPath("tags[].name").description("문서 태그 목록"),
                                             fieldWithPath("tags[].color").description("문서 태그 색상"),
-                                            fieldWithPath("cover").description("문서 커버 이미지"),
-                                            fieldWithPath("blocks").description("문서 블록 목록")
+                                            fieldWithPath("cover").description("문서 커버 이미지")
                                     )
                             )
                     );
@@ -147,7 +180,7 @@ public class DocumentDocument extends DocumentTest {
 
             String fieldType = "title";
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(patch("/documents/" + documentId + "/" + fieldType)
+            mockMvc.perform(patch("/notes/" + documentId + "/" + fieldType)
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(documentUpdateRequest)))
@@ -172,7 +205,7 @@ public class DocumentDocument extends DocumentTest {
                     List.of(tagUpdateRequest1, tagUpdateRequest2));
 
             UUID documentId = UUID.randomUUID();
-            mockMvc.perform(patch("/documents/" + documentId + "/tags")
+            mockMvc.perform(patch("/notes/" + documentId + "/tags")
                             .header("Authorization", accessToken)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(tagsUpdateRequest)))

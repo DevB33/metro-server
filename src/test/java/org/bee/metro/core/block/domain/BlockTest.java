@@ -65,7 +65,6 @@ class BlockTest {
         private static Stream<Arguments> generateInvalidArguments() {
             return Stream.of(
                     Arguments.of(-1L, UUID.randomUUID(), UUID.randomUUID()),
-                    Arguments.of(1L, null, UUID.randomUUID()),
                     Arguments.of(1L, UUID.randomUUID(), null)
             );
         }

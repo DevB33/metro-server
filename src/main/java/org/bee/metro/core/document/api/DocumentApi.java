@@ -7,6 +7,7 @@ import org.bee.metro.core.document.application.DocumentService;
 import org.bee.metro.core.document.common.DocumentFieldType;
 import org.bee.metro.core.document.domain.Document;
 import org.bee.metro.core.document.dto.DetailDocumentPayload;
+import org.bee.metro.core.document.dto.DocumentCreationAtListRequest;
 import org.bee.metro.core.document.dto.DocumentCreationRequest;
 import org.bee.metro.core.document.dto.DocumentCreationResponse;
 import org.bee.metro.core.document.dto.DocumentTagsUpdateRequest;
@@ -42,7 +43,17 @@ public class DocumentApi {
             @Login UUID memberId,
             @RequestBody DocumentCreationRequest documentCreationRequest
     ) {
-        Document document = documentService.createDocument(memberId, documentCreationRequest.parentId());
+        Document document = documentService.createDocument(memberId, documentCreationRequest.parentId(),
+                documentCreationRequest.upperOrder() + 1);
+        return ResponseEntity.ok(new DocumentCreationResponse(document.getId()));
+    }
+
+    @PostMapping("/list")
+    public ResponseEntity<DocumentCreationResponse> createDocumentAtList(
+            @Login UUID memberId,
+            @RequestBody DocumentCreationAtListRequest documentCreationRequest
+    ) {
+        Document document = documentService.createDocumentAtList(memberId, documentCreationRequest.parentId());
         return ResponseEntity.ok(new DocumentCreationResponse(document.getId()));
     }
 

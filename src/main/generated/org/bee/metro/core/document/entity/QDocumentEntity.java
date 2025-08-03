@@ -31,6 +31,8 @@ public class QDocumentEntity extends EntityPathBase<DocumentEntity> {
 
     public final ComparablePath<java.util.UUID> id = createComparable("id", java.util.UUID.class);
 
+    public final NumberPath<Long> order = createNumber("order", Long.class);
+
     public final ComparablePath<java.util.UUID> ownerId = createComparable("ownerId", java.util.UUID.class);
 
     public final ComparablePath<java.util.UUID> parentId = createComparable("parentId", java.util.UUID.class);

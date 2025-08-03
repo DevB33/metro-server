@@ -33,6 +33,7 @@ class DocumentServiceTest extends ServiceTest {
                     .tag(null)
                     .icon(null)
                     .ownerId(ownerId)
+                    .order(1L)
                     .parentId(null)
                     .build();
             Document savedDocument1 = documentRepository.save(document1);
@@ -43,6 +44,7 @@ class DocumentServiceTest extends ServiceTest {
                     .tag(null)
                     .icon(null)
                     .ownerId(ownerId)
+                    .order(2L)
                     .parentId(savedDocument1.getId())
                     .build();
             documentRepository.save(document2);
@@ -53,6 +55,7 @@ class DocumentServiceTest extends ServiceTest {
                     .tag(null)
                     .icon(null)
                     .ownerId(ownerId)
+                    .order(3L)
                     .parentId(savedDocument1.getId())
                     .build();
             documentRepository.save(document3);
@@ -71,7 +74,8 @@ class DocumentServiceTest extends ServiceTest {
         void 문서를_생성한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
 
             Document savedDocument = documentRepository.findById(document.getId()).orElseThrow();
             assertThat(savedDocument.getId()).isNotNull();
@@ -81,11 +85,42 @@ class DocumentServiceTest extends ServiceTest {
         @Test
         void 부모_문서가_없어도_문서를_생성한다() {
             UUID ownerId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, null);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, null, order);
 
             Document savedDocument = documentRepository.findById(document.getId()).orElseThrow();
             assertThat(savedDocument.getId()).isNotNull();
             assertThat(savedDocument.getOwnerId()).isEqualTo(ownerId);
+        }
+    }
+
+    @Nested
+    class createDocumentAtList_메서드는 {
+
+        @Test
+        void 문서를_리스트에_생성한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID parentId = UUID.randomUUID();
+            Document document = documentService.createDocumentAtList(ownerId, parentId);
+
+            Document savedDocument = documentRepository.findById(document.getId()).orElseThrow();
+            assertThat(savedDocument.getId()).isNotNull();
+            assertThat(savedDocument.getOwnerId()).isEqualTo(ownerId);
+            assertThat(savedDocument.getOrder()).isEqualTo(0L);
+        }
+
+        @Test
+        void 문서_생성_시_리스트의_마지막_순서로_생성한다() {
+            UUID ownerId = UUID.randomUUID();
+            UUID parentId = UUID.randomUUID();
+            Document document1 = documentService.createDocumentAtList(ownerId, parentId);
+            Document document2 = documentService.createDocumentAtList(ownerId, parentId);
+
+            Document savedDocument1 = documentRepository.findById(document1.getId()).orElseThrow();
+            Document savedDocument2 = documentRepository.findById(document2.getId()).orElseThrow();
+
+            assertThat(savedDocument1.getOrder()).isEqualTo(0L);
+            assertThat(savedDocument2.getOrder()).isEqualTo(1L);
         }
     }
 
@@ -96,7 +131,8 @@ class DocumentServiceTest extends ServiceTest {
         void 문서를_삭제한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
 
             documentService.deleteDocument(ownerId, document.getId());
 
@@ -117,7 +153,8 @@ class DocumentServiceTest extends ServiceTest {
         void 소유자가_아니라면_예외가_발생한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
 
             UUID anotherOwnerId = UUID.randomUUID();
             assertThatThrownBy(() -> documentService.deleteDocument(anotherOwnerId, document.getId()))
@@ -128,9 +165,10 @@ class DocumentServiceTest extends ServiceTest {
         void 하위_문서도_함께_삭제한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
-            Document childDocument1 = documentService.createDocument(ownerId, document.getId());
-            Document childDocument2 = documentService.createDocument(ownerId, document.getId());
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
+            Document childDocument1 = documentService.createDocument(ownerId, document.getId(), order + 1);
+            Document childDocument2 = documentService.createDocument(ownerId, document.getId(), order + 2);
 
             documentService.deleteDocument(ownerId, document.getId());
 
@@ -147,7 +185,8 @@ class DocumentServiceTest extends ServiceTest {
         void 문서를_조회한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
 
             DetailDocumentPayload foundDocument = documentService.findDocumentById(ownerId, document.getId());
 
@@ -171,7 +210,8 @@ class DocumentServiceTest extends ServiceTest {
         void 문서_조회_권한이_없다면_예외가_발생한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
 
             UUID notOwnerId = UUID.randomUUID();
             assertThatThrownBy(() -> documentService.findDocumentById(notOwnerId, document.getId()))
@@ -186,7 +226,8 @@ class DocumentServiceTest extends ServiceTest {
         void 문서의_필드를_수정한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
 
             documentService.updateDocument(ownerId, document.getId(), DocumentFieldType.TITLE, "updated title");
 
@@ -208,7 +249,8 @@ class DocumentServiceTest extends ServiceTest {
         void 문서_수정_권한이_없다면_예외가_발생한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
 
             UUID notOwnerId = UUID.randomUUID();
             assertThatThrownBy(
@@ -225,7 +267,8 @@ class DocumentServiceTest extends ServiceTest {
         void 문서의_태그를_수정한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
 
             List<DocumentTagUpdateRequest> tags = List.of(new DocumentTagUpdateRequest("newTag", "line_one"));
             documentService.updateDocumentTags(ownerId, document.getId(), tags);
@@ -240,7 +283,8 @@ class DocumentServiceTest extends ServiceTest {
         void 해당_문서의_권한이_없으면_예외가_발생한다() {
             UUID ownerId = UUID.randomUUID();
             UUID parentId = UUID.randomUUID();
-            Document document = documentService.createDocument(ownerId, parentId);
+            Long order = 1L;
+            Document document = documentService.createDocument(ownerId, parentId, order);
 
             UUID notOwnerId = UUID.randomUUID();
             List<DocumentTagUpdateRequest> tags = List.of(new DocumentTagUpdateRequest("newTag", "line_one"));

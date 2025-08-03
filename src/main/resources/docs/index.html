@@ -462,21 +462,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_사용자_로그아웃">사용자 로그아웃</a></li>
 </ul>
 </li>
-<li><a href="#document">문서 API</a>
+<li><a href="#member">사용자 API</a>
 <ul class="sectlevel2">
-<li><a href="#_문서_리스트_조회">문서 리스트 조회</a></li>
-<li><a href="#_문서_생성">문서 생성</a></li>
-<li><a href="#_문서_삭제">문서 삭제</a></li>
-<li><a href="#_문서_상세_조회">문서 상세 조회</a></li>
-<li><a href="#_문서_부분_수정">문서 부분 수정</a></li>
-<li><a href="#_문서_태그_수정">문서 태그 수정</a></li>
+<li><a href="#_사용자_조회">사용자 조회</a></li>
+</ul>
+</li>
+<li><a href="#document">노트 API</a>
+<ul class="sectlevel2">
+<li><a href="#_노트_리스트_조회">노트 리스트 조회</a></li>
+<li><a href="#_노트_블록_생성">노트 블록 생성</a></li>
+<li><a href="#_노트_리스트에서_생성">노트 리스트에서 생성</a></li>
+<li><a href="#_노트_삭제">노트 삭제</a></li>
+<li><a href="#_노트_상세_조회">노트 상세 조회</a></li>
+<li><a href="#_노트_부분_수정">노트 부분 수정</a></li>
+<li><a href="#_노트_태그_수정">노트 태그 수정</a></li>
 </ul>
 </li>
 <li><a href="#block">블록 API</a>
 <ul class="sectlevel2">
-<li><a href="#_블록_생성">블록 생성</a></li>
+<li><a href="#_텍스트_블록_생성">텍스트 블록 생성</a></li>
 <li><a href="#_블록_리스트_조회">블록 리스트 조회</a></li>
+<li><a href="#_블록_노드_변경">블록 노드 변경</a></li>
 <li><a href="#_블록_순서_변경">블록 순서 변경</a></li>
+<li><a href="#_텍스트_블록_타입_변경">텍스트 블록 타입 변경</a></li>
 <li><a href="#_범위_기반_블록_삭제">범위 기반 블록 삭제</a></li>
 </ul>
 </li>
@@ -637,22 +645,22 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="document"><a class="link" href="#document">문서 API</a></h2>
+<h2 id="member"><a class="link" href="#member">사용자 API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_문서_리스트_조회"><a class="link" href="#_문서_리스트_조회">문서 리스트 조회</a></h3>
+<h3 id="_사용자_조회"><a class="link" href="#_사용자_조회">사용자 조회</a></h3>
 <div class="sect3">
-<h4 id="_문서_리스트_조회_http_request"><a class="link" href="#_문서_리스트_조회_http_request">HTTP request</a></h4>
+<h4 id="_사용자_조회_http_request"><a class="link" href="#_사용자_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiNDY2YmQ5MDYtZWY1OS00ODA1LWJhMzItNDJkMTNhZDQyYzU3IiwiZXhwIjoxNzQxNDk5NDIyfQ.K1-tiVGeIRhn7kP4bv1PYaGICNjOf7aYau-oaSwUejbeLZGgsbLv_NdiiAGunp9k
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /members HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiNDY5YWEwZGItZmZhNC00ZjlkLWI2MzctNzY1MTNmZjIxZmE4IiwiZXhwIjoxNzUyMjg2ODk3fQ.o_RDwINasfQHpcZhoe637tQxdAf7_c_pf71MWM2JBxpXf_U3k_Y1WiUfRooU48Yp
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_문서_리스트_조회_response_fields"><a class="link" href="#_문서_리스트_조회_response_fields">Response fields</a></h4>
+<h4 id="_사용자_조회_response_fields"><a class="link" href="#_사용자_조회_response_fields">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -672,35 +680,111 @@ Host: localhost:8080</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>node</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자 이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>avatar</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자 아바타 경로</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="document"><a class="link" href="#document">노트 API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_노트_리스트_조회"><a class="link" href="#_노트_리스트_조회">노트 리스트 조회</a></h3>
+<div class="sect3">
+<h4 id="_노트_리스트_조회_http_request"><a class="link" href="#_노트_리스트_조회_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notes HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiNTRmMDgwNjAtOGRiNy00NjAxLTg1MmUtMDU5N2NjNzUxMjE2IiwiZXhwIjoxNzUyMjg2ODk3fQ.1LQix9Q1_pBcPemR3tvGM5onkwaXjK5jFezH4ypk5GVceUnXLd_vy0LAfDgAdJMp
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_노트_리스트_조회_response_fields"><a class="link" href="#_노트_리스트_조회_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>notes</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 목록</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>node[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>notes[].id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>node[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>notes[].title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 제목</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>node[].icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>notes[].icon</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 아이콘</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>node[].children</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>notes[].order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 순서</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>notes[].parentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문서 부모 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>notes[].children</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -711,25 +795,26 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_문서_생성"><a class="link" href="#_문서_생성">문서 생성</a></h3>
+<h3 id="_노트_블록_생성"><a class="link" href="#_노트_블록_생성">노트 블록 생성</a></h3>
 <div class="sect3">
-<h4 id="_문서_생성_http_request"><a class="link" href="#_문서_생성_http_request">HTTP request</a></h4>
+<h4 id="_노트_블록_생성_http_request"><a class="link" href="#_노트_블록_생성_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /documents HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /notes HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiMWQxZjhlNGQtNjY3OC00Njg5LWE3MzUtYjljNDczZjliYjFiIiwiZXhwIjoxNzQxNDk5NDIyfQ.BOYpljkingLJoNWbQXb8OGfm-pedJrD5qZoYB4v1eS7Ucg-DVhxoiPa6wk2giRts
-Content-Length: 57
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiMmExYTA5ZGMtNDk4OC00NTNlLTg4ZGItNTAxODg5ZWQ2NDI5IiwiZXhwIjoxNzUyMjg2ODk3fQ.TNVLSxQn5Eria2ADY949Btq6W2KfYIrHfWVIN7u7n6e_o1yR625fexUMi2XZ_8NW
+Content-Length: 77
 Host: localhost:8080
 
 {
-  "parentId" : "9c22f1ad-591c-4788-ae16-1d323792d6e9"
+  "parentId" : "f62cac3c-ff17-4967-8aab-a0acc95fc856",
+  "upperOrder" : 1
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_문서_생성_request_fields"><a class="link" href="#_문서_생성_request_fields">Request fields</a></h4>
+<h4 id="_노트_블록_생성_request_fields"><a class="link" href="#_노트_블록_생성_request_fields">Request fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -755,11 +840,18 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">부모 문서 ID</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>upperOrder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상위 문서의 순서</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_문서_생성_response_fields"><a class="link" href="#_문서_생성_response_fields">Response fields</a></h4>
+<h4 id="_노트_블록_생성_response_fields"><a class="link" href="#_노트_블록_생성_response_fields">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -790,32 +882,111 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect2">
-<h3 id="_문서_삭제"><a class="link" href="#_문서_삭제">문서 삭제</a></h3>
+<h3 id="_노트_리스트에서_생성"><a class="link" href="#_노트_리스트에서_생성">노트 리스트에서 생성</a></h3>
 <div class="sect3">
-<h4 id="_문서_삭제_http_request"><a class="link" href="#_문서_삭제_http_request">HTTP request</a></h4>
+<h4 id="_노트_리스트에서_생성_http_request"><a class="link" href="#_노트_리스트에서_생성_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /documents/d3fa0b6b-e89e-4e67-bec3-47d479bb835e HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiYmFjNGMwOGMtZjJiMC00NDJkLThlM2MtYmYzYWNmMGRkMDA3IiwiZXhwIjoxNzQxNDk5NDIyfQ.TKJHl0DMud3JlLRPQATz7gNb-fkcHwy-S7_k_-k2-TJzoG9MxKsjWyVcABo7Mu7r
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /notes/list HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiOTBjNmU3NmEtMTkxMS00OTBhLTkyNzMtMTdmOGE2ZWMzN2ExIiwiZXhwIjoxNzUyMjg2ODk3fQ.Ro-RezMeP16SOPn_UU_ekOfk7VNchJyEBCom6NxBlC9G87KxS6n_NNp1KKLK9wTD
+Content-Length: 57
+Host: localhost:8080
+
+{
+  "parentId" : "0a903bdd-d6c1-4b1f-b10d-60e0337cb58e"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_노트_리스트에서_생성_request_fields"><a class="link" href="#_노트_리스트에서_생성_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약사항</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>parentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">부모 문서 ID</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_노트_리스트에서_생성_response_fields"><a class="link" href="#_노트_리스트에서_생성_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성된 문서 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_노트_삭제"><a class="link" href="#_노트_삭제">노트 삭제</a></h3>
+<div class="sect3">
+<h4 id="_노트_삭제_http_request"><a class="link" href="#_노트_삭제_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /notes/5cc206d0-94e0-4264-b145-a97ceb73e32d HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiY2U2NGZkMWUtZGE1Yi00YmJlLTg4M2UtYzgxMzRiZDcyZGEyIiwiZXhwIjoxNzUyMjg2ODk3fQ.xRrme9EPKACnVv0FKfif8z8cPF4f01qptQ1rs4hbUWbrjs34wH298kv3clYIA3Ln
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_문서_상세_조회"><a class="link" href="#_문서_상세_조회">문서 상세 조회</a></h3>
+<h3 id="_노트_상세_조회"><a class="link" href="#_노트_상세_조회">노트 상세 조회</a></h3>
 <div class="sect3">
-<h4 id="_문서_상세_조회_http_request"><a class="link" href="#_문서_상세_조회_http_request">HTTP request</a></h4>
+<h4 id="_노트_상세_조회_http_request"><a class="link" href="#_노트_상세_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /documents/753322a0-d3d9-45f8-b9f5-91b649c7c405 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiOTZjMDg3MGEtYTJlZi00ZDM5LTllMWMtNmRlZTUwYTFiOWIxIiwiZXhwIjoxNzQxNDk5NDIyfQ.A1DPTJsTw3mQLBnXImiWaOHKlRbiNuj0jx3B-KuYQ1Ndv3fzeMIFfG_YuAmeN3wO
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notes/adb969af-5513-4e70-9e18-f6ea4bf5df42 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiZWIzNTg0ODItY2QwZS00ZTBhLTg3MjctNjNhMzlhN2E0YTQ2IiwiZXhwIjoxNzUyMjg2ODk3fQ.4fOy2s9s4NRrwc3hlRfNA6pkSo1Ud9ZJuUS4uH3aUPplmiROsRmaLE6BersZLyR2
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_문서_상세_조회_response_fields"><a class="link" href="#_문서_상세_조회_response_fields">Response fields</a></h4>
+<h4 id="_노트_상세_조회_response_fields"><a class="link" href="#_노트_상세_조회_response_fields">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -869,26 +1040,19 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 커버 이미지</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">문서 블록 목록</p></td>
-</tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_문서_부분_수정"><a class="link" href="#_문서_부분_수정">문서 부분 수정</a></h3>
+<h3 id="_노트_부분_수정"><a class="link" href="#_노트_부분_수정">노트 부분 수정</a></h3>
 <div class="sect3">
-<h4 id="_문서_부분_수정_http_request"><a class="link" href="#_문서_부분_수정_http_request">HTTP request</a></h4>
+<h4 id="_노트_부분_수정_http_request"><a class="link" href="#_노트_부분_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/3ae9a427-3b60-412f-a0ba-a3a2ea3f12d7/title HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /notes/169c2210-5779-4e3a-bcbb-ac0f81c86aba/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiMTBiODYyOTItNmNiMi00OWJiLTkzMWQtOGJjMGUwOGJlMmIzIiwiZXhwIjoxNzQxNDk5NDIyfQ.LE5_SOGv8lQ-eqgHI0oEySYxI8jbI1CfZl7RIynKUAnO-oqDf6JYo730EGRybCGw
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiOWM5YTUwYWQtNzlhMy00OWQ3LTllOGUtY2QxOTI4Yjg3MmFkIiwiZXhwIjoxNzUyMjg2ODk3fQ.6Va-cak6ibZG2KV4gelA1c8OYfWwXIazzroha01FfLbU66Yz0y7oCLI4ETeQ41r8
 Content-Length: 23
 Host: localhost:8080
 
@@ -899,7 +1063,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_문서_부분_수정_request_fields"><a class="link" href="#_문서_부분_수정_request_fields">Request fields</a></h4>
+<h4 id="_노트_부분_수정_request_fields"><a class="link" href="#_노트_부분_수정_request_fields">Request fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -930,14 +1094,14 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect2">
-<h3 id="_문서_태그_수정"><a class="link" href="#_문서_태그_수정">문서 태그 수정</a></h3>
+<h3 id="_노트_태그_수정"><a class="link" href="#_노트_태그_수정">노트 태그 수정</a></h3>
 <div class="sect3">
-<h4 id="_문서_태그_수정_http_request"><a class="link" href="#_문서_태그_수정_http_request">HTTP request</a></h4>
+<h4 id="_노트_태그_수정_http_request"><a class="link" href="#_노트_태그_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /documents/690dedf4-78ae-4d10-b948-66d62d858904/tags HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /notes/b25f6b71-7f73-4dc8-ae8d-95b3a1366ec1/tags HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiYzRhZjlmNDItMTQ5OS00YjM0LWE5MWMtOGQyYTNmMThmNDZiIiwiZXhwIjoxNzQxNDk5NDIyfQ.XXoxZc0WWW5Hd79X5U_pE5YyMLKbl1P0NqHAoLv2fkeh84VWJ7Wd-Mys9zGi9Hdc
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiMTA4MDE0YmEtOTNlZC00YjM0LWIyN2YtMmFiNmZiY2FmN2Y5IiwiZXhwIjoxNzUyMjg2ODk3fQ.KdXqtiSlloolzlscJZj9-SjCYakBz1X2pRIy7YpgRjaVPQfVYU4oVBDF10GdVB12
 Content-Length: 121
 Host: localhost:8080
 
@@ -954,7 +1118,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_문서_태그_수정_request_fields"><a class="link" href="#_문서_태그_수정_request_fields">Request fields</a></h4>
+<h4 id="_노트_태그_수정_request_fields"><a class="link" href="#_노트_태그_수정_request_fields">Request fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -997,27 +1161,40 @@ Host: localhost:8080
 <h2 id="block"><a class="link" href="#block">블록 API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_블록_생성"><a class="link" href="#_블록_생성">블록 생성</a></h3>
+<h3 id="_텍스트_블록_생성"><a class="link" href="#_텍스트_블록_생성">텍스트 블록 생성</a></h3>
 <div class="sect3">
-<h4 id="_블록_생성_http_request"><a class="link" href="#_블록_생성_http_request">HTTP request</a></h4>
+<h4 id="_텍스트_블록_생성_http_request"><a class="link" href="#_텍스트_블록_생성_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /blocks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiMDkyODdjNTgtMTFmNi00MDdmLTkzN2ItMmI0OGU5ZmU2YWNhIiwiZXhwIjoxNzQxNDk5NDIyfQ.dAKd230FgjrKXwmuqq7xt72SyLAFduZSN5tOrC2swa0AbTLWMMONNMuVC0_3lvNH
-Content-Length: 98
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiNjk1MGJjNDktYWEwNC00MmU4LWI3MzktNzk5YmY4ZTA4ODZjIiwiZXhwIjoxNzUyMjg2ODk3fQ.NEZi0A1tJyXzScAphCX4hbvHDHv1yFrNcN7yhrvsk5OfboY6bL2GFrCVisf9yN_K
+Content-Length: 315
 Host: localhost:8080
 
 {
-  "documentId" : "b41197ca-590f-4fcd-a8bc-49fa47438942",
-  "type" : "TEXT",
-  "upperOrder" : 1
+  "noteId" : "8daddf92-62e2-48b3-86c5-58b2f22054f2",
+  "type" : "DEFAULT",
+  "upperOrder" : 1,
+  "nodes" : [ {
+    "content" : "content1",
+    "type" : "text",
+    "style" : {
+      "key" : "value1"
+    }
+  }, {
+    "content" : "content2",
+    "type" : "text",
+    "style" : {
+      "key" : "value2"
+    }
+  } ]
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_블록_생성_request_fields"><a class="link" href="#_블록_생성_request_fields">Request fields</a></h4>
+<h4 id="_텍스트_블록_생성_request_fields"><a class="link" href="#_텍스트_블록_생성_request_fields">Request fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -1037,7 +1214,7 @@ Host: localhost:8080
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>documentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>noteId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
@@ -1057,11 +1234,46 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">블록 순서</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 리스트</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 내용</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes[].type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 타입</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes[].style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 스타일</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes[].style.key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타일 키</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_블록_생성_response_fields"><a class="link" href="#_블록_생성_response_fields">Response fields</a></h4>
+<h4 id="_텍스트_블록_생성_response_fields"><a class="link" href="#_텍스트_블록_생성_response_fields">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -1097,47 +1309,12 @@ Host: localhost:8080
 <h4 id="_블록_리스트_조회_http_request"><a class="link" href="#_블록_리스트_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /blocks HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiNGQ1ZjY5ZTAtZWY5MC00NTQyLTkyMTUtOTU3MDRjMzU0NGRkIiwiZXhwIjoxNzQxNDk5NDIyfQ.qyGYf_6wrBTT3OT1FbNwapG26B0ZZrsyAiwwly9j7_xYXTTje5CmB-Rn2eHtLjI3
-Content-Length: 59
-Host: localhost:8080
-
-{
-  "documentId" : "7b8aff3f-573c-4303-b18d-09032f7fd4bf"
-}</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /blocks?noteId=2673b565-2fd7-4f68-8ff5-0b8ac320f3c8 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiY2YwNjQyZGMtYmQyNC00NWI4LTliNDAtNmMyMjM5MzE0NTA0IiwiZXhwIjoxNzUyMjg2ODk3fQ.8fDl0MkBAmph5_g_xYcrdYaPVgNihdccJxEb0_2DWg0Zv3PK_96sUXBa1L7XRT0U
+Accept: application/json
+Host: localhost:8080</code></pre>
 </div>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_블록_리스트_조회_request_fields"><a class="link" href="#_블록_리스트_조회_request_fields">Request fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">필드명</th>
-<th class="tableblock halign-left valign-top">타입</th>
-<th class="tableblock halign-left valign-top">필수값</th>
-<th class="tableblock halign-left valign-top">설명</th>
-<th class="tableblock halign-left valign-top">제약사항</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>documentId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect3">
 <h4 id="_블록_리스트_조회_response_fields"><a class="link" href="#_블록_리스트_조회_response_fields">Response fields</a></h4>
@@ -1167,53 +1344,25 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">Block 리스트</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">블록 ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">블록 타입</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.order</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">블록 순서</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.documentId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].block.memberId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">회원 ID</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">블록에 포함된 노드 목록</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">노드 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록 내용</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].content</code></p></td>
@@ -1221,6 +1370,13 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">노드 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 타입</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].style</code></p></td>
@@ -1237,25 +1393,94 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">스타일 키</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].order</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">노드 순서</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록 순서</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_블록_노드_변경"><a class="link" href="#_블록_노드_변경">블록 노드 변경</a></h3>
+<div class="sect3">
+<h4 id="_블록_노드_변경_http_request"><a class="link" href="#_블록_노드_변경_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /blocks/ce748b5e-a554-41f8-b830-2ef19b986b69/nodes HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiMTY0YTJlYzUtZjY4Yi00YmMxLTk5NTMtMWZmY2RiODdhZGUyIiwiZXhwIjoxNzUyMjg2ODk3fQ.CfQDDw7znK5kR3J3R_AXqkM_TY1SgnOJZSGJxxVaDfB4mAPAGL732De-dI9gjAl_
+Content-Length: 117
+Host: localhost:8080
+
+{
+  "nodes" : [ {
+    "content" : "content",
+    "type" : "text",
+    "style" : {
+      "key" : "value"
+    }
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_블록_노드_변경_request_fields"><a class="link" href="#_블록_노드_변경_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약사항</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록 노드 리스트</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].blockId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes[].content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 내용</p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">블록 ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>blocks[].nodes[].documentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes[].type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 타입</p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes[].style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노드 스타일</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nodes[].style.key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타일 키</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
@@ -1269,12 +1494,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /blocks/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiM2ViZWE0OGMtNGI5Ni00OTFlLTllY2ItMGI1Yzk5ZDZjYzY0IiwiZXhwIjoxNzQxNDk5NDIyfQ.TwI5CFmlV6-wriYnBMiqBlgmo9XKutZ9xasFis32n6RMaEED_l08IRjxfiZeagep
-Content-Length: 117
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiZjhlYjAwZmItYzE5My00YjhiLWE4OGMtYzA0ZDNhMjNmZGMxIiwiZXhwIjoxNzUyMjg2ODk3fQ.lX4_lwFflLLfFSgcRF60T45jYcHiC9N2MtZSQwqnkFGL5nL2_RLGtPqCc_thihoC
+Content-Length: 113
 Host: localhost:8080
 
 {
-  "documentId" : "1e288731-0609-4976-a04f-808a664e0de2",
+  "noteId" : "df3d806c-c859-4385-bbb6-ea59561c75c9",
   "startOrder" : 1,
   "endOrder" : 2,
   "upperOrder" : 3
@@ -1303,7 +1528,7 @@ Host: localhost:8080
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>documentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>noteId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
@@ -1335,6 +1560,55 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect2">
+<h3 id="_텍스트_블록_타입_변경"><a class="link" href="#_텍스트_블록_타입_변경">텍스트 블록 타입 변경</a></h3>
+<div class="sect3">
+<h4 id="_텍스트_블록_타입_변경_http_request"><a class="link" href="#_텍스트_블록_타입_변경_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /blocks/16f8dbbe-a409-4722-942f-68a7806134a8/type HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiZDI1NTMyNTUtNTZiYi00NjM5LTg1NTgtODIwODFiZDRkMTE2IiwiZXhwIjoxNzUyMjg2ODk3fQ.KpbJinF9ePyGLBf_pm-hvm8-WNInR_5hRpxhbL5rXuvKaHJi0JnnzSxkxq9OQQC8
+Content-Length: 24
+Host: localhost:8080
+
+{
+  "type" : "DEFAULT"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_텍스트_블록_타입_변경_request_fields"><a class="link" href="#_텍스트_블록_타입_변경_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약사항</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록 타입</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_범위_기반_블록_삭제"><a class="link" href="#_범위_기반_블록_삭제">범위 기반 블록 삭제</a></h3>
 <div class="sect3">
 <h4 id="_범위_기반_블록_삭제_http_request"><a class="link" href="#_범위_기반_블록_삭제_http_request">HTTP request</a></h4>
@@ -1342,12 +1616,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /blocks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiY2U0MmJlM2UtNjE3Zi00MDA3LWE2NWQtY2Q0ODljYTNmYjRiIiwiZXhwIjoxNzQxNDk5NDIyfQ.m2DL4mhSfIBYwi2mhcmQ35I3o8G4NI1ixX--3blX8yDdpD6kjiEpsOtq7oIXVRW5
-Content-Length: 97
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiYmUwNTU3MDgtMDU4Zi00NTgyLTlhMWItMzgyNjhkNzdlOGM1IiwiZXhwIjoxNzUyMjg2ODk3fQ.F1g4XodziNVEKNRe07UmYsCHc1P59y9gptKQIg0sUptoMbwt-K_-0x0v5A3-ggvF
+Content-Length: 93
 Host: localhost:8080
 
 {
-  "documentId" : "410d3a3a-6039-4aca-9087-c865f4e579f4",
+  "noteId" : "6b7275cb-72e4-4de5-90d4-f551fa497b06",
   "startOrder" : 1,
   "endOrder" : 2
 }</code></pre>
@@ -1375,7 +1649,7 @@ Host: localhost:8080
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>documentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>noteId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
@@ -1412,13 +1686,13 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /nodes HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiZTM4YzZmNjgtYWE0My00YTVhLThkOWItYmJhNTc3YTgyMzMyIiwiZXhwIjoxNzQxNDk5NDIyfQ.fhiNdIL-VEph7VPSy08dgLyUONgvNj-Q4km2ekKLRzbwmM3xgOl0duW9F1ljJQdB
-Content-Length: 192
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiNjYzYTFhMjgtYWVjZi00ZjUzLWIxNDEtNWU1YWJlODIzMTcwIiwiZXhwIjoxNzUyMjg2ODk3fQ.ckWEgi6UVIZNiUY_AAAUlUFRn2R0nh-b-Vpa5xiIeipDdb8b-ECKPRkJxQIFlFWI
+Content-Length: 188
 Host: localhost:8080
 
 {
-  "blockId" : "5119cea8-620e-46bb-aecf-7849b60ac52c",
-  "documentId" : "81208f81-2ffc-44ad-9e91-8625f928a07f",
+  "blockId" : "22fce821-47cf-475c-a972-0bce7ad14e57",
+  "noteId" : "ece3b5c6-a60d-4441-af54-8fbf5edad26b",
   "content" : "content",
   "order" : 1,
   "style" : {
@@ -1456,7 +1730,7 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>documentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>noteId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문서 ID</p></td>
@@ -1500,9 +1774,9 @@ Host: localhost:8080
 <h4 id="_노드_내용_수정_http_request"><a class="link" href="#_노드_내용_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /nodes/a8d1b758-5523-40f0-a4d8-1c1bc53e738b/content HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /nodes/2b381ca3-f24d-4fb4-a3bc-4cc8ecfbdb70/content HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiYjc3YjExZTMtYjVlZS00MWVjLWFmNjItNDZjN2UzMzk2YWJiIiwiZXhwIjoxNzQxNDk5NDIyfQ.s9zdq6YdddHJttdUWKCw4EZpqEeOmXB0b-9YiQDmTy_3VYKfoZNPBSndS5e1xKzb
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiYzAwOTNhZDQtY2YwOS00ODZkLWE1ZDgtOWE5NzllYTI1YjY2IiwiZXhwIjoxNzUyMjg2ODk3fQ.q96B6MLVLgdVcfttNIhySxwnGuJnqM61SOJ8le_of1lLFtYTAQllXWQIA7j_2bQz
 Content-Length: 27
 Host: localhost:8080
 
@@ -1549,9 +1823,9 @@ Host: localhost:8080
 <h4 id="_노드_스타일_수정_http_request"><a class="link" href="#_노드_스타일_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /nodes/88edbe36-adb2-4cce-b785-3d169801c11c/style HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /nodes/d0bc9d65-ab86-4584-a315-e2b305ca8fea/style HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc0MDg5NDYyMiwic3ViIjoiZjRhZjZhMzYtMDI5OC00MTEyLTg4Y2YtNjQ4YWMwYTMzNWQ5IiwiZXhwIjoxNzQxNDk5NDIyfQ.oYMQUgR8c0oihOJajUYkQy1Zix27_RoFvmRqEWCTMcBNL97rdqlGRcpTQxdG49_X
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZXRybyIsImlhdCI6MTc1MTY4MjA5Nywic3ViIjoiMmYwOGY5MjEtZDU1NS00ZjAwLWI0MzMtMGVlNmU4MmY3OWI1IiwiZXhwIjoxNzUyMjg2ODk3fQ.O1iIU6JWaFHWOTQwOAXw2Qv8WSu7yhre7ERxOFvYMhCDgim_95M0PvHVkqFtaYmn
 Content-Length: 41
 Host: localhost:8080
 
@@ -1685,6 +1959,18 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">해당 권한이 없습니다.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B008</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">해당 노드을 문자열로 변경할 수 없습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B009</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">해당 문자열을 노드로 변경할 수 없습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B010</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">블록을 찾을 수 없습니다.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>D001</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">해당 인자는 null일 수 없습니다</p></td>
 </tr>
@@ -1733,7 +2019,7 @@ Host: localhost:8080
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2025-03-02 14:26:48 +0900
+Last updated 2025-07-05 10:56:25 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
